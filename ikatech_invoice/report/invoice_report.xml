@@ -56,7 +56,7 @@
                     <li t-if="company.email" class="list-inline-item" >Correo Electrónico: <span t-field="company.email"/></li>
 
                     <li t-if="company.website" class="list-inline-item">&amp;bull;</li>
-                    <li t-if="company.website" class="list-inline-item">Página web: <span t-field="company.website"/></li>
+                    <li t-if="company.website" class="list-inline-item">Página web:<![CDATA[&nbsp;]]><span t-field="company.website"/></li>
                 </ul>
 
                 <div name="financial_infos">
@@ -103,7 +103,7 @@
                                     <![CDATA[&nbsp;]]>
                                     <span t-field="o.company_id.street_number2"/>
                                     <![CDATA[&nbsp;]]>
-                                    <span>COLONIA</span>
+                                    <span>Colonia</span>
                                     <![CDATA[&nbsp;]]>
                                     <span t-field="o.company_id.l10n_mx_edi_colony"/>
                                     <![CDATA[&nbsp;]]>
@@ -121,7 +121,7 @@
                                     <![CDATA[&nbsp;]]>
                                     <span t-field="o.company_id.phone"/><br/>
                                     <![CDATA[&nbsp;]]>
-                                    <span>Website:</span><spant t-field="o.company_id.website"/>
+                                    <span>Sitio Web:<![CDATA[&nbsp;]]></span><spant t-field="o.company_id.website"/>
                                 </div>
                             </center>
                         </div>
@@ -153,15 +153,15 @@
                         <div class="col-7" style="font-size:12px">
                             <table style="border-spacing: 5px; border-collapse: separate;">
                                 <tr>
-                                    <td><strong><span>FECHA EMISION</span></strong></td>
-                                    <td>:<![CDATA[&nbsp;]]><span t-field="o.invoice_date" t-options='{"format": "MM/dd/yyyy"}'/><br/></td>
+                                    <td><strong><span>FECHA EMISIÓN</span></strong></td>
+                                    <td>:<![CDATA[&nbsp;]]><span t-field="o.invoice_date" t-options='{"format": "dd/MM/yyyy"}'/><br/></td>
                                 </tr>
                                 <tr>
                                     <td><strong><span>CLIENTE</span></strong></td>
                                     <td>:<![CDATA[&nbsp;]]><span t-field="o.partner_id.name"/></td>
                                 </tr>
                                 <tr>
-                                    <td><strong><span>DIRECCION</span></strong></td>
+                                    <td><strong><span>DIRECCIÓN</span></strong></td>
                                     <td>:<![CDATA[&nbsp;]]><span t-field="o.partner_id.street_name"/></td>
                                 </tr>
                                 <tr>
@@ -392,7 +392,7 @@
                         <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
                     </div>
                     <div t-att-class="o_grid_layout">
-                        <strong>Metodo de Pago:</strong>
+                        <strong>Método de Pago:</strong>
                         <p t-esc="cfdi_vals.get('payment_method')"/>
                     </div>
                     <div t-if="cfdi_vals.get('bank_account')" t-att-class="o_grid_layout">
