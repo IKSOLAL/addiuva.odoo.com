@@ -200,7 +200,7 @@
                         <table class="table" style="font-size:12px" name="invoice_line_table">
                             <thead class="thead-light text-center">
                                 <tr>
-                                    <th style="width:40%; padding:0px 0px 0px 0px;color:black;"><strong><span>Descripcion</span></strong></th>
+                                    <th style="width:40%; padding:0px 0px 0px 0px;color:black;"><strong><span>Descripción</span></strong></th>
                                     <th style="width:10%; padding:0px 0px 0px 0px;color:black;"><strong>Cantidad</strong></th>
                                     <th style="width:10%; padding:0px 0px 0px 0px;color:black;"><strong>Precio Unitario</strong></th>
                                     <th style="width:10%; padding:0px 0px 0px 0px;color:black;"><strong>Dscto</strong></th>
