@@ -153,7 +153,7 @@
                         <div class="col-7" style="font-size:12px">
                             <table style="border-spacing: 5px; border-collapse: separate;">
                                 <tr>
-                                    <td><strong><span>FECHA EMISIÓN</span></strong></td>
+                                    <td><strong><span>FECHA</span></strong></td>
                                     <td>:<![CDATA[&nbsp;]]><span t-field="o.invoice_date" t-options='{"format": "dd/MM/yyyy"}'/><br/></td>
                                 </tr>
                                 <tr>
