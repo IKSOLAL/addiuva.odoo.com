@@ -31,55 +31,6 @@
             </t>
         <div class="header">
             <div class="row">
-                <div class="col-xs-9 text-left" style="margin-top:-20px;"
-                    t-field="company.report_header" />
-            </div>
-            <div class="row zero_min_height">
-                <div class="col-xs-12">
-                    <!--<div style="border-bottom: 1px solid black;"></div>-->
-                </div>
-            </div>
-        </div>
-
-        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
-            <t t-call="web.address_layout"/>
-            <t t-raw="0" />
-        </div>
-
-        <!--EMPIEZA EL FOOTER *ESTA BIEN*-->
-        <div class="footer">
-            <div class="text-center" style="border-top: 1px solid black;">
-                <ul class="list-inline mb4">
-                    <li t-if="company.phone" class="list-inline-item">Teléfono: <span t-field="company.phone"/></li>
-
-                    <li t-if="company.email" class="list-inline-item">&amp;bull;</li>
-                    <li t-if="company.email" class="list-inline-item" >Correo Electrónico: <span t-field="company.email"/></li>
-
-                    <li t-if="company.website" class="list-inline-item">&amp;bull;</li>
-                    <li t-if="company.website" class="list-inline-item">Página web:<![CDATA[&nbsp;]]><span t-field="company.website"/></li>
-                </ul>
-
-                <div name="financial_infos">
-                    <span t-field="company.report_footer"/>
-                </div>
-
-                <div class="text-muted">
-                    Page: <span class="page"/> / <span class="topage"/>
-                </div>
-            </div>
-        </div>
-        <!--TERMINA EL FOOTER-->
-
-
-    </template>
-
-    <!--TERMINA CFDI EXTERNAL LAYOUT-->
-        <template id="report_payment_receipt_document_ikatech" >
-            <t t-call="ikatech_payment.ikatech_external_layout">
-                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
-
-                <div class="page" style="padding-top: -10px; font-size:18px;">
-                    <div class="row">
                     <!--INICIA LOGO DE LA EMPRESA-->
                         <div class="col-3">
                             <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)"
@@ -136,19 +87,58 @@
                                 </center>
                             </div>
                         </div>
-                        <!--TERMINA DATOS DEL EMISOR-->
+                </div>
+        </div>
 
-                        <!--INFORMACIÓN GENERAL FACTURA-->
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0" />
+        </div>
 
-                        <!--TERMINA INFORMACIÓN GENERAL DE FACTURA-->
-                    </div>
+        <!--EMPIEZA EL FOOTER *ESTA BIEN*-->
+        <div class="footer">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <ul class="list-inline mb4">
+                    <li t-if="company.phone" class="list-inline-item">Teléfono: <span t-field="company.phone"/></li>
+
+                    <li t-if="company.email" class="list-inline-item">&amp;bull;</li>
+                    <li t-if="company.email" class="list-inline-item" >Correo Electrónico: <span t-field="company.email"/></li>
+
+                    <li t-if="company.website" class="list-inline-item">&amp;bull;</li>
+                    <li t-if="company.website" class="list-inline-item">Página web:<![CDATA[&nbsp;]]><span t-field="company.website"/></li>
+                </ul>
+
+                <div name="financial_infos">
+                    <span t-field="company.report_footer"/>
+                </div>
+
+                <div class="text-muted">
+                    Page: <span class="page"/> / <span class="topage"/>
+                </div>
+            </div>
+        </div>
+
+        <!--TERMINA EL FOOTER-->
+
+
+    </template>
+
+    <!--TERMINA CFDI EXTERNAL LAYOUT-->
+        <template id="report_payment_receipt_document_ikatech" inherit_id="account.report_payment_receipt_document" >
+            <xpath expr="/t" position="replace">
+            <t t-call="ikatech_payment.ikatech_external_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+                <t t-set="cfdi_vals" t-value="o.move_id._l10n_mx_edi_decode_cfdi()"/>
+                <t t-set="is_cfdi_signed" t-value="bool(o.move_id._get_l10n_mx_edi_signed_edi_document())"/>
+
+                <div class="page" style="padding-top: -10px; font-size:18px;">
                     <br/>
                     <div class="row" style="border-style: groove; border-radius: 10px;" name="info_row">
-                        <div class="col-7" style="font-size:12px">
+                        <div class="col-5" style="font-size:12px">
                             <table style="border-spacing: 5px; border-collapse: separate;">
                                 <tr>
                                     <td><strong><span>FECHA DE PAGO</span></strong></td>
-                                    <td>:<![CDATA[&nbsp;]]><span t-field="o.invoice_date" t-options='{"format": "dd/MM/yyyy"}'/><br/></td>
+                                    <td>:<![CDATA[&nbsp;]]><span t-field="o.date" t-options='{"format": "dd/MM/yyyy"}'/><br/></td>
                                 </tr>
                                 <tr>
                                     <td><strong><span>CLIENTE</span></strong></td>
@@ -161,8 +151,8 @@
                             </table>
                         </div>
                         <div class="col-1"/>
-                        <div class="col-4" style="font-size:12px">
-                            <table>
+                        <div class="col-5" style="font-size:12px">
+                            <table style="width:100%">
                                 <tr>
                                     <td>
                                          <t t-if="o.company_id.country_id.name=='México'">
@@ -180,7 +170,7 @@
                                     <td>:<![CDATA[&nbsp;]]><span t-esc="'%s - %s' % (o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name)"/></td>
                                 </tr>
                                  <tr>
-                                    <td><strong><span>Referencia</span><br/></strong></td>
+                                    <td><strong><span>REFERENCIA</span><br/></strong></td>
                                     <td>:<![CDATA[&nbsp;]]><span t-field="o.ref"/></td>
                                 </tr>
                             </table>
@@ -188,11 +178,13 @@
                     </div>
                     <br/>
                     <div class="row" style="border-style: groove; border-radius: 10px;">
+                        <t t-if="o.move_id.l10n_mx_edi_cfdi_uuid">
+                             <t t-set="docs_related" t-value="cfdi_vals.get('cfdi_node') and cfdi_vals['cfdi_node'].Complemento.xpath('//pago10:DoctoRelacionado', namespaces={'pago10': 'http://www.sat.gob.mx/Pagos'})"/>
                         <table class="table" style="font-size:12px" name="invoice_line_table">
                             <thead class="thead-light text-center">
                                 <tr>
-                                    <th style="width:40%; padding:0px 0px 0px 0px;color:black;"><strong><span>Factura</span></strong></th>
-                                    <th style="width:10%; padding:0px 0px 0px 0px;color:black;"><strong>UUID</strong></th>
+                                    <th style="width:10%; padding:0px 0px 0px 0px;color:black;"><strong><span>Factura</span></strong></th>
+                                    <th style="width:30%; padding:0px 0px 0px 0px;color:black;"><strong>UUID</strong></th>
                                     <th style="width:10%; padding:0px 0px 0px 0px;color:black;"><strong>Parcialidad</strong></th>
                                     <th style="width:10%; padding:0px 0px 0px 0px;color:black;"><strong>Saldo Anterior</strong></th>
                                     <th style="width:10%; padding:0px 0px 0px 0px;color:black;"><strong>Monto Pagado</strong></th>
@@ -201,179 +193,95 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                 <tr t-foreach="docs_related" t-as="inv">
-                                <td><span t-esc="invoice_ids.filtered(lambda i: i.l10n_mx_edi_cfdi_uuid == inv.get('IdDocumento')).name or ''"/></td>
-                                <td><span t-esc="inv.get('IdDocumento')"/></td>
-                                <td class="text-right"><span t-esc="inv.get('NumParcialidad', '')"/></td>
-                                <td class="text-right"><span t-esc="inv.get('ImpSaldoAnt', '')"/></td>
-                                <td class="text-right"><span t-esc="inv.get('ImpPagado', '')"/></td>
-                                <td class="text-right"><span t-esc="inv.get('ImpSaldoInsoluto', '')"/></td>
-                                <td><span t-esc="inv.get('MonedaDR')"/></td>
-                            </tr>                              
+                                <tr t-foreach="docs_related" t-as="inv">
+                                    <td><span t-esc="o.reconciled_invoice_ids.filtered(lambda i: i.l10n_mx_edi_cfdi_uuid == inv.get('IdDocumento')).name or ''"/></td>
+                                    <td><span t-esc="inv.get('IdDocumento')"/></td>
+                                    <td class="text-right"><span t-esc="inv.get('NumParcialidad', '')"/></td>
+                                    <td class="text-right"><span t-esc="inv.get('ImpSaldoAnt', '')"/></td>
+                                    <td class="text-right"><span t-esc="inv.get('ImpPagado', '')"/></td>
+                                    <td class="text-right"><span t-esc="inv.get('ImpSaldoInsoluto', '')"/></td>
+                                    <td><span t-esc="inv.get('MonedaDR')"/></td>
+                                </tr>
                             </tbody>
                         </table>
+                             </t>
                     </div>
+                    <br/>
                     <div class="row" style="border-style: groove; border-radius: 10px;">
-                         <t t-if="o.move_id.l10n_mx_edi_cfdi_uuid">
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th>FECHA DE LA FACTURA</th>
-                                <th>NÚMERO DE FACTURA</th>
-                                <th class="text-right">MONTO ORIGINAL</th>
-                                <th class="text-right">MONTO PAGADO</th>
-                                <th class="text-right">SALDO</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr t-foreach="invoice_ids" t-as="inv">
-                                <td><span t-field="inv.invoice_date"/></td>
-                                <td><span t-field="inv.name"/></td>
-                                <td class="text-right"><span t-field="inv.amount_total"/></td>
-                                <td class="text-right"><span t-esc="inv.amount_total - inv.amount_residual" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></td>
-                                <td class="text-right"><span t-field="inv.amount_residual"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </t>
-                    </div>
-                </div>
-            </t>
-        </template>
 
-    <template id="report_payment_receipt" inherit_id="account.report_payment_receipt">
-        <xpath expr="//t[4]" position="replace">
-            <t t-call="ikatech_payment.report_payment_receipt_document_ikatech" t-lang="o.partner_id.lang" />
-        </xpath>
-    </template>
-    <template id="report_payment_receipt_document" inherit_id="account.report_payment_receipt_document">
-        <xpath expr="//t[3]" position="replace">
-            <t t-call="ikatech_invoice.report_invoice_document_ikatech" t-lang="o.partner_id.lang" />
-        </xpath>
-    </template>
+                            <table class="table" style="font-size:12px">
+                                <thead class="thead-light text-center">
+                                    <tr>
+                                        <th style="width:10%; padding:0px 0px 0px 0px;color:black;">Fecha De La Factura</th>
+                                        <th style="width:10%; padding:0px 0px 0px 0px;color:black;">Número De Factura</th>
+                                        <th style="width:10%; padding:0px 0px 0px 0px;color:black;">Monto Original</th>
+                                        <th style="width:10%; padding:0px 0px 0px 0px;color:black;">Monto Pagado</th>
+                                        <th style="width:10%; padding:0px 0px 0px 0px;color:black;">Saldo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.reconciled_invoice_ids" t-as="inv">
+                                        <td><span t-field="inv.invoice_date"/></td>
+                                        <td><span t-field="inv.name"/></td>
+                                        <td class="text-right"><span t-field="inv.amount_total"/></td>
+                                        <td class="text-right"><span t-esc="inv.amount_total - inv.amount_residual" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></td>
+                                        <td class="text-right"><span t-field="inv.amount_residual"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-    <template id="report_payment_receipt_document_mx" inherit_id="ikatech_payment.report_payment_receipt_document_ikatech">
-        <xpath expr="//div/div[@name='info_row']" position="after">
-            <!-- Global variables -->
-            <t t-set="cfdi_vals" t-value="o._l10n_mx_edi_decode_cfdi()"/>
-            <t t-set="is_cfdi_signed" t-value="bool(o._get_l10n_mx_edi_signed_edi_document())"/>
-
-            <t t-if="o.l10n_mx_edi_cfdi_request in ('on_invoice', 'on_refund') and not is_cfdi_signed and o.edi_state != 'cancelled'">
-                <!-- due to HTML preview for device responsive -->
-                <button t-attf-class="btn-danger #{'btn' if report_type != 'html' else ''}">
-                    <strong>A signature of this invoice is required, but it is not signed.</strong>
-                </button>
-            </t>
-        </xpath>
-
-        <xpath expr="//span[@t-field='o.partner_id.vat']" position="after">
-            <span t-if="is_cfdi_signed and o.company_id.vat != o.l10n_mx_edi_cfdi_supplier_rfc"><span>XML VAT: </span><span t-esc="o.l10n_mx_edi_cfdi_supplier_rfc"/></span>
-        </xpath>
-
-        <xpath expr="//p[@name='payment_term']" position="after">
-             <div id="informations" class="row mt32 mb32" style="font-size:12px">
-
-                <t t-if="is_cfdi_signed">
-                    <t t-set="original_o_grid_layout" t-value="o_grid_layout"/>
-                    <t t-set="o_grid_layout" t-value="'col-auto col-2 mw-100 mb-2'"/>
-                    <t t-if="cfdi_vals.get('usage')">
-                        <div name="cfdi_vals['usage']" t-att-class="o_grid_layout">
-                            <strong>Uso CFDI:</strong>
-                            <p><span t-esc="cfdi_vals['usage']"/><span> - </span><span t-field="o.l10n_mx_edi_usage"/></p>
+                   </div>
+                     <t t-if="is_cfdi_signed">
+                        <div class="row" id='complement'>
+                            <div t-if="cfdi_vals.get('sello')" class="barcode col-3">
+                                <img alt="Barcode" t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=180&amp;height=180' % quote_plus(
+                                    'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?' + keep_query(
+                                        re=o.l10n_mx_edi_cfdi_supplier_rfc, rr=o.l10n_mx_edi_cfdi_customer_rfc,
+                                        tt=0, id=o.l10n_mx_edi_cfdi_uuid)
+                                        + '&amp;fe=%s' % quote_plus(cfdi_vals['sello'][-8:], 'utf-8', 'strict', '=/').replace('%2B', '+'))"/>
+                            </div>
+                            <div class="complement-details col-9">
+                                <div class="digital-stamp">
+                                    <span>Digital stamp of the emitter</span>
+                                </div>
+                                <div class="digital-stamp-content">
+                                    <span t-esc="cfdi_vals.get('sello')"/>
+                                </div>
+                                <div class="digital-stamp">
+                                    <span>Digital stamp SAT</span>
+                                </div>
+                                <div class="digital-stamp-content">
+                                    <span t-esc="cfdi_vals.get('sello_sat')"/>
+                                </div>
+                                <div class="digital-stamp">
+                                    <span>Original chain complement of digital certification SAT</span>
+                                </div>
+                                <div class="digital-stamp-content">
+                                    <span class="nowrap" t-esc="cfdi_vals.get('cadena')"/>
+                                </div>
+                                <div class="digital-stamp">
+                                    <span>Extra Info</span>
+                                </div>
+                                <div class="digital-stamp-content">
+                                    <span>Emitter certificate:</span> <span t-esc="cfdi_vals.get('certificate_number')"/>
+                                    <span> | SAT Certificate:</span> <span t-esc="cfdi_vals.get('certificate_sat_number')"/>
+                                    <span> | Expedition place:</span> <span t-esc="cfdi_vals.get('expedition')"/>
+                                    <span> | Fiscal Regime:</span><span t-esc="cfdi_vals.get('fiscal_regime')"/>
+                                    <span> | Emission Date:</span> <span t-esc="cfdi_vals.get('emission_date_str')"/>
+                                    <span> | Certification Date:</span> <span t-esc="cfdi_vals.get('stamp_date')"/>
+                                    <span> | Fiscal Folio:</span> <span t-esc="cfdi_vals.get('uuid')"/>
+                                </div>
+                                <div class="digital-stamp-content text-center">
+                                    <strong>This document is a printed representation of a CFDI</strong>
+                                </div>
+                            </div>
                         </div>
                     </t>
-                    <div t-att-class="o_grid_layout">
-                        <strong>Folio fiscal:</strong><br/>
-                        <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
-                    </div>
-                    <div t-att-class="o_grid_layout">
-                        <strong>Método de Pago:</strong>
-                        <p t-esc="cfdi_vals.get('payment_method')"/>
-                    </div>
-                    <div t-if="cfdi_vals.get('bank_account')" t-att-class="o_grid_layout">
-                        <strong>Cuenta de Banco:</strong>
-                        <p t-esc="cfdi_vals['bank_account']"/>
-                    </div>
-                    <t t-set="o_grid_layout" t-value="original_o_grid_layout"/>
 
-            </t>
-                 </div>
-        </xpath>
-
-        <!-- Add new column on invoice lines: Product Code -->
-        <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[1]" position="before">
-            <th t-if="is_cfdi_signed" style="width:15%; padding:0px 0px 0px 0px;;color:black;" >
-                <span>Codigo Producto</span>
-            </th>
-        </xpath>
-        <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]//td[1]" position="before">
-            <td t-if="is_cfdi_signed"><span t-field="line.product_id.unspsc_code_id.code"/></td>
-        </xpath>
-
-        <!-- Add new column on invoice lines: Unit Code -->
-        <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[4]" position="after">
-            <th t-if="is_cfdi_signed" class="text-right" style="width:15%; padding:0px 0px 0px 0px;;color:black;">
-                <span>Codigo Unidad</span>
-            </th>
-        </xpath>
-        <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]//td[4]" position="after">
-            <td t-if="is_cfdi_signed" class="text-right"><span t-field="line.product_uom_id.unspsc_code_id.code"/></td>
-        </xpath>
-
-        <xpath expr="//div[hasclass('clearfix')]" position="after">
-            <t t-if="is_cfdi_signed">
-                <p class="text-right">
-                    <span t-esc="o._l10n_mx_edi_cfdi_amount_to_text()" style="font-size:14px"/>
-                </p>
-            </t>
-        </xpath>
-
-        <xpath expr="//p[@t-if='not is_html_empty(o.fiscal_position_id.note)']" position="after">
-            <t t-if="is_cfdi_signed">
-                <div class="row" id="complement">
-                    <div t-if="cfdi_vals.get('sello')" class="barcode col-3">
-                        <img alt="Barcode" t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=180&amp;height=180' % quote_plus(                             'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?' + keep_query(                                 re=o.l10n_mx_edi_cfdi_supplier_rfc, rr=o.l10n_mx_edi_cfdi_customer_rfc,                                 tt='%.*f' % (o.currency_id.decimal_places, o.l10n_mx_edi_cfdi_amount), id=o.l10n_mx_edi_cfdi_uuid)                                 + '&amp;fe=%s' % quote_plus(                                     cfdi_vals['sello'][-8:], 'utf-8', 'strict', '=/').replace('%2B', '+'))"/>
-                    </div>
-                    <div class="complement-details col-9">
-                        <div class="digital-stamp">
-                            <span>Digital stamp of the emitter</span>
-                        </div>
-                        <div class="digital-stamp-content">
-                            <span t-esc="cfdi_vals.get('sello')"/>
-                        </div>
-                        <div class="digital-stamp">
-                            <span>Digital stamp SAT</span>
-                        </div>
-                        <div class="digital-stamp-content">
-                            <span t-esc="cfdi_vals.get('sello_sat')"/>
-                        </div>
-                        <div class="digital-stamp">
-                            <span>Original chain complement of digital certification SAT</span>
-                        </div>
-                        <div class="digital-stamp-content">
-                            <span class="nowrap" t-esc="cfdi_vals.get('cadena')"/>
-                        </div>
-                        <div class="digital-stamp">
-                            <span>Extra Info</span>
-                        </div>
-                        <div class="digital-stamp-content">
-                            <span>Emitter certificate:</span> <span t-esc="cfdi_vals.get('certificate_number')"/>
-                            <span> | SAT Certificate:</span> <span t-esc="cfdi_vals.get('certificate_sat_number')"/>
-                            <span> | Expedition place:</span> <span t-esc="cfdi_vals.get('expedition')"/>
-                            <span> | Fiscal Regime:</span><span t-esc="cfdi_vals.get('fiscal_regime')"/>
-                            <span> | Emission Date:</span> <span t-esc="cfdi_vals.get('emission_date_str')"/>
-                            <span> | Certification Date:</span> <span t-esc="cfdi_vals.get('stamp_date')"/>
-                            <span> | Fiscal Folio:</span> <span t-esc="cfdi_vals.get('uuid')"/>
-                        </div>
-                        <div class="digital-stamp-content text-center">
-                            <strong>This document is a printed representation of a CFDI</strong>
-                        </div>
-                    </div>
                 </div>
             </t>
-        </xpath>
-
-    </template>
+                </xpath>
+        </template>
 
 
 
