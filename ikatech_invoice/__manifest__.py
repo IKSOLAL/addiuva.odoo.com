@@ -13,7 +13,7 @@
     'website': 'https://ikatechsolutions.com/',
     'license': 'AGPL-3',
     'depends': [
-
+        'account',
     ],
     'data': [
         'report/invoice_report.xml',

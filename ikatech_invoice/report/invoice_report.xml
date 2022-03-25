@@ -17,7 +17,7 @@
             <field name="dpi">90</field>
         </record>
         <record id="account.account_invoices" model="ir.actions.report">
-            <field name="paperformat_id" ref="paperformat_a4_landscape" />
+            <field name="paperformat_id" ref="ikatech_invoice.paperformat_a4_landscape" />
         </record>
     <!--CFDI EXTERNAL LAYOUT-->
     <template id="ikatech_external_layout">
