@@ -16,7 +16,9 @@
             <field name="header_spacing">15</field>
             <field name="dpi">90</field>
         </record>
-
+        <record id="account.account_invoices" model="ir.actions.report">
+            <field name="paperformat_id" ref="paperformat_a4_landscape" />
+        </record>
     <!--CFDI EXTERNAL LAYOUT-->
     <template id="ikatech_external_layout">
             <!-- Multicompany -->
@@ -353,9 +355,7 @@
         </xpath>
     </template>
 
-     <record id="account.account_invoices" model="ir.actions.report">
-            <field name="paperformat_id" ref="ikatech_invoice.paperformat_a4_landscape" />
-        </record>
+  
 
     <template id="report_invoice_document_mx" inherit_id="ikatech_invoice.report_invoice_document_ikatech">
         <xpath expr="//div/div[@name='info_row']" position="after">
