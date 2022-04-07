@@ -22,8 +22,8 @@ class AccountMove(models.Model):
                 line.transfer_to_company_id.due_to_account_id.id,
             'partner_id':
                 partner and partner.id or line.company_id.partner_id.id,
-            'debit': debit,
-            'credit': credit,
+            'debit': credit,
+            'credit': debit,
         }
 
     def prepare_company_move_line_values(
