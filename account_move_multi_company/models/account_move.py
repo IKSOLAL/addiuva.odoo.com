@@ -108,7 +108,7 @@ class AccountMove(models.Model):
                     'ref': move.ref,
                     'journal_id': journal_id,
                     'line_ids': transfer_lines})
-                journal_entry_transfer.post()
+                journal_entry_transfer._post()
 
                 transfer_lines = journal_entry_transfer.line_ids.filtered(
                     lambda l:
