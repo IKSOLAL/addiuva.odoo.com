@@ -58,8 +58,7 @@ class AccountMove(models.Model):
                     if line.transfer_to_company_id.id not in\
                             dedicated_companies_vals:
                         account = \
-                            self.env['account.account'].sudo().with_context(
-                                force_company=company_id).search([
+                            self.env['account.account'].sudo().with_company(company_id).search([
                                     ('code', '=', line.account_id.code),
                                     ('company_id', '=', company_id)],
                                 limit=1)
@@ -87,8 +86,7 @@ class AccountMove(models.Model):
                              self.prepare_other_company_move_line_values(line)
                              ))
                         account = \
-                            self.env['account.account'].sudo().with_context(
-                                force_company=company_id).search([
+                            self.env['account.account'].sudo().with_company(company_id).search([
                                     ('code', '=', line.account_id.code),
                                     ('company_id', '=', company_id)],
                                 limit=1)
@@ -127,8 +125,7 @@ class AccountMove(models.Model):
                 dedicated_company_move = self.env['account.move'].sudo()
                 for company_id in dedicated_companies_vals:
                     dedicated_company_move += \
-                        self.env['account.move'].sudo().with_context(
-                            force_company=company_id).create(
+                        self.env['account.move'].sudo().with_company(company_id).create(
                             dedicated_companies_vals[company_id])
                 # TODO: Determine the conditions to auto-post this entry
                 # Left in draft to set analytic information
