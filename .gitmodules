@@ -1,0 +1,4 @@
+[submodule "jorels-odoo-addons"]
+	path = jorels-odoo-addons
+	url = https://gitlab.com/jorels-community/jorels-odoo-addons.git
+	branch = 15.0
