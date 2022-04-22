@@ -133,6 +133,9 @@
                                     <t t-if="o.company_id.country_id.name=='México'">
                                         <strong><span>R.F.C</span></strong>
                                     </t>
+                                    <t t-if="o.company_id.country_id.name=='Colombia'">
+                                        <strong><span>NIT</span></strong>
+                                    </t>
                                     <span t-field="o.company_id.vat"/><br/>
                                     <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'"><strong><span>FACTURA ELECTRONICA</span></strong><br/></span>
                                     <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'"><strong><span>FACTURA BORRADOR</span></strong><br/></span>
@@ -179,6 +182,9 @@
                                          <t t-if="o.company_id.country_id.name=='México'">
                                             <strong><span>R.F.C</span></strong>
                                         </t>
+                                         <t t-if="o.company_id.country_id.name=='Colombia'">
+                                            <strong><span>NIT</span></strong>
+                                        </t>
                                     </td>
                                     <td>:<![CDATA[&nbsp;]]><span t-field="o.partner_id.vat"/></td>
                                 </tr>
@@ -190,7 +196,8 @@
                                     <td><strong><span>VENCIMIENTO</span></strong></td>
                                     <td>:<![CDATA[&nbsp;]]><span t-field="o.invoice_date_due"/></td>
                                 </tr>
-                                <tr>
+                                
+                                <tr t-if="o.company_id.country_id.name=='México'">
                                     <td><strong><span>FORMA DE PAGO</span><br/></strong></td>
                                     <td>:<![CDATA[&nbsp;]]><span t-esc="'%s - %s' % (o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name)"/></td>
                                 </tr>
@@ -376,33 +383,34 @@
         </xpath>
 
         <xpath expr="//p[@name='payment_term']" position="after">
-             <div id="informations" class="row mt32 mb32" style="font-size:12px">
-
-                <t t-if="is_cfdi_signed">
-                    <t t-set="original_o_grid_layout" t-value="o_grid_layout"/>
-                    <t t-set="o_grid_layout" t-value="'col-auto col-2 mw-100 mb-2'"/>
-                    <t t-if="cfdi_vals.get('usage')">
-                        <div name="cfdi_vals['usage']" t-att-class="o_grid_layout">
-                            <strong>Uso CFDI:</strong>
-                            <p><span t-esc="cfdi_vals['usage']"/><span> - </span><span t-field="o.l10n_mx_edi_usage"/></p>
+             <div id="informations" class="row mt32 mb32" style="font-size:12px">                     
+                     <!-- Mexico -->
+                    <t t-if="is_cfdi_signed">
+                        <t t-set="original_o_grid_layout" t-value="o_grid_layout"/>
+                        <t t-set="o_grid_layout" t-value="'col-auto col-2 mw-100 mb-2'"/>
+                        <t t-if="cfdi_vals.get('usage')">
+                            <div name="cfdi_vals['usage']" t-att-class="o_grid_layout">
+                                <strong>Uso CFDI:</strong>
+                                <p><span t-esc="cfdi_vals['usage']"/><span> - </span><span t-field="o.l10n_mx_edi_usage"/></p>
+                            </div>
+                        </t>
+                        <div t-att-class="o_grid_layout">
+                            <strong>Folio fiscal:</strong><br/>
+                            <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
                         </div>
-                    </t>
-                    <div t-att-class="o_grid_layout">
-                        <strong>Folio fiscal:</strong><br/>
-                        <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
-                    </div>
-                    <div t-att-class="o_grid_layout">
-                        <strong>Método de Pago:</strong>
-                        <p t-esc="cfdi_vals.get('payment_method')"/>
-                    </div>
-                    <div t-if="cfdi_vals.get('bank_account')" t-att-class="o_grid_layout">
-                        <strong>Cuenta de Banco:</strong>
-                        <p t-esc="cfdi_vals['bank_account']"/>
-                    </div>
-                    <t t-set="o_grid_layout" t-value="original_o_grid_layout"/>
+                        <div t-att-class="o_grid_layout">
+                            <strong>Método de Pago:</strong>
+                            <p t-esc="cfdi_vals.get('payment_method')"/>
+                        </div>
+                        <div t-if="cfdi_vals.get('bank_account')" t-att-class="o_grid_layout">
+                            <strong>Cuenta de Banco:</strong>
+                            <p t-esc="cfdi_vals['bank_account']"/>
+                        </div>
+                        <t t-set="o_grid_layout" t-value="original_o_grid_layout"/>
 
-            </t>
-                 </div>
+                </t>
+            </div>
+              
         </xpath>
 
         <!-- Add new column on invoice lines: Product Code -->
@@ -410,9 +418,20 @@
             <th t-if="is_cfdi_signed" style="width:15%; padding:0px 0px 0px 0px;;color:black;" >
                 <span>Codigo Producto</span>
             </th>
+            <!-- COLOMBIA -->
+            <th t-if="o.ei_is_valid" style="width:15%; padding:0px 0px 0px 0px;;color:black;" >
+                <span>Nro.</span>
+            </th>
+              <t t-set="num_item" t-value="0"/>
         </xpath>
         <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]//td[1]" position="before">
             <td t-if="is_cfdi_signed"><span t-field="line.product_id.unspsc_code_id.code"/></td>
+        </xpath>
+        <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]//td[1]" position="before">       
+             <t t-set="num_item" t-value="num_item + 1"/>
+            <td t-if="o.ei_is_valid">
+             <span t-esc="num_item" class="text-center"/>
+            </td>
         </xpath>
 
         <!-- Add new column on invoice lines: Unit Code -->
@@ -434,8 +453,53 @@
         </xpath>
 
         <xpath expr="//p[@t-if='not is_html_empty(o.fiscal_position_id.note)']" position="after">
+            <t t-if="o.ei_is_not_test and o.ei_qr_data">
+                            <!-- With Odoo-->
+                <div class="row">
+                    <div  class="col-3">
+                      <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.ei_qr_data, 192, 192)"/>
+                    </div>
+                  <div class="complement-details col-9" style="font-size:11px">
+                                <div t-if="o.ei_is_valid">
+                                    <!-- TO DO: CUDE cuando es nota debito                                   -->
+                                    <strong t-if="o.move_type == 'out_invoice'">CUFE:</strong>
+                                    <strong t-if="o.move_type == 'out_refund'">CUDE:</strong>
+                                    <span t-field="o.ei_uuid"/>
+                                </div>
+                                <div t-else="">
+                                    <span>This document has not been validated in the DIAN</span>
+                                </div>
+                                <div t-if="o.ei_signature">
+                                    <strong>Firma Digital:</strong>
+                                    <span t-field="o.ei_signature"/>
+                                </div>
+                                <strong>Número de autorización de facturación:</strong>
+                                <span t-field="o.journal_id.resolution_invoice_id.resolution_resolution"/>
+                                <strong>Fecha:</strong>
+                                <span t-field="o.journal_id.resolution_invoice_id.resolution_resolution_date"/>
+                                <br/>
+                                <strong>Rango autorizado desde:</strong>
+                                <span t-field="o.journal_id.resolution_invoice_id.resolution_prefix"/>
+                                <span t-field="o.journal_id.resolution_invoice_id.resolution_from"/>
+                                <strong>hasta</strong>
+                                <span t-field="o.journal_id.resolution_invoice_id.resolution_prefix"/>
+                                <span t-field="o.journal_id.resolution_invoice_id.resolution_to"/>
+                                <strong>Valido desde:</strong>
+                                <span t-field="o.journal_id.resolution_invoice_id.resolution_date_from"/>
+                                <strong>hasta</strong>
+                                <span t-field="o.journal_id.resolution_invoice_id.resolution_date_to"/>
+                                <br/>
+                                <strong>Representación gráfica de factura electrónica impresa por computadora con software propio de
+                                </strong>
+                                <strong t-field="o.company_id.business_name"/>
+                </div>
+                </div>
+            </t>
             <t t-if="is_cfdi_signed">
                 <div class="row" id="complement">
+                       <!-- COLOMBIA -->
+                
+                <!-- MEXICO-->
                     <div t-if="cfdi_vals.get('sello')" class="barcode col-3">
                         <img alt="Barcode" t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=180&amp;height=180' % quote_plus(                             'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?' + keep_query(                                 re=o.l10n_mx_edi_cfdi_supplier_rfc, rr=o.l10n_mx_edi_cfdi_customer_rfc,                                 tt='%.*f' % (o.currency_id.decimal_places, o.l10n_mx_edi_cfdi_amount), id=o.l10n_mx_edi_cfdi_uuid)                                 + '&amp;fe=%s' % quote_plus(                                     cfdi_vals['sello'][-8:], 'utf-8', 'strict', '=/').replace('%2B', '+'))"/>
                     </div>
