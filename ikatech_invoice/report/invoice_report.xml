@@ -270,6 +270,12 @@
                                     <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)"/>
                                     <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
                                         <tr class="border-black o_subtotal">
+                                            <td><strong>Descuento Total</strong></td>
+                                            <td class="text-right">
+                                                <span t-att-class="oe_subtotal_footer_separator" t-field="o.discount_total"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="border-black o_subtotal">
                                             <td><strong>SubTotal</strong></td>
                                             <td class="text-right">
                                                 <span t-att-class="oe_subtotal_footer_separator" t-esc="subtotal['formatted_amount']"/>
