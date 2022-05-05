@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+    <!-- <data>
         <record id="inherit_view_product_template" model="ir.ui.view">
             <field name="name">product.template.uom</field>
             <field name="model">product.template</field>
@@ -11,5 +11,5 @@
                 </xpath>
             </field>
         </record>
-    </data>
+    </data> -->
 </odoo>
