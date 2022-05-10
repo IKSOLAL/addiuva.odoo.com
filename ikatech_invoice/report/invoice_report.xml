@@ -136,14 +136,18 @@
                                     <t t-if="o.company_id.country_id.name=='Colombia'">
                                         <strong><span>NIT</span></strong>
                                     </t>
-                                    <span t-field="o.company_id.vat"/><br/>
-                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'"><strong><span>FACTURA ELECTRONICA</span></strong><br/></span>
+                                   
+                                   <span t-field="o.company_id.vat"/><br/>
+                                   <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='México'"><strong><span>FACTURA ELECTRONICA</span></strong><br/></span>
+                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='Colombia'"><strong><span>FACTURA ELECTRONICA DE VENTA</span></strong><br/></span>
                                     <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'"><strong><span>FACTURA BORRADOR</span></strong><br/></span>
                                     <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'"><strong><span>FACTURA CANCELADA</span></strong><br/></span>
                                     <span t-if="o.move_type == 'out_refund'"><strong><span>NOTA DE CREDITO</span></strong><br/></span>
                                     <span t-if="o.move_type == 'in_refund'"><strong><span>NOTA DE CREDITO PROVEEDOR</span></strong><br/></span>
                                     <span t-if="o.move_type == 'in_invoice'"><strong><span>FACTURA PROVEEDOR</span></strong><br/></span>
-                                    <span>FOLIO:</span><![CDATA[&nbsp;]]><span t-if="o.name != '/'" t-field="o.name"/>
+                                    <span t-if="o.company_id.country_id.name=='México'"><span>FOLIO:</span></span>
+                                    <span t-if="o.company_id.country_id.name=='Colombia'"><span>NÚMERO:</span></span>
+                                    <![CDATA[&nbsp;]]><span t-if="o.name != '/'" t-field="o.name"/>
                                 </center>
                             </div>
                         </div>
@@ -316,7 +320,7 @@
                             </div>
                         </div>
                     </div>
-                     <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" name="payment_communication" style="font-size:14px">
+                   <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" name="payment_communication" style="font-size:14px">
                         Utilize la siguiente referencia al realizar su pago : <b><span t-field="o.payment_reference"/></b>
                     </p>
                     <p t-if="o.invoice_payment_term_id" name="payment_term" style="font-size:14px">
@@ -350,12 +354,19 @@
 
                 <!--INICIAN ELEMENTOS DEL SAT-->
                 <!--CORRECCIÓN DE ETIQUETAS STRONG-->
-
-
-
                 </div>
             </t>
         </template>
+    
+    <!-- IVAN PORRAS
+    <template id="invoice_report_amount_in_words_inherit" inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@class='clearfix']" position="after">
+                 <div style="padding-top:20px; padding-bottom:20px;">
+                    <p><span><strong>Total Amount in words: </strong></span><span t-field="o.amount_words"/></p>                    
+                </div>
+            </xpath>
+        </template>
+-->
 
     <template id="report_invoice" inherit_id="account.report_invoice">
         <xpath expr="//t[2]" position="replace">
@@ -451,9 +462,16 @@
         </xpath>
 
         <xpath expr="//div[hasclass('clearfix')]" position="after">
+            <!-- Mexico -->
             <t t-if="is_cfdi_signed">
                 <p class="text-right">
                     <span t-esc="o._l10n_mx_edi_cfdi_amount_to_text()" style="font-size:14px"/>
+                </p>   
+            </t>
+            <!-- Colombia -->
+            <t t-if="o.ei_is_valid">
+                <p class="text-right">
+                     <span t-field="o.amount_words"/>
                 </p>
             </t>
         </xpath>
