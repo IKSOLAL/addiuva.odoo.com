@@ -1,0 +1,121 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="xml_invoice_tree_view">
+            <field name="name">charge.xml.invoice</field>
+            <field name="model">xml.import.invoice</field>
+            <field name="arch" type="xml">
+                <tree string="XML-Invoice">
+                    <field name="name"/>
+                    <field name="create_date"/>
+                    <field name="create_uid"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="xml_invoice_form_view">
+            <field name="name">charge.xml.invoice</field>
+            <field name="model">xml.import.invoice</field>
+            <field name="arch" type="xml">
+                <form string="XML-Invoice">
+                    <header>
+                        <button name="action_import_xml_invoices"
+                                string="Import xmls"
+                                type="object"
+                                class="btn-primary"
+                                attrs="{'invisible':[('state', 'in', ('invoiced'))]}"
+                                state="import,validate"
+                        />
+                        <button name="create_xml_invoice"
+                                string="Create invoices"
+                                type="object" 
+                                class="btn-primary"
+                                attrs="{'invisible':[('state', 'in', ('import', 'invoiced', 'error'))]}"/>
+                        <!-- <button name="validate" 
+                                string="VALIDATE" 
+                                type="object" 
+                                class="btn-primary"
+                                attrs="{'invisible':[('state', 'in', ('import', 'invoiced', 'error'))]}"/> -->
+                        <field name="state"
+                               widget="statusbar"
+                               statusbar_visible="import,validate,invoiced"
+                               options="{'clickable': '1'}"
+                        />
+                        <!--<button string="Cancel" class="btn-default" special="cancel"/>-->
+                        <!--<button name="validate_xml" string="Check XML" type="object"-->
+                                <!--class="btn-primary"-->
+                                <!--attrs="{'invisible':[('xml_ok','=',True)]}"/>-->
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_invoice"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-pencil-square-o"
+                                    attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                                <field name="invoice_count" widget="statinfo"
+                                       string="Invoices"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                Process XML's -
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="journal_id" domain="[('type','=','purchase')]"
+                                   required="1"/>
+                            <field name="account_id" required="1"/>
+                            <field name="analytic_account_id"
+                                   domain="['|', ('company_id', '=', company_id), ('company_id', '=', False)]"
+                                   groups="analytic.group_analytic_accounting"/>
+                            <field name="analytic_tag_ids"
+                                   groups="analytic.group_analytic_tags"
+                                   widget="many2many_tags"/>
+                            <!--<field name="xml_ok" widget="boolean_toggle"/>-->
+                        </group>
+                        <notebook>
+                            <page string="XMLs">
+                                <field name="xml_table_ids">
+                                    <tree 
+                                        editable="bottom" 
+                                        create="false" 
+                                        delete="true" 
+                                        decoration-danger="is_duplicate == True">
+                                      <field name="name" invisible="1"/>
+                                      <field name="xml" filename="name" widget="binary" readonly="1"/>
+                                      <field name="uuid" readonly="1"/>
+                                      <field name="move_id" readonly="1"/>
+                                      <field name="status" readonly="1"/>
+                                      <field name="xml_wiz_id" invisible="1"/>
+                                      <field name="is_duplicate" invisible="1"/>
+                                  </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_xml_invoice" model="ir.actions.act_window">
+            <field name="name">Portal Proveedores</field>
+            <field name="res_model">xml.import.invoice</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu0_xml_import_wizard"
+                  name="Portal Proveedores"
+                  action="action_wizard_xml_invoice"
+                  parent="account.menu_finance_payables"
+                  sequence="1000"/>
+    </data>
+</odoo>

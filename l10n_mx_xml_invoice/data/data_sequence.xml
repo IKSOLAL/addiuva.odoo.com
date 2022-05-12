@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for xml.import.invoice -->
+        <record id="seq_route_order" model="ir.sequence">
+            <field name="name">XML To Invoice</field>
+            <field name="code">xml.import.invoice</field>
+            <field name="prefix">XMLTI</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

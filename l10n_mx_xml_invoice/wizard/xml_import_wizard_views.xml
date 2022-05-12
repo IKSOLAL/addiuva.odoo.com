@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="xml_import_wizard_form" model="ir.ui.view">
+            <field name="name">xml.import.wizard.form</field>
+            <field name="model">xml.import.wizard</field>
+            <field name="arch" type="xml">
+                <form string="XML import">
+                    <group>
+                        <field name="attachment_ids"  widget="many2many_binary" colspan="2" string="Select XML Files" nolabel="1"/>
+                        <field name="xml_import_invoice_id" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button string="Import xmls" name="import_xml" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xml_import_invoice,xml.import.invoice,model_xml_import_invoice,,1,1,1,1
+access_xml_table_invoice,xml.table.invoice,model_xml_table_invoice,,1,1,1,1
+access_xml_import_wizard,xml.import.wizard,model_xml_import_wizard,,1,1,1,1
