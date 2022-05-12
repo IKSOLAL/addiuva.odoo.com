@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ikatech_colombia_account_move_view_form" model="ir.ui.view">
+        <field name="name">answer dian view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_co_edi_jorels.account_move_view_form_inherit_l10n_co_edi_jorels"/>
+        <field name="arch" type="xml">
+            <field name="ei_operation" position="replace"/>
+            <field name="ei_correction_concept_debit_id" position="replace"/>
+
+
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="flag_colombia"/>
+                <field name="ei_operation" attrs="{'invisible' : [('flag_colombia', '=', False)]}"/>
+                <field name="ei_correction_concept_debit_id" attrs="{'invisible' : [('flag_colombia', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//page[@name='info_Dian']" position="attributes">
+                <attribute name="attrs">{'invisible' : [('flag_colombia', '=', False)]}</attribute>
+            </xpath>
+
+            <xpath expr="//page[@id='edi_documents']" position="attributes">
+                <attribute name="attrs">{'invisible' : [('flag_colombia', '=', False)]}</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='status_document']" position="attributes">
+                <attribute name="attrs">{'invisible' : [('flag_colombia', '=', False)]}</attribute>
+            </xpath>
+
+
+        </field>
+    </record>
+
+
+    <record id="ikatech_colombia_client_account_move_view_form" model="ir.ui.view">
+        <field name="name">invoice and information view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="l10n_co_edi_jorels.res_partner_form_view_inherit_l10n_co_edi_jorels"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="flag_colombia"/>
+            </xpath>
+
+            <xpath expr="//page[@name='electronic_invoicing']" position="attributes">
+                <attribute name="attrs">{'invisible' : [('flag_colombia', '=', False)]}</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='postal']" position="attributes">
+                <attribute name="attrs">{'invisible' : [('flag_colombia', '=', False)]}</attribute>
+            </xpath>
+
+        </field>
+
+    </record>
+
+
+    <record id="ikatech_colombia_concept_account_move_reversal_view_form" model="ir.ui.view">
+        <field name="name">Credit note view</field>
+        <field name="model">account.move.reversal</field>
+        <field name="inherit_id"
+               ref="l10n_co_edi_jorels.account_view_account_move_reversal_inherit_l10n_co_edi_jorels"/>
+        <field name="arch" type="xml">
+
+
+            <field name="ei_correction_concept_credit_id" position="replace"/>
+
+            <xpath expr="//field[@name='date_mode']" position="after">
+                <field name="flag_colombia"/>
+                <field name="ei_correction_concept_credit_id" attrs="{'invisible' : [('flag_colombia', '=', False)]}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>
