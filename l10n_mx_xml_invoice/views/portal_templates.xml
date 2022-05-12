@@ -1,0 +1,123 @@
+<odoo>
+    <!--
+    <template
+            id="portal_my_home_inh"
+            name="Portal My Home Inh : invoice entries"
+            inherit_id="portal.portal_my_home"
+            priority="40"
+    >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <form method="POST" t-attf-action="/upload/invoice">
+                <input
+                        type="hidden"
+                        name="csrf_token"
+                        t-att-value="request.csrf_token()"
+                />
+                <button
+                        name="create_new_invoice"
+                        type="action"
+                        class="btn btn-primary"
+                        style="float: right; margin-right: 0px; margin-top:5px;"
+                >Nueva Factura
+                </button>
+            </form>
+        </xpath>
+    </template>
+    -->
+
+    <template id="portal_upload_invoice" name="Subir Factura">
+        <t t-call="portal.portal_layout">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="text-center">Subir un CFDI</h1>
+                    </div>
+                </div>
+            </div>
+            <form
+                    action="/submitted/invoice"
+                    method="POST"
+                    class="form-horizontal mt32"
+                    enctype="multipart/form-data"
+            >
+                <input
+                        type="hidden"
+                        name="csrf_token"
+                        t-att-value="request.csrf_token()"
+                />
+                <div class="form-group">
+                    <label
+                            class="col-md-3 col-sm-4 control-label"
+                            for="attachment"
+                    >Agregar CFDI (XML)
+                    </label>
+                    <div class="col-md-7 col-sm-8">
+                        <div class="btn btn-default btn-file col-md-12">
+                            <input
+                                    class="form-control o_website_form_input"
+                                    name="attachment"
+                                    id="attachment"
+                                    type="file"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                        <button class="btn btn-primary btn-lg">Subir CFDI</button>
+                    </div>
+                </div>
+            </form>
+        </t>
+    </template>
+
+
+    <!-- Purchase -->
+
+    <template id="portal_my_purchase_order_inh"
+              inherit_id="purchase.portal_my_purchase_order"
+              name="Portal: My Purchase Orders">
+        <xpath expr="//div[@id='purchase_order_communication']" position="before">
+            <div id="attachments">
+                <form
+                        action="/submitted/invoice"
+                        method="POST"
+                        class="form-horizontal mt32"
+                        enctype="multipart/form-data"
+                >
+                    <input type="hidden" name="purchase_id" t-att-value="purchase_order.id"/>
+                    <input
+                            type="hidden"
+                            name="csrf_token"
+                            t-att-value="request.csrf_token()"
+                    />
+                    <t t-if="order.invoice_status != 'no' and  order.invoice_status != 'invoiced'">
+                        <div class="form-group">
+                            <label
+                                    class="col-md-3 col-sm-4 control-label"
+                                    for="attachment"
+                            >Agregar CFDI (XML)
+                            </label>
+                            <div class="col-md-7 col-sm-8">
+                                <div class="btn btn-default btn-file col-md-12">
+                                    <input
+                                            class="form-control o_website_form_input"
+                                            name="attachment"
+                                            id="attachment"
+                                            type="file"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                                <button class="btn btn-primary btn-lg">Subir CFDI</button>
+                            </div>
+                        </div>
+                    </t>
+                </form>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

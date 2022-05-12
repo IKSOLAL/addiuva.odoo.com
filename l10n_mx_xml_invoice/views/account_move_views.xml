@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="add_account_tax_fields_xml" model="ir.ui.view">
+        <field name="name">add_account_tax_fields_xml</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id" ref="account.view_tax_form"/>
+        <field name="arch" type="xml">
+            <field name="active" position="after">
+                <field name="is_local_tax" widget="boolean_toggle"/>
+            </field>
+        </field>
+    </record>
+        <record model="ir.ui.view" id="view_move_form_inherit_view">
+            <field name="name">view.move.form.inherit.view</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <group id="other_tab_group" position="inside">
+                    <group string="XML Cargado"
+                        attrs="{'invisible': [('move_type', 'in', ('out_invoice','out_refund'))]}">
+                        <field name="xml_filename" invisible="1"/>
+                        <field name="xml_file" filename="xml_filename" widget="binary"/>
+                    </group>
+                </group>
+            </field>
+        </record>
+    </data>
+</odoo>

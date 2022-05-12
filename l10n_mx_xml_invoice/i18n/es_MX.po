@@ -1,0 +1,670 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_mx_xml_invoice
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-14 19:15+0000\n"
+"PO-Revision-Date: 2021-05-14 19:15+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "A new partner was created:"
+msgstr "Se creó un nuevo proveedor:"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__account_id
+msgid "Account for invoice line"
+msgstr "Cuenta para la línea de factura"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_needaction
+msgid "Action Needed"
+msgstr "Acción necesaria"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoración de excepción de actividad"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__activity_state
+msgid "Activity State"
+msgstr "Estado de actividad"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields.selection,name:l10n_mx_xml_invoice.selection__xml_import_invoice__state__validate
+msgid "All XML are valid"
+msgstr "Todos los XML son válidos"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__analytic_account_id
+msgid "Analytic Account"
+msgstr "Cuenta analítica"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__analytic_tag_ids
+msgid "Analytic Tags"
+msgstr "Etiquetas analíticas"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_attachment_count
+msgid "Attachment Count"
+msgstr "Recuento de adjuntos"
+
+#. module: l10n_mx_xml_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.xml_import_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: l10n_mx_xml_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.xml_invoice_form_view
+msgid "Create invoices"
+msgstr "Crear facturas"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model,name:l10n_mx_xml_invoice.model_xml_import_invoice
+msgid "CreateInvoiceXml: Create purchase invoice from XML file."
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__create_uid
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_wizard__create_uid
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__create_date
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_wizard__create_date
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__display_name
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__display_name
+msgid "Display Name"
+msgstr "Nombre desplegado"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__is_duplicate
+msgid "Duplicate"
+msgstr "Duplicado"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "Duplicate UUID on Import and Registered UUID"
+msgstr "UUID duplicado en la importación y UUID registrado"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "Duplicate UUID on import"
+msgstr "UUID duplicado al importar"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "Error in XML file"
+msgstr "Error en archivo XML"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/wizard/xml_import_wizard.py:0
+#, python-format
+msgid "File %s is not xml type, please remove from list"
+msgstr "El archivo %s no es del tipo xml, elimínelo de la lista."
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_wizard__attachment_ids
+msgid "Files"
+msgstr "Archivos"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Seguidores (Canales)"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Socios)"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model,name:l10n_mx_xml_invoice.model_xml_import_wizard
+msgid "For import wizard"
+msgstr "Para el asistente de importación"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__id
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_wizard__id
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__activity_exception_icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icono para indicar una actividad de excepción."
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__message_needaction
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, los nuevos mensajes requieren su atención."
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__message_has_error
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields.selection,name:l10n_mx_xml_invoice.selection__xml_import_invoice__state__import
+msgid "Import XML"
+msgstr "Importar XML"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "Import xml"
+msgstr "Importar XML"
+
+#. module: l10n_mx_xml_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.xml_import_wizard_form
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.xml_invoice_form_view
+msgid "Import xmls"
+msgstr "Importar xmls"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__move_id
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__invoice_count
+msgid "Invoice Count"
+msgstr "Recuento de facturas"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__invoice_ids
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.xml_invoice_form_view
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields.selection,name:l10n_mx_xml_invoice.selection__xml_import_invoice__state__invoiced
+msgid "Invoices created"
+msgstr "Facturas creadas"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_is_follower
+msgid "Is Follower"
+msgstr "Es seguidor"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__journal_id
+msgid "Journal"
+msgstr "Diarios"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model,name:l10n_mx_xml_invoice.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_move____last_update
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice____last_update
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_wizard____last_update
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice____last_update
+msgid "Last Modified on"
+msgstr "Ultima modificacion realizada"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__write_uid
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_wizard__write_uid
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__write_date
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_wizard__write_date
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__write_date
+msgid "Last Updated on"
+msgstr "Ultima actualización en"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "Lines with error. check"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Adjunto principal"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_has_error
+msgid "Message Delivery error"
+msgstr "Mensaje de entrega de error"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__name
+msgid "Name XML"
+msgstr "Nombre XML"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Fecha límite de actividad siguiente"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de actividad siguiente"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__activity_type_id
+msgid "Next Activity Type"
+msgstr "Siguiente tipo de actividad"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_bank_statement_line__xml_filename
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_move__xml_filename
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_payment__xml_filename
+msgid "Nombre XML"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Numero de acciones"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_has_error_counter
+msgid "Number of errors"
+msgstr "Numero de errores"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Número de mensajes que requieren una acción."
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de entrega"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Número de mensajes no leídos"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "Please create a customer named Test Client."
+msgstr "Cree un cliente llamado Test Client."
+
+#. module: l10n_mx_xml_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.xml_invoice_form_view
+msgid "Process XML's -"
+msgstr "Procesar XML’s -"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "Products not found in the following invoices:"
+msgstr "Productos no encontrados en las siguientes facturas:"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "Proof successfully obtained."
+msgstr "Prueba obtenida con éxito."
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "Registered UUID"
+msgstr "UUID registrado"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario responsable"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de entrega de SMS"
+
+#. module: l10n_mx_xml_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.xml_import_wizard_form
+msgid "Select XML Files"
+msgstr "Seleccionar archivos XML"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__state
+msgid "State"
+msgstr "Estado"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__status
+msgid "Status"
+msgstr "Estado"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado basado en actividades\n"
+"Atrasado: la fecha de vencimiento ya pasó\n"
+"Hoy: la fecha de la actividad es hoy\n"
+"Planificado: Actividades futuras."
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/account_move.py:0
+#, python-format
+msgid "The company RFC (%s) does not match the RFC (%s) of the attached xml"
+msgstr ""
+"El RFC de la empresa (%s) no coincide con el RFC (%s) del xml adjunto."
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid ""
+"The corresponding IEPS retention was not found:\n"
+" Type: Purchases\n"
+" Amount/Percentage: %s"
+msgstr ""
+"No se encontró la retención IEPS correspondiente:\n"
+"  Tipo: compras\n"
+"  Cantidad / Porcentaje: %s"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid ""
+"The corresponding IEPS tax was not found:\n"
+" Type: Purchase\n"
+" Amount/Percentage: %s"
+msgstr ""
+"No se encontró el impuesto IEPS correspondiente:\n"
+"  Tipo: Compra\n"
+"  Cantidad / Porcentaje: %s"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid ""
+"The corresponding ISR retention was not found:\n"
+" Type: Purchase\n"
+" Amount/Percentage: %s"
+msgstr ""
+"No se encontró la retención ISR correspondiente:\n"
+"  Tipo: Compra\n"
+"  Cantidad / Porcentaje: %s"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid ""
+"The corresponding ISR tax was not found:\n"
+" Type: Purchase\n"
+" Amount/Percentage: %s"
+msgstr ""
+"No se encontró el impuesto ISR correspondiente:\n"
+"  Tipo: Compra\n"
+"  Cantidad / Porcentaje: %s"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid ""
+"The corresponding IVA retention was not found:\n"
+" Type: Purchases\n"
+" Amount/Percentage: %s"
+msgstr ""
+"No se encontró la retención de IVA correspondiente:\n"
+"  Tipo: compras\n"
+"  Cantidad / Porcentaje: %s"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid ""
+"The corresponding IVA tax was not found:\n"
+" Type: Purchase\n"
+" Amount/Percentage: %s"
+msgstr ""
+"No se encontró el impuesto de IVA correspondiente:\n"
+"  Tipo: Compra\n"
+"  Cantidad / Porcentaje: %s"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/account_move.py:0
+#, python-format
+msgid ""
+"The invoice currency (%s) does not match the currency (%s) the attached xml"
+msgstr ""
+"La moneda de la factura (%s) no coincide con la moneda (%s) del xml adjunto"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/account_move.py:0
+#, python-format
+msgid ""
+"The invoice date (%s) does not match the date of the XML attachment (%s)"
+msgstr ""
+"La fecha de la factura (%s) no coincide con la fecha del archivo adjunto XML"
+" (%s)"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/account_move.py:0
+#, python-format
+msgid ""
+"The provider's RFC (%s) does not match the RFC (%s) of the attached xml"
+msgstr "El RFC del proveedor (%s) no coincide con el RFC (%s) del xml adjunto"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/account_move.py:0
+#, python-format
+msgid ""
+"The sub-total amount (%s) of the invoice does not match the sub-total amount"
+" (%s) of the attached xml"
+msgstr ""
+"El importe del subtotal (%s) de la factura no coincide con el importe del "
+"subtotal (%s) del xml adjunto"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/account_move.py:0
+#, python-format
+msgid ""
+"The total amount (%s) of the invoice does not match the total amount (%s) of"
+" the attached xml"
+msgstr ""
+"El importe total (%s) de la factura no coincide con el importe total (%s) "
+"del xml adjunto"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid ""
+"There is no currency named %s: Please check your settings or contact an "
+"administrator."
+msgstr ""
+"No existe una moneda denominada %s, compruebe su configuración o póngase en "
+"contacto con un administrador."
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "This XML does not belong to this company."
+msgstr "Este XML no pertenece a esta empresa."
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de actividad de excepción registrada."
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__uuid
+msgid "UUID"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_unread
+msgid "Unread Messages"
+msgstr "Mensajes no leídos"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Contador de mensajes no leídos"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,help:l10n_mx_xml_invoice.field_xml_import_invoice__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación del sitio web"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields.selection,name:l10n_mx_xml_invoice.selection__xml_import_invoice__state__error
+msgid "With errors"
+msgstr "Con errores"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_bank_statement_line__xml_file
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_move__xml_file
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_payment__xml_file
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__xml
+msgid "XML"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.view_move_form_inherit_view
+msgid "XML Cargado"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_bank_statement_line__xml_import_id
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_move__xml_import_id
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_payment__xml_import_id
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.xml_import_wizard_form
+msgid "XML import"
+msgstr "Importación XML"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.actions.act_window,name:l10n_mx_xml_invoice.action_wizard_xml_invoice
+#: model:ir.ui.menu,name:l10n_mx_xml_invoice.menu0_xml_import_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.xml_invoice_form_view
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.xml_invoice_tree_view
+msgid "XML-Invoice"
+msgstr "Factura XML"
+
+#. module: l10n_mx_xml_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_mx_xml_invoice.xml_invoice_form_view
+msgid "XMLs"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_invoice__xml_table_ids
+msgid "Xml Table"
+msgstr "Tabla Xml"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_table_invoice__xml_wiz_id
+msgid "Xml Wiz"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_xml_import_wizard__xml_import_invoice_id
+msgid "Xml invoice"
+msgstr "Factura xml"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "You cannot delete this record as it has registered lines"
+msgstr "No puede eliminar este registro ya que tiene líneas registradas"
+
+#. module: l10n_mx_xml_invoice
+#: code:addons/l10n_mx_xml_invoice/models/xm_import_invoice.py:0
+#, python-format
+msgid "You cannot delete this record as you have an invoice created"
+msgstr "No puede eliminar este registro ya que tiene una factura creada"
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_bank_statement_line__xml_import_invoice_id
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_move__xml_import_invoice_id
+#: model:ir.model.fields,field_description:l10n_mx_xml_invoice.field_account_payment__xml_import_invoice_id
+msgid "line import"
+msgstr ""
+
+#. module: l10n_mx_xml_invoice
+#: model:ir.model,name:l10n_mx_xml_invoice.model_xml_table_invoice
+msgid "xml.table.invoice"
+msgstr ""
