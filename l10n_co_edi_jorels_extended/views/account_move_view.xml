@@ -10,7 +10,7 @@
 
 
             <xpath expr="//field[@name='ref']" position="after">
-                <field name="flag_colombia"/>
+                <field name="flag_colombia" invisible="1"/>
                 <field name="ei_operation" attrs="{'invisible' : [('flag_colombia', '=', False)]}"/>
                 <field name="ei_correction_concept_debit_id" attrs="{'invisible' : [('flag_colombia', '=', False)]}"/>
             </xpath>
@@ -38,7 +38,7 @@
         <field name="arch" type="xml">
 
             <xpath expr="//field[@name='vat']" position="after">
-                <field name="flag_colombia"/>
+                <field name="flag_colombia" invisible="1"/>
             </xpath>
 
             <xpath expr="//page[@name='electronic_invoicing']" position="attributes">
@@ -65,7 +65,7 @@
             <field name="ei_correction_concept_credit_id" position="replace"/>
 
             <xpath expr="//field[@name='date_mode']" position="after">
-                <field name="flag_colombia"/>
+                <field name="flag_colombia" invisible="1"/>
                 <field name="ei_correction_concept_credit_id" attrs="{'invisible' : [('flag_colombia', '=', False)]}"/>
             </xpath>
 
