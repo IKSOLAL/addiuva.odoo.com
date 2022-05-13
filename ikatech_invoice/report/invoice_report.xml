@@ -97,17 +97,23 @@
                                 <div style="font-size:11px">
                                     <span t-field="o.company_id.street_name"/>
                                     <![CDATA[&nbsp;]]>
+                                    <div t-if="o.company_id.street_number">
                                     <span>No Ext.</span>
                                     <![CDATA[&nbsp;]]>
                                     <span t-field="o.company_id.street_number"/>
+                                    </div>
                                     <![CDATA[&nbsp;]]>
+                                    <div t-if="o.company_id.street_number2">
                                     <span>No Int.</span>
                                     <![CDATA[&nbsp;]]>
                                     <span t-field="o.company_id.street_number2"/>
+                                    </div>
                                     <![CDATA[&nbsp;]]>
+                                    <div t-if="o.company_id.l10n_mx_edi_colony">
                                     <span>Colonia</span>
                                     <![CDATA[&nbsp;]]>
                                     <span t-field="o.company_id.l10n_mx_edi_colony"/>
+                                    </div>
                                     <![CDATA[&nbsp;]]>
                                     <span>CP.</span>
                                     <![CDATA[&nbsp;]]>
@@ -136,7 +142,7 @@
                                     <t t-if="o.company_id.country_id.name=='Colombia'">
                                         <strong><span>NIT</span></strong>
                                     </t>
-                                   
+
                                    <span t-field="o.company_id.vat"/><br/>
                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='México'"><strong><span>FACTURA ELECTRONICA</span></strong><br/></span>
                                     <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='Colombia'"><strong><span>FACTURA ELECTRONICA DE VENTA</span></strong><br/></span>
@@ -194,13 +200,13 @@
                                 </tr>
                                 <tr>
                                     <td><strong><span>CIUDAD</span></strong></td>
-                                    <td>:<![CDATA[&nbsp;]]><span t-field="o.partner_id.city_id.name"/></td>
+                                    <td>:<![CDATA[&nbsp;]]><span t-field="o.partner_id.city"/></td>
                                 </tr>
                                 <tr>
                                     <td><strong><span>VENCIMIENTO</span></strong></td>
                                     <td>:<![CDATA[&nbsp;]]><span t-field="o.invoice_date_due"/></td>
                                 </tr>
-                                
+
                                 <tr t-if="o.company_id.country_id.name=='México'">
                                     <td><strong><span>FORMA DE PAGO</span><br/></strong></td>
                                     <td>:<![CDATA[&nbsp;]]><span t-esc="'%s - %s' % (o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name)"/></td>
@@ -357,12 +363,12 @@
                 </div>
             </t>
         </template>
-    
+
     <!-- IVAN PORRAS
     <template id="invoice_report_amount_in_words_inherit" inherit_id="account.report_invoice_document">
             <xpath expr="//div[@class='clearfix']" position="after">
                  <div style="padding-top:20px; padding-bottom:20px;">
-                    <p><span><strong>Total Amount in words: </strong></span><span t-field="o.amount_words"/></p>                    
+                    <p><span><strong>Total Amount in words: </strong></span><span t-field="o.amount_words"/></p>
                 </div>
             </xpath>
         </template>
@@ -379,7 +385,7 @@
         </xpath>
     </template>
 
-  
+
 
     <template id="report_invoice_document_mx" inherit_id="ikatech_invoice.report_invoice_document_ikatech">
         <xpath expr="//div/div[@name='info_row']" position="after">
@@ -400,7 +406,7 @@
         </xpath>
 
         <xpath expr="//p[@name='payment_term']" position="after">
-             <div id="informations" class="row mt32 mb32" style="font-size:12px">                     
+             <div id="informations" class="row mt32 mb32" style="font-size:12px">
                      <!-- Mexico -->
                     <t t-if="is_cfdi_signed">
                         <t t-set="original_o_grid_layout" t-value="o_grid_layout"/>
@@ -427,7 +433,7 @@
 
                 </t>
             </div>
-              
+
         </xpath>
 
         <!-- Add new column on invoice lines: Product Code -->
@@ -444,7 +450,7 @@
         <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]//td[1]" position="before">
             <td t-if="is_cfdi_signed"><span t-field="line.product_id.unspsc_code_id.code"/></td>
         </xpath>
-        <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]//td[1]" position="before">       
+        <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]//td[1]" position="before">
              <t t-set="num_item" t-value="num_item + 1"/>
             <td t-if="o.ei_is_valid">
              <span t-esc="num_item" class="text-center"/>
@@ -466,12 +472,13 @@
             <t t-if="is_cfdi_signed">
                 <p class="text-right">
                     <span t-esc="o._l10n_mx_edi_cfdi_amount_to_text()" style="font-size:14px"/>
-                </p>   
+                </p>
             </t>
             <!-- Colombia -->
             <t t-if="o.ei_is_valid">
                 <p class="text-right">
-                     <span t-field="o.amount_words"/>
+
+                     <span t-esc="o._l10n_co_amount_to_text()" style="font-size:14px"/>
                 </p>
             </t>
         </xpath>
@@ -522,7 +529,7 @@
             <t t-if="is_cfdi_signed">
                 <div class="row" id="complement">
                        <!-- COLOMBIA -->
-                
+
                 <!-- MEXICO-->
                     <div t-if="cfdi_vals.get('sello')" class="barcode col-3">
                         <img alt="Barcode" t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=180&amp;height=180' % quote_plus(                             'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?' + keep_query(                                 re=o.l10n_mx_edi_cfdi_supplier_rfc, rr=o.l10n_mx_edi_cfdi_customer_rfc,                                 tt='%.*f' % (o.currency_id.decimal_places, o.l10n_mx_edi_cfdi_amount), id=o.l10n_mx_edi_cfdi_uuid)                                 + '&amp;fe=%s' % quote_plus(                                     cfdi_vals['sello'][-8:], 'utf-8', 'strict', '=/').replace('%2B', '+'))"/>
