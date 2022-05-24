@@ -1,0 +1,65 @@
+<odoo>
+    <!-- View form wizard -->
+    <record id="view_account_pending_report" model="ir.ui.view">
+        <field name="name">Account Pending Report</field>
+        <field name="model">account.pending.report</field>
+        <field name="arch" type="xml">
+            <form string="Choose your details">
+                    <group col="2">
+                        <group col="1">
+                            <field name="nature"  widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                        <!-- <group col="2">
+                            <field name="dt_initial"/>
+                            <field name="dt_final"/>
+                        </group> -->
+                    </group>
+                <group>
+                    <notebook>
+                        <page string="Clientes">
+                            <field name="accounts_g1"/>
+                        </page>
+                        <page string="Deudores">
+                            <field name="accounts_g2"/>
+                        </page>
+                        <page string="Empresas Relacionadas">
+                            <field name="accounts_g3"/>
+                        </page>
+                        <page string="Empresas Relacionadas LP">
+                            <field name="accounts_g4"/>
+                        </page>
+                    </notebook>
+                </group>
+                <footer>
+                    <button name="print_XLSX" string="Export" type="object" class="oe_highlight" />
+                        or                
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--  -->
+
+    <!-- Action open wizard  -->
+    <record id="action_xlsx_report" model="ir.actions.act_window">
+        <field name="name">Action Pending Report</field>
+        <field name="res_model">account.pending.report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- report record to be able to generate this XLS Report -->
+    <report id="ikatech_report_xlsx"
+                model="account.pending.report"
+                string="Cuentas Pendientes"
+                report_type="xlsx"
+                name="account_pending_report.accpend_report_xlsx"
+                file="Cuentas Pendientes"
+                menu="False"/>
+
+    <!-- Menu action -->
+    <menuitem id="menu_account_pending_report" name="Cuentas Pendientes"
+               parent="account.menu_finance_entries" action="action_xlsx_report"/>
+
+</odoo>
