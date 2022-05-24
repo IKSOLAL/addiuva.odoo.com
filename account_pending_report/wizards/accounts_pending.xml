@@ -14,7 +14,7 @@
                             <field name="dt_final"/>
                         </group> -->
                     </group>
-                <group>
+                <!-- <group>
                     <notebook>
                         <page string="Clientes">
                             <field name="accounts_g1"/>
@@ -29,10 +29,10 @@
                             <field name="accounts_g4"/>
                         </page>
                     </notebook>
-                </group>
+                </group> -->
                 <footer>
                     <button name="print_XLSX" string="Export" type="object" class="oe_highlight" />
-                        or                
+                        or
                     <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
             </form>
