@@ -14,24 +14,8 @@
                             <field name="dt_final"/>
                         </group> -->
                     </group>
-                <!-- <group>
-                    <notebook>
-                        <page string="Clientes">
-                            <field name="accounts_g1"/>
-                        </page>
-                        <page string="Deudores">
-                            <field name="accounts_g2"/>
-                        </page>
-                        <page string="Empresas Relacionadas">
-                            <field name="accounts_g3"/>
-                        </page>
-                        <page string="Empresas Relacionadas LP">
-                            <field name="accounts_g4"/>
-                        </page>
-                    </notebook>
-                </group> -->
                 <footer>
-                    <button name="print_XLSX" string="Export" type="object" class="oe_highlight" />
+                    <button name="print_XLSX" string="Imprimir" type="object" class="oe_highlight" />
                         or
                     <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
@@ -42,7 +26,7 @@
 
     <!-- Action open wizard  -->
     <record id="action_xlsx_report" model="ir.actions.act_window">
-        <field name="name">Action Pending Report</field>
+        <field name="name">Saldos de Cuentas Antiguas</field>
         <field name="res_model">account.pending.report</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">form</field>
