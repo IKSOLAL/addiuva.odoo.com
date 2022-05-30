@@ -8,6 +8,7 @@
                     <group col="2">
                         <group col="1">
                             <field name="nature"  widget="radio" options="{'horizontal': true}"/>
+                            <field name="detail"/>
                         </group>
                         <!-- <group col="2">
                             <field name="dt_initial"/>
@@ -16,7 +17,7 @@
                     </group>
                 <footer>
                     <button name="print_XLSX" string="Imprimir" type="object" class="oe_highlight" />
-                        or
+                        or                
                     <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
             </form>
