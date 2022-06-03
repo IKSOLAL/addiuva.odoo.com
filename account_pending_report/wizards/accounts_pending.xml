@@ -8,7 +8,7 @@
                     <group col="2">
                         <group col="1">
                             <field name="nature"  widget="radio" options="{'horizontal': true}"/>
-                            <field name="detail"/>
+                            <field name="foreign"/>
                         </group>
                         <!-- <group col="2">
                             <field name="dt_initial"/>
@@ -16,7 +16,7 @@
                         </group> -->
                     </group>
                 <footer>
-                    <button name="print_XLSX" string="Imprimir" type="object" class="oe_highlight" />
+                    <button name="print_XLSX" string="Print" type="object" class="oe_highlight" />
                         or                
                     <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
@@ -27,7 +27,7 @@
 
     <!-- Action open wizard  -->
     <record id="action_xlsx_report" model="ir.actions.act_window">
-        <field name="name">Saldos de Cuentas Antiguas</field>
+        <field name="name">Ageing Account Balances</field>
         <field name="res_model">account.pending.report</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">form</field>
@@ -37,14 +37,14 @@
     <!-- report record to be able to generate this XLS Report -->
     <report id="ikatech_report_xlsx"
                 model="account.pending.report"
-                string="Cuentas Pendientes"
+                string="Accounts Aging"
                 report_type="xlsx"
                 name="account_pending_report.accpend_report_xlsx"
-                file="Cuentas Pendientes"
+                file="Accounts Aging"
                 menu="False"/>
 
     <!-- Menu action -->
-    <menuitem id="menu_account_pending_report" name="Cuentas Pendientes"
+    <menuitem id="menu_account_pending_report" name="Aging Accounts"
                parent="account.menu_finance_entries" action="action_xlsx_report"/>
 
 </odoo>
