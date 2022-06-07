@@ -14,7 +14,7 @@ from odoo.tools.image import image_data_uri
 
 class WizardClassName(models.TransientModel):
     _name = 'account.pending.report'
-
+    
     nature = fields.Selection([
         ('payable',_("Payable")),
         ('receivable',_("Receivable"))
@@ -23,7 +23,7 @@ class WizardClassName(models.TransientModel):
 
     foreign = fields.Boolean(default=False, string=_("American currency"))
     detail = fields.Boolean(default=True, string=_("Detailed"))
-
+    
     dt_initial = fields.Date(string=_("Initial Date"))
     dt_final = fields.Date(string=_("Final Date"))
 
@@ -66,32 +66,33 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         stl_totv = workbook.add_format({'font_size': 10, 'bg_color':'#dbdbdb','bold':True, 'align':'right'})
         stl_totv.set_num_format('$#,##0.00')
 
-
+        
 
         title = _('Aging Account Receivable Report') if records['nature'] == 'receivable' else  _('Aging Account Payable Report')
         # Cuentas Por Cobrar Pendientes'
         sheet = workbook.add_worksheet(title)
         # inser image
-        # if self.env.user.company_id.logo:
-        #     imgdata = base64.b64decode(self.env.user.company_id.logo)
-        #     image = io.BytesIO(imgdata)
-        #     sheet.insert_image('B1', 'myimage.png', {'image_data': image, 'x_scale': 0.1, 'y_scale': 0.1})
+        if self.env.user.company_id.logo:
+            company = self.env['res.company']._company_default_get('report.account_pending_report.accpend_report_xlsx')
+            imgdata = base64.b64decode(company.logo)
+            image = io.BytesIO(imgdata)
+            sheet.insert_image('B1', 'myimage.png', {'image_data': image, 'x_scale': 0.25, 'y_scale': 0.25})
         #? End image
         sheet.hide_gridlines(2)
         current_datetime = fields.Datetime.context_timestamp(self, fields.Datetime.now()) # Get current day to get numbers of months
         current_date = fields.Date.context_today(self)
         number_months = current_datetime.month
-        sheet.set_row(2, 25) #set height in row number 3
+        sheet.set_row(2, 25) #set height in row number 3 
         sheet.set_column('B:C',25)
-        sheet.merge_range(2, 2, 1, int(number_months + 14), title, header)
+        sheet.merge_range(2, 2, 1, int(number_months + 14), title, header) 
         concept = _("CLIENTS")  if records['nature'] == 'receivable' else _("PROVIDERS")
         sheet.merge_range(6,1, 6, 2, concept, subtitles) #(first_row, first_col, last_row, last_col, data, cell_format])
-
+       
         row_initial, column_initial = 6, 3
         row_position = row_initial
         column_position = column_initial
         current_year = current_datetime.year
-
+        
         # we set month headers
         for month in range(number_months):
             year_cmonth = self.current_year(month)
@@ -114,20 +115,20 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         sheet.write(row_position, col_ageing+4, _("61-90 Days"), subheaders)
         # another style
          #xl_rowcol_to_cell(row, col)
-        sheet.merge_range(row_position-1, col_ageing+5, row_position, col_ageing+5, _('Over 90 days'), subheaders)
-        sheet.merge_range(row_position-1, col_ageing+6, row_position, col_ageing+6, _('2nd Semester'), subheaders)
+        sheet.merge_range(row_position-1, col_ageing+5, row_position, col_ageing+5, _('Over 90 days'), subheaders) 
+        sheet.merge_range(row_position-1, col_ageing+6, row_position, col_ageing+6, _('2nd Semester'), subheaders) 
         sheet.set_column(col_ageing+6,col_ageing+7, 30) #Ajust width for columns semester
-        sheet.merge_range(row_position-1, col_ageing+7, row_position, col_ageing+7, _('1st Semester'), subheaders)
+        sheet.merge_range(row_position-1, col_ageing+7, row_position, col_ageing+7, _('1st Semester'), subheaders) 
         date_year = current_date - relativedelta(months=12)
-        sheet.merge_range(row_position-2, col_ageing+6, row_position -2, col_ageing+7, date_year.year, subyears)
+        sheet.merge_range(row_position-2, col_ageing+6, row_position -2, col_ageing+7, date_year.year, subyears) 
         sheet.merge_range(row_position-1, col_ageing+8, row_position, col_ageing+8, _('2nd Year'), subheaders) #Segundo ano
         date_year = current_date - relativedelta(months=24)
-        sheet.write(row_position-2, col_ageing+8, date_year.year, sublastyears)
+        sheet.write(row_position-2, col_ageing+8, date_year.year, sublastyears) 
         # lastyears
         date_year = current_date - relativedelta(months=36)
-        sheet.merge_range(row_position-1, col_ageing+9, row_position, col_ageing+9, _('Older than') + " {}".format(date_year.year), subheaders)
-        sheet.write(row_position-2, col_ageing+9, date_year.year, lastyears)
-        sheet.merge_range(row_position-1, col_ageing+10, row_position, col_ageing+10, _('Total'), subheaders)
+        sheet.merge_range(row_position-1, col_ageing+9, row_position, col_ageing+9, _('Older than') + " {}".format(date_year.year), subheaders) 
+        sheet.write(row_position-2, col_ageing+9, date_year.year, lastyears) 
+        sheet.merge_range(row_position-1, col_ageing+10, row_position, col_ageing+10, _('Total'), subheaders) 
         sheet.set_column(col_ageing+1,col_ageing+10, 20)
         # sheet.set_column(col_ageing+10,col_ageing+10, 2)
         # * End
@@ -155,27 +156,27 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         else:
             accounts = tuple(self.env['account.account'].search([('code','=ilike','20000%')]).ids)
         row_position = self.calculate_data(accounts, row_position, concept, args, records['foreign'])
-
+        
         sheet.merge_range(row_position,1, row_position+1, int(number_months + 14), "")
 
         #?Group 2
         row_position += 2 #row debtors
         # merge_range(first_row, first_col, last_row, last_col, data, cell_format])
         concept = _("MISCELLANEOUS DEBTORS")  if records['nature'] == 'receivable' else _("MISCELLANEOUS CREDITORS")
-        sheet.merge_range(row_position,1, row_position, 2, concept, subtitles)
+        sheet.merge_range(row_position,1, row_position, 2, concept, subtitles) 
         row_position += 1 #row jump
         if records['nature'] == 'receivable':
             accounts = tuple(self.env['account.account'].search( ['|', ('code','=ilike','115%'), ('code','=ilike','120%'), '!', ('code', 'in', ('12040001','12040002'))]).ids)
         else:
             accounts = tuple(self.env['account.account'].search([('code','=ilike','20010%')]).ids)
         row_position = self.calculate_data(accounts, row_position, concept, args, records['foreign'])
-
+        
         sheet.merge_range(row_position,1, row_position+1, int(number_months + 14), "")
 
         #?Group 3
         row_position += 2 #row debtors
         concept = _("ACCOUNT RECEIVABLE INTERCOMPANY")  if records['nature'] == 'receivable' else _("ACCOUNT PAYABLE INTERCOMPANY")
-        sheet.merge_range(row_position,1, row_position, 2, concept, subtitles)
+        sheet.merge_range(row_position,1, row_position, 2, concept, subtitles) 
         row_position += 1 #row jump
         if records['nature'] == 'receivable':
             accounts = tuple(self.env['account.account'].search([('code','=ilike','12510%')]).ids)
@@ -188,7 +189,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         #?Group 4
         row_position += 2 #row debtors
         concept = _("ACCOUNT RECEIVABLE LT INTERCOMPANY")  if records['nature'] == 'receivable' else _("ACCOUNT PAYABLE LT INTERCOMPANY")
-        sheet.merge_range(row_position,1, row_position, 2, concept, subtitles)
+        sheet.merge_range(row_position,1, row_position, 2, concept, subtitles) 
         row_position += 1 #row jump
         if records['nature'] == 'receivable':
             accounts = tuple(self.env['account.account'].search([('code','=ilike','17010%')]).ids)
@@ -196,7 +197,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
             accounts = tuple(self.env['account.account'].search([('code','=ilike','27010%')]).ids)
         row_position = self.calculate_data(accounts, row_position, concept, args, records['foreign'])
 
-
+        
         # Sum total row
         columns_months = column_position
         sheet.merge_range("B{0}:C{0}".format(row_position+4), "TOTAL", subtitles_gral) #- establece nombre
@@ -217,16 +218,16 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         else:
             rate = 1
         start_position = row_position
-        self.env.cr.execute("""SELECT aml.partner_id AS id, rp.name, SUM(aml.debit - aml.credit) AS balance FROM account_move_line aml
-        INNER JOIN res_partner rp ON (aml.partner_id = rp.id)
+        self.env.cr.execute("""SELECT aml.partner_id AS id, rp.name, SUM(aml.debit - aml.credit) AS balance FROM account_move_line aml 
+        INNER JOIN res_partner rp ON (aml.partner_id = rp.id) 
         WHERE aml.account_id in {} AND aml.parent_state = 'posted' GROUP BY aml.partner_id, rp.name ORDER BY rp.name""".format(accounts))
-        dic_partners = self.env.cr.dictfetchall()
+        dic_partners = self.env.cr.dictfetchall() 
         for partner in dic_partners:
             if partner['balance'] == 0: continue
             columns_months = args['column_position']
             args['sheet'].merge_range("B{0}:C{0}".format(row_position+1),  partner['name'], args['text_partners']) #- establece nombre
             for month in range(args['number_months']):
-                sql_balance = """SELECT  SUM(debit - credit) AS balance FROM account_move_line WHERE partner_id = {} AND account_id in {}
+                sql_balance = """SELECT  SUM(debit - credit) AS balance FROM account_move_line WHERE partner_id = {} AND account_id in {} 
                     AND EXTRACT(YEAR FROM date) <= {} AND EXTRACT(MONTH FROM date) <= {} AND parent_state = 'posted'""".format(partner['id'], accounts, args['current_datetime'].year, month + 1)
                 self.env.cr.execute(sql_balance)
                 balance = self.env.cr.dictfetchall()
@@ -237,9 +238,9 @@ class ReportAccountPendingXlsx(models.AbstractModel):
             for account in accounts: #- itera por cuentas
                 exist_move, columns_months = True, args['column_position']
                 for month in range(args['number_months']): #check month by month
-                    sql_balance = """SELECT aml.account_id, CONCAT(aa.code, ' ', aa.name) AS name_account,  SUM(aml.debit - aml.credit) AS balance FROM account_move_line aml
+                    sql_balance = """SELECT aml.account_id, CONCAT(aa.code, ' ', aa.name) AS name_account,  SUM(aml.debit - aml.credit) AS balance FROM account_move_line aml 
                     INNER JOIN account_account aa ON (aml.account_id = aa.id)
-                    WHERE aml.partner_id = {} AND aml.account_id = {}
+                    WHERE aml.partner_id = {} AND aml.account_id = {} 
                     AND EXTRACT(YEAR FROM aml.date) <= {} AND EXTRACT(MONTH FROM aml.date) <= {} AND aml.parent_state = 'posted'  GROUP BY aml.account_id, name_account """.format(partner['id'], account, args['current_datetime'].year, month + 1)
                     self.env.cr.execute(sql_balance)
                     balance = self.env.cr.dictfetchall()
@@ -247,12 +248,12 @@ class ReportAccountPendingXlsx(models.AbstractModel):
                         if balance[0]['balance'] != 0 and balance[0]['balance'] != None: # only print movements with balance
                             if exist_move: # Print partner for first time, then, change flag
                                 row_position += 1 #row jump
-                                args['sheet'].merge_range("B{0}:C{0}".format(row_position + 1),  balance[0]['name_account'], args['text_accounts'])
+                                args['sheet'].merge_range("B{0}:C{0}".format(row_position + 1),  balance[0]['name_account'], args['text_accounts']) 
                                 exist_move = False
                             bal = balance[0]['balance']/rate if balance[0]['balance'] else ""
                             args['sheet'].write(row_position , columns_months, bal, args['text_number'])
                     columns_months += 1 # jump to another month
-                if not exist_move:
+                if not exist_move: 
                     #-start calculating by periods
                     self.calculate_ageing(partner, row_position, args['col_ageing'], args['sheet'], args['text_number'], account, "accounts", args['sum_group'], args['stl_totv'],'accounts',rate)
                     #-end calculating by periods
@@ -276,7 +277,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
 
 
     def calculate_ageing(self, partner, row, col, sheet, text_number, account, type_sum, sum_group, stl_totv, type_opt, rate):
-        query = """ SELECT SUM(amount_residual) AS amount_residual FROM account_move_line WHERE
+        query = """ SELECT SUM(amount_residual) AS amount_residual FROM account_move_line WHERE 
                 parent_state = 'posted' AND partner_id = {} AND full_reconcile_id IS NULL """.format(partner['id'])
         if type_sum == "accounts":
             query = query +  " AND  account_id = {}  ".format(account)
@@ -329,17 +330,17 @@ class ReportAccountPendingXlsx(models.AbstractModel):
             date_group = current_date - relativedelta(year=3)
             query_dates = "AND EXTRACT(YEAR FROM DATE) <= {}".format(date_group.year)
         self.env.cr.execute(query + query_dates)
-        ar = self.env.cr.dictfetchall()[0]
+        ar = self.env.cr.dictfetchall()[0] 
         style = text_number if type_sum == "accounts" else sum_group
         bal = ar['amount_residual']/rate if ar['amount_residual'] else ""
         sheet.write(row, col, bal, style)
-
-
+        
+    
     def current_year(self, num_month):
         current_date = fields.Date.context_today(self)
         date = current_date - relativedelta(months=num_month)
         return date.year
-
+    
     def convert_monht(self, number):
         months = [
             _('January'),
