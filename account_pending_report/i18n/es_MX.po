@@ -206,8 +206,8 @@ msgstr "Junio"
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
-msgid "Last year"
-msgstr "Año Anterior "
+msgid "2nd Year"
+msgstr "2do Año"
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0

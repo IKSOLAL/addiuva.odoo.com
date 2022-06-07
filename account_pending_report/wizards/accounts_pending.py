@@ -9,6 +9,7 @@ from odoo.tools import date_utils
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from xlsxwriter.utility import xl_rowcol_to_cell
+from odoo.tools.image import image_data_uri
 
 
 class WizardClassName(models.TransientModel):
@@ -51,6 +52,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         lastyears = workbook.add_format({'font_size': 11, 'font_color':'#303030', 'bg_color':'#c4bd97','bold':True, 'align':'center', 'valign':'vcenter'})
         subtitles_h3 = workbook.add_format({'font_size': 12, 'bg_color':'#FFCC6D','bold':True, 'align':'right'})
         subtitles = workbook.add_format({'font_size': 10, 'bg_color':'#FFCC6D','bold':True, 'align':'center'})
+        subtitles_gral = workbook.add_format({'font_size': 10, 'bg_color':'#c4bd97','bold':True, 'align':'center'})
         text_number = workbook.add_format({'font_size': 8, 'align':'right', 'font_color':'#6e6e6e'})
         text_number.set_num_format('$#,##0.00')
         sum_group = workbook.add_format({'font_size': 10,  'align':'right', 'bg_color':'#dbdbdb', 'bold':True})
@@ -58,19 +60,29 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         text_partners = workbook.add_format({'font_size': 10, 'bold':True, 'align':'right', 'bg_color':'#dbdbdb'})
         text_accounts = workbook.add_format({'font_size': 8, 'align':'right', 'font_color':'#6e6e6e'})
         style_sumtot = workbook.add_format({'font_size': 10, 'bg_color':'#FFCC6D','bold':True, 'align':'right'})
+        style_sumtot_gral = workbook.add_format({'font_size': 10, 'bg_color':'#c4bd97','bold':True, 'align':'right'})
         style_sumtot.set_num_format('$#,##0.00')
+        style_sumtot_gral.set_num_format('$#,##0.00')
         stl_totv = workbook.add_format({'font_size': 10, 'bg_color':'#dbdbdb','bold':True, 'align':'right'})
         stl_totv.set_num_format('$#,##0.00')
+
+        
 
         title = _('Aging Account Receivable Report') if records['nature'] == 'receivable' else  _('Aging Account Payable Report')
         # Cuentas Por Cobrar Pendientes'
         sheet = workbook.add_worksheet(title)
+        # inser image
+        if self.env.user.company_id.logo:
+            imgdata = base64.b64decode(self.env.user.company_id.logo)
+            image = io.BytesIO(imgdata)
+            sheet.insert_image('B1', 'myimage.png', {'image_data': image, 'x_scale': 0.5, 'y_scale': 0.5})
+        #? End image
         sheet.hide_gridlines(2)
         current_datetime = fields.Datetime.context_timestamp(self, fields.Datetime.now()) # Get current day to get numbers of months
         current_date = fields.Date.context_today(self)
         number_months = current_datetime.month
         sheet.set_row(2, 25) #set height in row number 3 
-        sheet.set_column('B:C',30)
+        sheet.set_column('B:C',25)
         sheet.merge_range(2, 2, 1, int(number_months + 14), title, header) 
         concept = _("CLIENTS")  if records['nature'] == 'receivable' else _("PROVIDERS")
         sheet.merge_range(6,1, 6, 2, concept, subtitles) #(first_row, first_col, last_row, last_col, data, cell_format])
@@ -108,7 +120,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         sheet.merge_range(row_position-1, col_ageing+7, row_position, col_ageing+7, _('1st Semester'), subheaders) 
         date_year = current_date - relativedelta(months=12)
         sheet.merge_range(row_position-2, col_ageing+6, row_position -2, col_ageing+7, date_year.year, subyears) 
-        sheet.merge_range(row_position-1, col_ageing+8, row_position, col_ageing+8, _('Last year'), subheaders) 
+        sheet.merge_range(row_position-1, col_ageing+8, row_position, col_ageing+8, _('2nd Year'), subheaders) #Segundo ano
         date_year = current_date - relativedelta(months=24)
         sheet.write(row_position-2, col_ageing+8, date_year.year, sublastyears) 
         # lastyears
@@ -184,6 +196,19 @@ class ReportAccountPendingXlsx(models.AbstractModel):
             accounts = tuple(self.env['account.account'].search([('code','=ilike','27010%')]).ids)
         row_position = self.calculate_data(accounts, row_position, concept, args, records['foreign'])
 
+        
+        # Sum total row
+        columns_months = column_position
+        sheet.merge_range("B{0}:C{0}".format(row_position+4), "TOTAL", subtitles_gral) #- establece nombre
+        for month in range(number_months + 11):
+            if month == int(args['number_months']): #empty middle column
+                columns_months += 1
+                continue
+            cell_init = xl_rowcol_to_cell(row_initial + 1, columns_months) #initial cell by month
+            cell_end = xl_rowcol_to_cell(row_position -1, columns_months) # ending cell by month
+            sheet.write_formula(row_position + 3, columns_months, "=SUM({}:{})/3".format(cell_init, cell_end), style_sumtot_gral) #added formula
+            columns_months += 1 #jump column (month)
+
 
     def calculate_data(self, accounts, row_position, concept, args, foreign):
         if foreign:
@@ -240,6 +265,8 @@ class ReportAccountPendingXlsx(models.AbstractModel):
             #xl_rowcol_to_cell(row, col)
             if month == int(args['number_months']): #empty middle column
                 columns_months += 1
+                continue
+            if start_position + 1 == row_position:
                 continue
             cell_init = xl_rowcol_to_cell(start_position, columns_months) #initial cell by month
             cell_end = xl_rowcol_to_cell(last_row_g1 -1, columns_months) # ending cell by month
