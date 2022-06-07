@@ -1,0 +1,307 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_pending_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-03 03:56+0000\n"
+"PO-Revision-Date: 2022-06-03 03:56+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "1-30 Days"
+msgstr "Días 1-30"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "1st Semester"
+msgstr "1er Semestre Año Anterior"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "2nd Semester"
+msgstr "2do Semestre Año Anterior"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "31-60 Days"
+msgstr "Días 31-60"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "61-90 Days"
+msgstr "Días 61-90"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "ACCOUNT PAYABLE INTERCOMPANY"
+msgstr "CUENTAS POR PAGAR EMPRESAS RELACIONADAS"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "ACCOUNT PAYABLE LT INTERCOMPANY"
+msgstr "CUENTAS POR PAGAR EMPRESAS RELACIONADAS LP"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "ACCOUNT RECEIVABLE INTERCOMPANY"
+msgstr "CUENTAS POR COBRAR EMPRESAS RELACIONADA"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "ACCOUNT RECEIVABLE LT INTERCOMPANY"
+msgstr "CUENTAS POR COBRAR EMPRESAS RELACIONADA LP"
+
+#. module: account_pending_report
+#: model:ir.actions.report,name:account_pending_report.ikatech_report_xlsx
+msgid "Accounts Aging"
+msgstr "Cuentas Antiguas"
+
+#. module: account_pending_report
+#: model:ir.actions.act_window,name:account_pending_report.action_xlsx_report
+msgid "Ageing Account Balances"
+msgstr "Saldos de Cuentas Antiguas"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Aging Account Payable Report"
+msgstr "Cuentas Por Pagar Pendientes"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Aging Account Receivable Report"
+msgstr "Cuentas Por Cobrar Pendientes"
+
+#. module: account_pending_report
+#: model:ir.ui.menu,name:account_pending_report.menu_account_pending_report
+msgid "Aging Accounts"
+msgstr "Cuentas Antiguas"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "American currency"
+msgstr "Moneda Americana"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "April"
+msgstr "Abril"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "August"
+msgstr "Agosto"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "CLIENTS"
+msgstr "CLIENTES"
+
+#. module: account_pending_report
+#: model_terms:ir.ui.view,arch_db:account_pending_report.view_account_pending_report
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_pending_report
+#: model_terms:ir.ui.view,arch_db:account_pending_report.view_account_pending_report
+msgid "Choose your details"
+msgstr "Elige tus detalles"
+
+#. module: account_pending_report
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: account_pending_report
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Current Due"
+msgstr "Corriente "
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "December"
+msgstr "Diciembre"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Detailed"
+msgstr "Detallado"
+
+
+#. module: account_pending_report
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "February"
+msgstr "Febrero"
+
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Final Date"
+msgstr "Fecha final"
+
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Initial Date"
+msgstr "Fecha Inicial"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "January"
+msgstr "Enero"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "July"
+msgstr "Julio"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "June"
+msgstr "Junio"
+
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "2nd Year"
+msgstr "2do Año"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "MISCELLANEOUS CREDITORS"
+msgstr "ACREEDORES VARIOS"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "MISCELLANEOUS DEBTORS"
+msgstr "DEUDORES VARIOS"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "March"
+msgstr "Marzo"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "May"
+msgstr "Mayo"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "November"
+msgstr "Noviembre"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "October"
+msgstr "Octubre"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Older than"
+msgstr "Mas Antigüedad"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Over 90 days"
+msgstr "Más de 90 días"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "PROVIDERS"
+msgstr "PROVEEDORES"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Payable"
+msgstr "Por Pagar"
+
+#. module: account_pending_report
+#: model_terms:ir.ui.view,arch_db:account_pending_report.view_account_pending_report
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Receivable"
+msgstr "Por Cobrar"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "September"
+msgstr "Septiembre"
+
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Total"
+msgstr ""
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "Type of report"
+msgstr "Tipo de reporte"
+
+
+#. module: account_pending_report
+#: model_terms:ir.ui.view,arch_db:account_pending_report.view_account_pending_report
+msgid "or"
+msgstr "O"
+

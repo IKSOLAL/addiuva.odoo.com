@@ -1,0 +1,50 @@
+<odoo>
+    <!-- View form wizard -->
+    <record id="view_account_pending_report" model="ir.ui.view">
+        <field name="name">Account Pending Report</field>
+        <field name="model">account.pending.report</field>
+        <field name="arch" type="xml">
+            <form string="Choose your details">
+                    <group col="2">
+                        <group col="1">
+                            <field name="nature"  widget="radio" options="{'horizontal': true}"/>
+                            <field name="foreign"/>
+                        </group>
+                        <!-- <group col="2">
+                            <field name="dt_initial"/>
+                            <field name="dt_final"/>
+                        </group> -->
+                    </group>
+                <footer>
+                    <button name="print_XLSX" string="Print" type="object" class="oe_highlight" />
+                        or                
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--  -->
+
+    <!-- Action open wizard  -->
+    <record id="action_xlsx_report" model="ir.actions.act_window">
+        <field name="name">Ageing Account Balances</field>
+        <field name="res_model">account.pending.report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- report record to be able to generate this XLS Report -->
+    <report id="ikatech_report_xlsx"
+                model="account.pending.report"
+                string="Accounts Aging"
+                report_type="xlsx"
+                name="account_pending_report.accpend_report_xlsx"
+                file="Accounts Aging"
+                menu="False"/>
+
+    <!-- Menu action -->
+    <menuitem id="menu_account_pending_report" name="Aging Accounts"
+               parent="account.menu_finance_entries" action="action_xlsx_report"/>
+
+</odoo>
