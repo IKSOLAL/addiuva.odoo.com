@@ -72,10 +72,10 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         # Cuentas Por Cobrar Pendientes'
         sheet = workbook.add_worksheet(title)
         # inser image
-        if self.env.user.company_id.logo:
-            imgdata = base64.b64decode(self.env.user.company_id.logo)
-            image = io.BytesIO(imgdata)
-            sheet.insert_image('B1', 'myimage.png', {'image_data': image, 'x_scale': 0.1, 'y_scale': 0.1})
+        # if self.env.user.company_id.logo:
+        #     imgdata = base64.b64decode(self.env.user.company_id.logo)
+        #     image = io.BytesIO(imgdata)
+        #     sheet.insert_image('B1', 'myimage.png', {'image_data': image, 'x_scale': 0.1, 'y_scale': 0.1})
         #? End image
         sheet.hide_gridlines(2)
         current_datetime = fields.Datetime.context_timestamp(self, fields.Datetime.now()) # Get current day to get numbers of months
