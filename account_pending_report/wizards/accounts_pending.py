@@ -148,7 +148,8 @@ class ReportAccountPendingXlsx(models.AbstractModel):
             'style_sumtot': style_sumtot,
             'text_accounts': text_accounts,
             'sum_group': sum_group,
-            'stl_totv':stl_totv
+            'stl_totv':stl_totv,
+            'nature': records['nature']
         }
         #?Group 1
         if records['nature'] == 'receivable':
@@ -232,9 +233,11 @@ class ReportAccountPendingXlsx(models.AbstractModel):
                 self.env.cr.execute(sql_balance)
                 balance = self.env.cr.dictfetchall()
                 bal = balance[0]['balance']/rate if balance[0]['balance'] else ""
+                if args['nature'] == "payable": 
+                    bal = bal * -1
                 args['sheet'].write(row_position, columns_months, bal, args['sum_group'])
                 columns_months += 1 # jump to another month
-            self.calculate_ageing(partner, row_position, args['col_ageing'], args['sheet'], args['text_number'], accounts, "partner", args['sum_group'], args['stl_totv'], 'partner',rate)
+            self.calculate_ageing(partner, row_position, args['col_ageing'], args['sheet'], args['text_number'], accounts, "partner", args['sum_group'], args['stl_totv'], 'partner',rate, args['nature'])
             for account in accounts: #- itera por cuentas
                 exist_move, columns_months = True, args['column_position']
                 for month in range(args['number_months']): #check month by month
@@ -251,11 +254,13 @@ class ReportAccountPendingXlsx(models.AbstractModel):
                                 args['sheet'].merge_range("B{0}:C{0}".format(row_position + 1),  balance[0]['name_account'], args['text_accounts']) 
                                 exist_move = False
                             bal = balance[0]['balance']/rate if balance[0]['balance'] else ""
+                            if args['nature'] == "payable": 
+                                bal = bal * -1
                             args['sheet'].write(row_position , columns_months, bal, args['text_number'])
                     columns_months += 1 # jump to another month
                 if not exist_move: 
                     #-start calculating by periods
-                    self.calculate_ageing(partner, row_position, args['col_ageing'], args['sheet'], args['text_number'], account, "accounts", args['sum_group'], args['stl_totv'],'accounts',rate)
+                    self.calculate_ageing(partner, row_position, args['col_ageing'], args['sheet'], args['text_number'], account, "accounts", args['sum_group'], args['stl_totv'],'accounts',rate, args['nature'])
                     #-end calculating by periods
             row_position += 1 #row jump
         last_row_g1 = row_position #Save last position for formulas
@@ -276,7 +281,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         return row_position
 
 
-    def calculate_ageing(self, partner, row, col, sheet, text_number, account, type_sum, sum_group, stl_totv, type_opt, rate):
+    def calculate_ageing(self, partner, row, col, sheet, text_number, account, type_sum, sum_group, stl_totv, type_opt, rate, nature):
         query = """ SELECT SUM(amount_residual) AS amount_residual FROM account_move_line WHERE 
                 parent_state = 'posted' AND partner_id = {} AND full_reconcile_id IS NULL """.format(partner['id'])
         if type_sum == "accounts":
@@ -284,30 +289,30 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         else:
             query = query +  " AND  account_id in {}  ".format(account)
         #Current month
-        self.fill_row_group(0, "", sheet, query, row, col + 1, text_number, sum_group, type_sum, rate)
+        self.fill_row_group(0, "", sheet, query, row, col + 1, text_number, sum_group, type_sum, rate, nature)
         # First Month
-        self.fill_row_group(1, "", sheet, query, row, col + 2, text_number, sum_group, type_sum, rate)
+        self.fill_row_group(1, "", sheet, query, row, col + 2, text_number, sum_group, type_sum, rate, nature)
         # Second Month
-        self.fill_row_group(2, "", sheet, query, row, col + 3, text_number, sum_group, type_sum, rate)
+        self.fill_row_group(2, "", sheet, query, row, col + 3, text_number, sum_group, type_sum, rate, nature)
         # Third  Month
-        self.fill_row_group(3, "", sheet, query, row, col + 4, text_number, sum_group, type_sum, rate)
+        self.fill_row_group(3, "", sheet, query, row, col + 4, text_number, sum_group, type_sum, rate, nature)
         # fourth  Month or after
-        self.fill_row_group(4, "+90", sheet, query, row, col + 5, text_number, sum_group, type_sum, rate)
+        self.fill_row_group(4, "+90", sheet, query, row, col + 5, text_number, sum_group, type_sum, rate, nature)
         # Second Semester year before
-        self.fill_row_group(7,  "2s", sheet, query, row, col + 6, text_number, sum_group, type_sum, rate)
+        self.fill_row_group(7,  "2s", sheet, query, row, col + 6, text_number, sum_group, type_sum, rate, nature)
         # First Semester year before
-        self.fill_row_group(6,  "1s", sheet, query, row, col + 7, text_number, sum_group, type_sum, rate)
+        self.fill_row_group(6,  "1s", sheet, query, row, col + 7, text_number, sum_group, type_sum, rate, nature)
         # 2 years before
-        self.fill_row_group(0,  "2y", sheet, query, row, col + 8, text_number, sum_group, type_sum, rate)
+        self.fill_row_group(0,  "2y", sheet, query, row, col + 8, text_number, sum_group, type_sum, rate, nature)
         #Last Years
-        self.fill_row_group(0,  "3y", sheet, query, row, col + 9, text_number, sum_group, type_sum, rate)
+        self.fill_row_group(0,  "3y", sheet, query, row, col + 9, text_number, sum_group, type_sum, rate, nature)
         #Total
         cell_init = xl_rowcol_to_cell(row ,  col + 1) #initial cell by month
         cell_end = xl_rowcol_to_cell(row , col + 9) # ending cell by month
         style = stl_totv if type_opt == 'partner' else text_number
         sheet.write_formula(row, col + 10 , "=SUM({}:{})".format(cell_init, cell_end), style) #added formula
 
-    def fill_row_group(self, month, closer, sheet, query, row, col, text_number, sum_group, type_sum, rate):
+    def fill_row_group(self, month, closer, sheet, query, row, col, text_number, sum_group, type_sum, rate, nature):
         current_date = fields.Date.context_today(self)
         if closer == "":
             date_group = current_date - relativedelta(months=month)
@@ -333,8 +338,9 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         ar = self.env.cr.dictfetchall()[0] 
         style = text_number if type_sum == "accounts" else sum_group
         bal = ar['amount_residual']/rate if ar['amount_residual'] else ""
+        if nature == "payable": 
+            bal = bal * -1
         sheet.write(row, col, bal, style)
-        
     
     def current_year(self, num_month):
         current_date = fields.Date.context_today(self)

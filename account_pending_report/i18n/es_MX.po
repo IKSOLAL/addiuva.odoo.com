@@ -61,13 +61,13 @@ msgstr "CUENTAS POR PAGAR EMPRESAS RELACIONADAS LP"
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "ACCOUNT RECEIVABLE INTERCOMPANY"
-msgstr "CUENTAS POR COBRAR EMPRESAS RELACIONADA"
+msgstr "CUENTAS POR COBRAR EMPRESAS RELACIONADAS"
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "ACCOUNT RECEIVABLE LT INTERCOMPANY"
-msgstr "CUENTAS POR COBRAR EMPRESAS RELACIONADA LP"
+msgstr "CUENTAS POR COBRAR EMPRESAS RELACIONADAS LP"
 
 #. module: account_pending_report
 #: model:ir.actions.report,name:account_pending_report.ikatech_report_xlsx
@@ -249,7 +249,7 @@ msgstr "Octubre"
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "Older than"
-msgstr "Mas Antigüedad"
+msgstr "Más Antigüedad"
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
