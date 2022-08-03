@@ -142,10 +142,22 @@
                                     <t t-if="o.company_id.country_id.name=='Colombia'">
                                         <strong><span>NIT</span></strong>
                                     </t>
+                                    <t t-if="o.company_id.country_id.name=='Costa Rica'">
+                                        <strong><span style="font-size:20px" t-esc="o.company_id.identification_id.name"/></strong>
+                                    </t>
 
-                                   <span t-field="o.company_id.vat"/><br/>
-                                   <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='México'"><strong><span>FACTURA ELECTRONICA</span></strong><br/></span>
-                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='Colombia'"><strong><span>FACTURA ELECTRONICA DE VENTA</span></strong><br/></span>
+                                    <span t-field="o.company_id.vat"/><br/>
+                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='México'">
+                                        <strong><span>FACTURA ELECTRONICA</span></strong><br/>
+                                    </span>
+                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='Colombia'">
+                                        <strong><span>FACTURA ELECTRONICA DE VENTA</span></strong><br/>
+                                    </span>
+                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='Costa Rica'">
+                                        <strong>
+                                            <t t-esc = "dict (o.fields_get (allfields = ['tipo_documento']) ['tipo_documento'] ['selection']) [o.tipo_documento]" />
+                                        </strong><br/>
+                                    </span>
                                     <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'"><strong><span>FACTURA BORRADOR</span></strong><br/></span>
                                     <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'"><strong><span>FACTURA CANCELADA</span></strong><br/></span>
                                     <span t-if="o.move_type == 'out_refund'"><strong><span>NOTA DE CREDITO</span></strong><br/></span>
@@ -194,6 +206,9 @@
                                         </t>
                                          <t t-if="o.company_id.country_id.name=='Colombia'">
                                             <strong><span>NIT</span></strong>
+                                        </t>
+                                        <t t-if="o.company_id.country_id.name=='Costa Rica'">
+                                            <strong><span t-esc="o.partner_id.identification_id.name" style="text-transform: uppercase;"/></strong>
                                         </t>
                                     </td>
                                     <td>:<![CDATA[&nbsp;]]><span t-field="o.partner_id.vat"/></td>
