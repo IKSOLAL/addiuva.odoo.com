@@ -26,6 +26,9 @@
               <field name="tipo_documento" position="replace">
                   <field name="tipo_documento" attrs="{'readonly':[('state','!=','draft')],'invisible':['|',('flag_cr','=',False),('move_type','not in', ('out_invoice', 'out_refund','in_invoice', 'in_refund'))],'required':[('move_type','in', ('out_invoice', 'out_refund','in_invoice', 'in_refund'))]}"/>
               </field>
+            <field name="payment_methods_id" position="replace">
+                <field name="payment_methods_id" attrs="{'readonly':[('state','!=','draft')],'invisible':['|',('flag_cr','=',False),('move_type','not in', ('out_invoice', 'out_refund','in_invoice', 'in_refund'))],'required':[('move_type','in', ('out_invoice', 'out_refund')),('flag_cr','=',True),'|',('tipo_documento','=', 'FEC'),('flag_cr','=',True)]}"/>
+            </field>
             <page name="fe_invoice_data" position="attributes">
                 <attribute name="attrs">{'invisible':['|',('flag_cr','=',False),('move_type','not in', ('out_invoice', 'out_refund','in_invoice', 'in_refund'))]}</attribute>
             </page>
