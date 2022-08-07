@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_fiscalyear_update_existing_records" model="ir.ui.view">
+            <field name="name">account.fiscalyear.update.records.form</field>
+            <field name="model">account.fiscalyear.update.records</field>
+            <field name="arch" type="xml">
+                <form string="Update Fiscal Year / Period In Exsting Records">
+                    <separator string="Update Fiscal Year / Period In Exsting Records" />
+                    <p class="oe_grey">
+                        This wizard will update Fiscal Year / Period In Exsting Account Invoice / Journal Entry / Journal Items.
+                    </p>
+                    <footer>
+                        <button icon="fa-lock" string="Update Existing Records" name="data_update_records" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_account_fiscalyear_update_existing_records" model="ir.actions.act_window">
+            <field name="name">Update Existing Records</field>
+            <field name="res_model">account.fiscalyear.update.records</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_account_fiscalyear_update_existing_records"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="action_account_fiscalyear_update_existing_records"
+            id="menu_account_fiscalyear_update_existing_records"
+            sequence="26"
+            parent="menu_finance_entries_periodic_processing" />
+
+    </data>
+</odoo>
