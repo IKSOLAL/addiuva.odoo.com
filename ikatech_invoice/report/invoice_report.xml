@@ -93,7 +93,7 @@
                         <!--EMPIEZA DATOS DEL EMISOR-->
                         <div class="col-5" >
                             <center>
-                                <strong><span t-field="o.company_id.name" /></strong>
+                                <strong><span t-field="o.company_id.name" style="font-size:16px"/></strong>
                                 <div style="font-size:11px">
                                     <span t-field="o.company_id.street_name"/>
                                     <![CDATA[&nbsp;]]>
@@ -142,10 +142,22 @@
                                     <t t-if="o.company_id.country_id.name=='Colombia'">
                                         <strong><span>NIT</span></strong>
                                     </t>
+                                    <t t-if="o.company_id.country_id.name=='Costa Rica'">
+                                        <strong><span style="font-size:20px" t-esc="o.company_id.identification_id.name"/></strong>
+                                    </t>
 
-                                   <span t-field="o.company_id.vat"/><br/>
-                                   <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='México'"><strong><span>FACTURA ELECTRONICA</span></strong><br/></span>
-                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='Colombia'"><strong><span>FACTURA ELECTRONICA DE VENTA</span></strong><br/></span>
+                                    <span t-field="o.company_id.vat"/><br/>
+                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='México'">
+                                        <strong><span>FACTURA ELECTRONICA</span></strong><br/>
+                                    </span>
+                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='Colombia'">
+                                        <strong><span>FACTURA ELECTRONICA DE VENTA</span></strong><br/>
+                                    </span>
+                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='Costa Rica'">
+                                        <strong>
+                                            <t t-esc = "dict (o.fields_get (allfields = ['tipo_documento']) ['tipo_documento'] ['selection']) [o.tipo_documento]" />
+                                        </strong><br/>
+                                    </span>
                                     <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'"><strong><span>FACTURA BORRADOR</span></strong><br/></span>
                                     <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'"><strong><span>FACTURA CANCELADA</span></strong><br/></span>
                                     <span t-if="o.move_type == 'out_refund'"><strong><span>NOTA DE CREDITO</span></strong><br/></span>
@@ -194,6 +206,9 @@
                                         </t>
                                          <t t-if="o.company_id.country_id.name=='Colombia'">
                                             <strong><span>NIT</span></strong>
+                                        </t>
+                                        <t t-if="o.company_id.country_id.name=='Costa Rica'">
+                                            <strong><span t-esc="o.partner_id.identification_id.name" style="text-transform: uppercase;"/></strong>
                                         </t>
                                     </td>
                                     <td>:<![CDATA[&nbsp;]]><span t-field="o.partner_id.vat"/></td>
@@ -328,6 +343,10 @@
                     </div>
                    <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" name="payment_communication" style="font-size:14px">
                         Utilize la siguiente referencia al realizar su pago : <b><span t-field="o.payment_reference"/></b>
+                    </p>
+                    <p class="text-left" style="padding:2px 2px 2px 2px; font-size:14px " t-if="o.move_type in ('out_invoice', 'in_refund') and o.number_electronic">
+                      Clave:<span t-field="o.number_electronic"/><![CDATA[&nbsp;&nbsp;&nbsp;]]>// Usuario:<span t-field="o.user_id.name"/><br/>
+                      Autorizada mediante resolución No DGT-R-033-2019 del 20 de junio de 2019
                     </p>
                     <p t-if="o.invoice_payment_term_id" name="payment_term" style="font-size:14px">
                         <span t-field="o.invoice_payment_term_id.note"/>
