@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ikatech_cr_account_move_view_form" model="ir.ui.view">
+        <field name="name">Fields for Costa Rica</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="cr_electronic_invoice.view_move_form_inherit"/>
+        <field name="arch" type="xml">
+            <group position="attributes">
+                <attribute name="attrs">{'invisible':['|',('flag_cr','=',False),('move_type','in', ('in_invoice', 'in_refund', 'entry'))]}</attribute>
+            </group>
+            <field name="partner_id" position="after">
+                <field name="flag_cr" invisible="1"/>
+            </field>
+           <field name="economic_activity_id" position="replace">
+               <field name="economic_activity_id" attrs="{'required':[('move_type','in', ('out_invoice', 'out_refund')),('flag_cr','=',True),'|',('tipo_documento','=', 'FEC'),('flag_cr','=',True)],'invisible':['|',('flag_cr','=',False),('move_type','not in', ('out_invoice', 'out_refund')),('tipo_documento','!=', 'FEC')]}"
+                  domain="[('id', 'in', economic_activities_ids),]"
+                  options='{"no_open": True, "no_create": True, "active_test": [("type","in", ("in_invoice", "in_refund"))]}'/>
+           </field>
+              <field name="number_electronic" position="replace">
+                  <field name="number_electronic" readonly="1" attrs="{'invisible':['|',('flag_cr','=',False),('move_type','not in', ('out_invoice', 'out_refund','in_invoice', 'in_refund'))]}"/>
+              </field>
+              <field name="sequence" position="replace">
+                  <field name="sequence" readonly="1" attrs="{'invisible':['|',('flag_cr','=',False),('move_type','not in', ('out_invoice', 'out_refund','in_invoice', 'in_refund'))]}"/>
+              </field>
+
+              <field name="tipo_documento" position="replace">
+                  <field name="tipo_documento" attrs="{'readonly':[('state','!=','draft')],'invisible':['|',('flag_cr','=',False),('move_type','not in', ('out_invoice', 'out_refund','in_invoice', 'in_refund'))],'required':[('move_type','in', ('out_invoice', 'out_refund','in_invoice', 'in_refund'))]}"/>
+              </field>
+            <field name="payment_methods_id" position="replace">
+                <field name="payment_methods_id" attrs="{'readonly':[('state','!=','draft')],'invisible':['|',('flag_cr','=',False),('move_type','not in', ('out_invoice', 'out_refund','in_invoice', 'in_refund'))],'required':[('move_type','in', ('out_invoice', 'out_refund')),('flag_cr','=',True),'|',('tipo_documento','=', 'FEC'),('flag_cr','=',True)]}"/>
+            </field>
+            <page name="fe_invoice_data" position="attributes">
+                <attribute name="attrs">{'invisible':['|',('flag_cr','=',False),('move_type','not in', ('out_invoice', 'out_refund','in_invoice', 'in_refund'))]}</attribute>
+            </page>
+        </field>
+    </record>
+
+     <record id="ikatech_cr_account_move_qr_view_form" model="ir.ui.view">
+        <field name="name">Fields for Costa Rica QR Image</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="cr_electronic_invoice.account_invoice_form_view"/>
+        <field name="arch" type="xml">
+           <div class="float-right" position="attributes">
+               <attribute name="attrs">{'invisible':[('flag_cr','=',False)]}</attribute>
+           </div>
+        </field>
+    </record>
+
+</odoo>
