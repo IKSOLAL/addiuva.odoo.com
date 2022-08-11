@@ -280,8 +280,9 @@ class AccountMove(models.Model):
     @api.constrains('date', 'period_id')
     def check_period(self):
         for record in self:
-            if record.period_id.state == 'done':
-                raise UserError(_('You can not create journal entries in a closed period %s') % (record.period_id.name))
+            if record.state != "draft":
+                if record.period_id.state == 'done':
+                    raise UserError(_('You can not create journal entries in a closed period %s') % (record.period_id.name))
 
     @api.constrains('fiscalyear_id')
     def check_fiscalyear(self):
