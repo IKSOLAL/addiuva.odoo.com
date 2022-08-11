@@ -24,7 +24,8 @@ class AccountInvoice(models.Model):
         for record in self:
             if record.invoice_date or record.date:
                 today = record.invoice_date or record.date
-                period_ids = self.env['account.period'].search([('date_start','<=',today), ('date_stop','>=',today)], limit=1)
+                company_enabled = self.env.company.id
+                period_ids = self.env['account.period'].search([('date_start','<=',today), ('date_stop','>=',today), ('company_id','=',company_enabled)], limit=1)
                 record.period_id = period_ids
 
     period_id = fields.Many2one('account.period', string='Force Period',

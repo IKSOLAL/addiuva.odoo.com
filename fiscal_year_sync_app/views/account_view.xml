@@ -44,7 +44,7 @@
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
             <field name="ref" position="after">
-                <field name="period_id"/>
+                <field name="period_id" readonly="1" force_save="1"/>
                 <field name="fiscalyear_id" invisible="1"/>
             </field>
             <xpath expr="//page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='account_internal_group']" position="after">
@@ -76,7 +76,7 @@
                 <field name="period_id" domain="[('company_id', '=', company_id)]"
                     groups="account.group_account_manager"
                     string="Accounting Period"
-                    placeholder="Force Period"/>
+                    placeholder="Force Period" readonly="1" force_save="1"/>
                 <field name="fiscalyear_id" invisible="1"/>
             </field>
         </field>
