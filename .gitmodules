@@ -4,5 +4,5 @@
 	branch = 15.0
 [submodule "l10n_cr"]
 	path = l10n_cr
-	url = https://github.com/odoocr/l10n_cr.git
+	url = https://github.com/ivanporras/l10n_cr.git
 	branch = 15.0
