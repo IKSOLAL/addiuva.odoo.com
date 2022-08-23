@@ -20,6 +20,9 @@ class AccountPaymentRegister(models.TransientModel):
     def _create_payments(self):
         payments = super()._create_payments()
         for p in payments:
-            p.check_number = self.check_number
+            try:
+                p.check_number = self.check_number
+            except:
+                return payments
         return payments
 
