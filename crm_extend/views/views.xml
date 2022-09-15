@@ -1,0 +1,85 @@
+<odoo>
+  <data>
+
+     <!-- inherit form view crm-->
+    <record id="view_crm_extend_form_inh" model="ir.ui.view">
+      <field name="name">crm.lead.form.inh</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+      <field name="arch" type="xml">
+          <field name="partner_id" position="after">
+              <field name="industries"/>
+          </field>
+           <field name="is_blacklisted" position="before">
+              <field name="industries"/>
+              <field name="stage_name" invisible="1"/>
+              <field name="services" attrs="{'invisible': [('stage_name','in',('Suspecto','Prospecto'))]}"/>
+           </field>
+          <field name="user_id" position="after">
+              <field name="inactive" readonly="1"/>
+          </field>
+          <xpath expr="//button[@name='action_set_won_rainbowman']" position="attributes">
+            <attribute name="attrs">{'invisible': 
+                ['|','|','&amp;',
+                    ('active','=',False), 
+                    ('probability', '=', 100), 
+                    ('type', '=', 'lead'), 
+                    ('stage_name', 'not in', ('Negociación'))]}
+            </attribute>
+          </xpath>
+          <xpath expr="//button[@name='483']" position="attributes">
+            <attribute name="attrs">
+                {'invisible': [('stage_name', 'in', ('Suspecto','Prospecto','Cita Inicial')) ]}
+            </attribute>
+          </xpath>
+          <button name="action_set_lost" position="before">
+              <button name="mark_as_inactive" string="Mandar a Inactivo" type="object" attrs="{'invisible': [('inactive','=',True)]}"/>
+              <button name="mark_as_active" string="Activar" type="object" attrs="{'invisible': [('inactive','=',False)]}"/>
+          </button>
+          
+      </field>
+   </record>
+
+    <!-- Model Industries CRM -->
+    <record model="ir.ui.view" id="crm_industries_list">
+      <field name="name">crm_industries list</field>
+      <field name="model">crm.industries</field>
+      <field name="arch" type="xml">
+        <tree editable="top">
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm_industries_action_window">
+      <field name="name">crm_industries action</field>
+      <field name="res_model">crm.industries</field>
+      <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem name="Industrias" id="crm_industries_menu" parent="crm.menu_crm_config_lead"
+              action="crm_industries_action_window"/>
+
+
+     <!-- Model Services CRM -->
+    <record model="ir.ui.view" id="crm_services_list">
+      <field name="name">crm_services list</field>
+      <field name="model">crm.services</field>
+      <field name="arch" type="xml">
+        <tree editable="top">
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm_services_action_server">
+      <field name="name">crm_services action</field>
+      <field name="res_model">crm.services</field>
+      <field name="view_mode">tree</field>
+    </record>
+    
+    <menuitem name="Servicios" id="crm_services_menu" parent="crm.menu_crm_config_lead"
+              action="crm_services_action_server"/>
+
+  </data>
+</odoo>

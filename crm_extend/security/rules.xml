@@ -1,0 +1,22 @@
+<odoo>
+<!-- group for CRM Own partners use -->
+<record id="crm_partner_owner_security" model="res.groups">
+    <field name="name">CRM: Solo Contactos del usuario</field>
+</record>
+
+
+
+<!-- Record Rule: for User -->
+<record id="crm_partners_rule_own_records" model="ir.rule">
+	<field name="name">CRM Own partners user</field>
+	<field name="model_id" ref="base.model_res_partner"/>
+    <field name="domain_force">['|',('crete_uid','=',user.id),('user_id','=',False)]</field>
+	<field name="groups" eval="[(4,ref('crm_extend.crm_partner_owner_security'))]"/>
+	<field name='perm_create' eval='True'/>
+    <field name='perm_read' eval='True'/>
+    <field name='perm_unlink' eval='True'/>
+    <field name='perm_write' eval='True'/>
+     <field name="active" eval="True"/>
+</record> 
+
+</odoo>
