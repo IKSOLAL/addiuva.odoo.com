@@ -1,6 +1,19 @@
 <odoo>
   <data>
 
+    <!--Inherit quotations search view-->
+    <record id="view_crm_filter_inh" model="ir.ui.view">
+      <field name="name">crm.filter.inh</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+      <field name="arch" type="xml">
+          <xpath expr="//search" position="inside">
+            <filter string="Frios"  name="frios"
+                domain="[('inactive','=',True)]"/>
+          </xpath>
+      </field>
+   </record>
+
      <!-- inherit form view crm-->
     <record id="view_crm_extend_form_inh" model="ir.ui.view">
       <field name="name">crm.lead.form.inh</field>
@@ -15,9 +28,12 @@
               <field name="stage_name" invisible="1"/>
               <field name="services" attrs="{'invisible': [('stage_name','in',('Suspecto','Prospecto'))]}"/>
            </field>
-          <field name="user_id" position="after">
-              <field name="inactive" readonly="1"/>
+          <field name="tag_ids" position="after">
+              <field name="inactive" invisible="1"/>
           </field>
+          <xpath expr="//sheet/widget[@name='web_ribbon']" position="after">
+                <widget name="web_ribbon" title="Frio" bg_color="bg-info" attrs="{'invisible': [('inactive','=',False)]}"/>
+          </xpath>  
           <xpath expr="//button[@name='action_set_won_rainbowman']" position="attributes">
             <attribute name="attrs">{'invisible': 
                 ['|','|','&amp;',
@@ -33,8 +49,8 @@
             </attribute>
           </xpath>
           <button name="action_set_lost" position="before">
-              <button name="mark_as_inactive" string="Mandar a Inactivo" type="object" attrs="{'invisible': [('inactive','=',True)]}"/>
-              <button name="mark_as_active" string="Activar" type="object" attrs="{'invisible': [('inactive','=',False)]}"/>
+              <button name="mark_as_inactive" string="Mandar a Frios" type="object" attrs="{'invisible': [('inactive','=',True)]}"/>
+              <button name="mark_as_active" string="Quitar de Frios" type="object" attrs="{'invisible': [('inactive','=',False)]}"/>
           </button>
           
       </field>

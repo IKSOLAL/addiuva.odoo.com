@@ -8,7 +8,7 @@ class crm_extend(models.Model):
 
     industries = fields.Many2one('crm.industries', string="Industrias")
     services = fields.Many2one('crm.services', string="Servicios")
-    inactive = fields.Boolean(string="Inactivo", default=False)
+    inactive = fields.Boolean(string="Frio", default=False)
     stage_name = fields.Char(related='stage_id.name')
 
 
