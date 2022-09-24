@@ -141,6 +141,9 @@
                                     <t t-if="o.company_id.country_id.name=='Colombia'">
                                         <strong><span>NIT</span></strong>
                                     </t>
+                                     <t t-if="o.company_id.country_id.name=='Chile'">
+                                            <strong><span>RUT</span></strong>
+                                        </t>
                                     <t t-if="o.company_id.country_id.name=='Costa Rica'">
                                         <strong><span style="font-size:20px" t-esc="o.company_id.identification_id.name"/></strong>
                                     </t>
@@ -205,6 +208,9 @@
                                         </t>
                                          <t t-if="o.company_id.country_id.name=='Colombia'">
                                             <strong><span>NIT</span></strong>
+                                        </t>
+                                         <t t-if="o.company_id.country_id.name=='Chile'">
+                                            <strong><span>RUT</span></strong>
                                         </t>
                                         <t t-if="o.company_id.country_id.name=='Costa Rica'">
                                             <strong><span t-esc="o.partner_id.identification_id.name" style="text-transform: uppercase;"/></strong>
@@ -367,6 +373,21 @@
                             <img class="border border-dark rounded" t-att-src="qr_code_urls[o.id]"/>
                         </p>
                     </div>
+                     <!-- chile -->
+                    <div name="stamp" class="col-4 text-center">
+                            <t t-if="o.l10n_cl_sii_barcode">
+                              <t t-set="barcode_stamp" t-value="o._pdf417_barcode(o.l10n_cl_sii_barcode)"/>
+                              <t t-if="barcode_stamp">
+                                  <img class="img-fluid" t-attf-src="data:image/*;base64,{{barcode_stamp}}"/>
+                                  <p t-att-style="'color: %s;' % o.company_id.primary_color" class="text-center small">
+                                      Timbre Electrónico SII<br />
+                                      Resolución Nº: <span t-field="o.company_id.l10n_cl_dte_resolution_number"/>
+                                      de Fecha: <span t-field="o.company_id.l10n_cl_dte_resolution_date" t-field-options='{"widget": "date"}'/>
+                                      <span name="verification_url">Verifique documento en www.sii.cl</span>
+                                  </p>
+                              </t>
+                          </t>
+                    </div>
                     <!-- Is there a discount on at least one line? -->
                     <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
                     <t t-set="amount_total" t-value="0.0"/>
@@ -440,6 +461,11 @@
                         <div t-att-class="o_grid_layout">
                             <strong>Folio fiscal:</strong><br/>
                             <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
+                        </div>
+                        <div t-if="o.l10n_mx_edi_origin">
+                            <strong>Folio Relacionado:</strong><br/>
+                            <t t-set="origin_cfdi" t-value="o.l10n_mx_edi_origin.split('|')[1]"/>
+                            <span t-esc="origin_cfdi"/>
                         </div>
                         <div t-att-class="o_grid_layout">
                             <strong>Método de Pago:</strong>
