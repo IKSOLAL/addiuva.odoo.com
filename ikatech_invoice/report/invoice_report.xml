@@ -132,7 +132,7 @@
                                 </div>
                             </center>
                         </div>
-                        <div class="col-4" style="border-style: groove; border-radius: 10px;">
+                        <div class="col-4" style="border: 2px; border-style: groove;border-radius: 10px;">
                             <div style="padding:30px 20px 20px 20px;">
                                 <center>
                                     <t t-if="o.company_id.country_id.name=='México'">
@@ -178,7 +178,7 @@
                         <!--TERMINA INFORMACIÓN GENERAL DE FACTURA-->
                     </div>
                     <br/>
-                    <div class="row" style="border-style: groove; border-radius: 10px;" name="info_row">
+                    <div class="row" style="border: 2px; border-style: groove;border-radius: 10px;" name="info_row">
                         <div class="col-7" style="font-size:12px">
                             <table style="border-spacing: 5px; border-collapse: separate;">
                                 <tr>
@@ -235,7 +235,7 @@
                         </div>
                     </div>
                     <br/>
-                    <div class="row" style="border-style: groove; border-radius: 10px;">
+                    <div class="row" style="border: 2px; border-style: groove;border-radius: 10px;">
                         <table class="table" style="font-size:12px" name="invoice_line_table">
                             <thead class="thead-light text-center">
                                 <tr>
