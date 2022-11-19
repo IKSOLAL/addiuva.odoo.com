@@ -135,7 +135,7 @@ class AccountInvoice(models.Model):
             }
             inv.write(vals)
         return True
-
+    """
     @api.depends(
         'line_ids.debit',
         'line_ids.credit',
@@ -243,7 +243,7 @@ class AccountInvoice(models.Model):
                     move.payment_state = 'paid'
             else:
                 move.payment_state = 'not_paid'
-
+"""
 
 class AccountJournal(models.Model):
     _inherit = "account.journal"
