@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record model="ir.ui.view" id="view_account_move_reversal_inherit">
+            <field name="name">account.move.reversal.form.inherit</field>
+            <field name="model">account.move.reversal</field>
+            <field name="inherit_id" ref="account.view_account_move_reversal"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="before">
+                    <field name="inv_type" invisible=" 1"/>
+                    <group>
+                        <!--Verificar la razon por la cual no permite ocultar campo-->
+                        <!-- <field name="cancellation_reason_id" attrs="{'invisible': [('inv_type', '!=', True)]}"/> -->
+                        <field name="cancellation_reason_id"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

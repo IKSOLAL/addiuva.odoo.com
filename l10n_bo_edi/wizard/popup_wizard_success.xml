@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record model="ir.ui.view" id="pop_up_wizard_success_form_view">
+            <field name="name">pop_up_wizard_success_form_view</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <form string="Completed">
+                    <div class="alert alert-primary" role="alert">
+                        <span class="fa fa-lg fa-check"></span>
+                        Task completed successfully!
+                    </div>
+                    <footer>
+                        <button string="OK" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id='popup_wizard_success' model='ir.actions.act_window'>
+            <field name="name">Info PopUp </field>
+            <!-- <field name="binding_model_id" ref="model_exploracion_mision"/> -->
+            <field name="res_model">popup_success_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+
+
+</odoo>

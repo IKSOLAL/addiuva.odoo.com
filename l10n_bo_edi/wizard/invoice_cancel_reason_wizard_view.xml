@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record model="ir.ui.view" id="invoice_cancel_reason_wizard_form_view">
+            <field name="name">invoice_cancel_reason_wizard_form</field>
+            <field name="model">invoice_cancel_reason_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Select Invoice Cancellation Reason and Confirm">
+                    <group>
+                        <field name="cancellation_reason_id"/>
+                    </group>
+                    <footer>
+                        <button name="cancel_invoice" type="object" string="Cancel Invoice" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id='invoice_cancel_reason_wizard' model='ir.actions.act_window'>
+            <field name="name">Invoice Cancellation Reason </field>
+            <!-- <field name="binding_model_id" ref="model_exploracion_mision"/> -->
+            <field name="res_model">invoice_cancel_reason_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+
+
+</odoo>

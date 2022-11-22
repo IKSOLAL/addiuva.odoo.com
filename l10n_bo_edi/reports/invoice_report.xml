@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_invoice_report"
+            model="report.paperformat">
+        <field name="name">Latinamerican Letter</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <!-- <field name="page_width">22</field>
+        <field name="page_height">27</field> -->
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">43</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="invoice_report" model="ir.actions.report">
+        <field name="name">Documento Electrónico</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">l10n_bo_edi.invoice_report_template</field>
+        <field name="report_file">l10n_bo_edi.invoice_report_template</field>
+        <field name="print_report_name">'Documento Electrónico'</field>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="l10n_bo_edi.paperformat_invoice_report"></field>
+    </record>
+
+
+    <record id="invoice_report_pdf" model="ir.actions.report">
+        <field name="name">Documento Electrónico</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_bo_edi.invoice_report_template</field>
+        <field name="report_file">l10n_bo_edi.invoice_report_template</field>
+        <field name="print_report_name">'Documento Electrónico'</field>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="l10n_bo_edi.paperformat_invoice_report"></field>
+    </record>
+</odoo>

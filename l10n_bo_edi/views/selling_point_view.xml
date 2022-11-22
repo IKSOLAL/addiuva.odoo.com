@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Selling Point Form -->
+        <record model="ir.ui.view" id="selling_point_view_form">
+            <field name="name">selling.point.view.form</field>
+            <field name="model">selling_point</field>
+            <field name="arch" type="xml">
+                <form string="Selling Point Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="id_selling_point"/>
+                            </group>
+                            <group>
+                                <field name="branch_office_id"/>
+                            </group>
+                            <group>
+                                <field name="cuis"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>
+                            <page string="Cufd Related Codes">
+                                <field name="cufd_ids"/>
+                            </page>
+                            <page string="Users">
+                                <field name="user_ids"/>
+                            </page>
+                            <page string="Invoice Dosages">
+                                <field name="invoice_dosage_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Selling Point List -->
+        <record model="ir.ui.view" id="selling_point_view_list">
+            <field name="name">selling.point.view.list</field>
+            <field name="model">selling_point</field>
+            <field name="arch" type="xml">
+                <tree string="Selling Point">
+                    <field name="id_selling_point"/>
+                    <field name="description"/>
+                    <field name="branch_office_id"/>
+                    <field name="cuis"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Selling point Search -->
+        <record model="ir.ui.view" id="selling_point_view_search">
+            <field name="name">selling.point.view.search</field>
+            <field name="model">selling_point</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="id_selling_point"/>
+                    <field name="description"/>
+                    <field name="branch_office_id"/>
+                    <field name="active"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>

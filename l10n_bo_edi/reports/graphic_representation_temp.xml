@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="graphic_representation_temp">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+             <t t-set="ili" t-value="doc.invoice_line_ids"/>
+              <t t-set="self_company" t-value="doc.env.company"/>
+                <!-- <t t-call="web.external_layout"> -->
+                    <!-- <t t-call="web.basic_layout"> -->
+                    <div style="border: 1px solid black; height: 100%; padding:3px;" class="p-3">
+                        <link rel="stylesheet" href="/l10n_bo_edi/static/src/css/style.css"/> 
+                        <div class="page">
+                            <div class="container p-3" align="center"> 
+
+
+                                <!-- <img src='/web/binary/company_logo' alt="Logo"/> -->
+                                <!-- <img t-field="self_company.logo" t-field-options='{"widget": "image"}'/> -->
+                                <!-- <img src='/web/binary/company_logo' class="float-right" style="max-height: 65px; margin-top:20px;" alt="Logo"/> -->
+                                <!-- <div class="row">
+                                    <div class="col-4" style="display:flex; flex-direction:column" align="start">
+                                        <h2 t-field="self_company.name" class="mt16 text-success"/>
+                                        <b t-field="self_company.street" />
+                                        <br/>
+                                        Telefono: <b t-field="self_company.phone"/>
+                                        <br/>
+                                        <b t-field="self_company.city"/>
+                                        <br/>
+                                    </div>
+                                    <div class="float-right col-8" style="display:flex; flex-direction:column" align="end">
+                                        <b>NIT:     <b t-field="self_company.vat"/></b>
+                                        <br/>
+                                        <b>FACTURA N°     <b t-field="doc.l10n_bo_invoice_number"/></b>
+                                        <br/>
+                                        <b>CUF:     <b t-field="doc.l10n_bo_cuf" /></b>
+                                        <br/>
+                                        <b>ACTIVIDAD:   <b  t-field="ili[0].product_id.sin_item.activity_code.name" /></b>
+                                    </div>
+                                </div> -->
+
+                                <table class="table table-condensed" style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <th style="width:30%"></th>
+                                        <th style="width:30%"></th>
+                                        <th style="width:40%"></th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <!-- <img src='/web/binary/company_logo' alt="Logo"/> -->
+                                            <img src='/l10n_bo_edi/static/image/asLogo.jpeg' alt="Logo"/>
+                                            <br/> <br/>
+                                            <b t-field="self_company.name" class="mt16"/>
+                                            <br/>
+                                            <b t-field="self_company.street" />
+                                            <br/>
+                                            Telefono: <b t-field="self_company.phone"/>
+                                            <br/>
+                                            <b t-field="self_company.city"/>
+                                            <br/>
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <b>NIT:     <b t-field="self_company.vat"/></b>
+                                            <br/>
+                                            <b>FACTURA N°     <b t-field="doc.l10n_bo_invoice_number"/></b>
+                                            <br/>
+                                            <b>CUF:     <b t-field="doc.l10n_bo_cuf" /></b>
+                                            <br/>
+                                            <b>ACTIVIDAD:   <b  t-field="ili[0].product_id.sin_item.activity_code.name" /></b>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+
+                                <div >
+                                    <h3 align="center">FACTURA</h3>
+                                    <p align="center">(Con Derecho a Credito Fiscal)</p> 
+                                </div>
+
+                                <table class="table table-condensed" style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <th style="width:30%"></th>
+                                        <th style="width:40%"></th>
+                                        <th style="width:30%"></th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Fecha:     <p t-field="doc.invoice_date"/></b>
+                                            <br/>
+                                            <b>Nombre/Razón Social:     <p t-field="doc.partner_id"/></b>
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <b>NIT/KARDEX:     <p t-field="doc.partner_id.vat"/></b>
+                                            <div class="height:50%"></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+
+                                <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <!-- <th name="th_name">Codigo Producto</th> -->
+                                        <th name="th_quantity">Cantidad</th>
+                                        <th name="th_name">Descripcion</th>
+                                        <th name="th_price">Precio Unitario</th>
+                                        <th name="th_">Descuentos</th>
+                                        <th name="th_subtotal">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="text-align:center;">
+
+                                <!-- <t t-set="ili" t-value="doc.invoice_line_ids"/> -->
+
+                                    <tr t-foreach="ili" t-as="i">
+                                        <td t-if="i.quantity" name="td_quantity">
+                                            <t t-esc="i.quantity" align="center"/>
+                                        </td>
+
+                                        <td t-if="i.name" name="td_name">
+                                            <t t-esc="i.name" />
+                                        </td>
+
+                                        <td t-if="i.price_unit" name="td_price_unit">
+                                            <t t-esc="i.price_unit" align="center"/>
+                                        </td>
+
+                                        <td >
+                                            
+                                        </td>
+
+                                        <td t-if="i.price_subtotal" name="td_price_subtotal">
+                                            <t t-esc="i.price_subtotal" align="center"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr t-foreach="ili" t-as="i">
+                                        <td >
+                                            
+                                        </td>
+
+                                        <td>
+                                            
+                                        </td>
+
+                                        <td>
+                                            
+                                        </td>
+                                        
+                                        <td>
+                                        
+                                        </td>
+                                        <hr/>
+                                        <td align="rigth">
+                                            <b>Total bs: </b><p t-field="doc.amount_total" class="mt16" align="rigth"/> <br/>
+                                            <b>Importe Base para Credito Fiscal: </b> <p t-field="doc.amount_total" class="mt16" align="rigth"/>
+                                        </td>
+                                    </tr>
+                                
+                                </tbody>
+                            </table>
+                            <hr/>
+
+                                <div class="container" align="center">
+                                    <div class="row align-items-start">
+                                        <div class="col"> 
+                                            <b>Son: </b><b t-field="doc.total_lit"></b><b> Bolivianos</b>
+                                        </div>    
+                                        <hr/>
+                                        <div class="col" width="100"> 
+                                            <h3>"ESTA FACTURA CONTRIBUYE AL DESARROLLO DE NUESTRO PAIS, 
+                                                EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LEY"
+                                            </h3>
+                                        </div>
+                                        <h4>Ley N° 453: Está prohibido importar, distribuir o comercializar productos prohibidos o retirados en el país de origen por atentar a la integridad física y a la salud.</h4>
+                                        <div class="col">
+                                            <img t-att-src="'data:image/*;base64,%s' % to_text(doc.qr_code)" width="200" height="200" style='margin:0px;padding-top:0px;'/>
+                                            <!-- <img t-att-src="'/report/barcode/?type=%s&value=%s&width=%s&height=%s' % ('QR', doc.qr_code, 200, 200)"/> -->
+                                            <!-- <img t-att-src="'data:image/*;base64,%s' % barcode('QR','doc.qr_code')" style="width:100%;height:25px"/> -->
+                                        </div>
+                                        <!-- <field name="doc.qr_code" widget='image' class="oe_avatar"/> -->
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            <!-- </t> -->
+        </t>
+    </template>
+</odoo>

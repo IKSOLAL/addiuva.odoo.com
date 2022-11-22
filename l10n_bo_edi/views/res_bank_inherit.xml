@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- The object account.payment.method is defined in the account module
+but there are no view for this object in the account module... so we define it
+here. I hate the objects that don't have a view... -->
+
+    <data noupdate="1">
+   
+        <record id="res_bank_bo_edi" model="ir.ui.view">
+        <field name="name">res.bank.bo.edi</field>
+        <field name="model">res.bank</field>
+        <field name="inherit_id" ref="base.view_res_bank_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bic']" position="after">
+                <field name="vat"/>
+            </xpath>
+        </field>
+        </record>
+    
+    </data>
+    
+
+    <record id="res_bank_tree" model="ir.ui.view">
+        <field name="name">res_bank.tree</field>
+        <field name="model">res.bank</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="vat" />
+                <field name="bic" />
+            </tree>
+        </field>
+    </record>
+    <record id="res_partner_bank_tree" model="ir.ui.view">
+        <field name="name">res_partner_bank.tree</field>
+        <field name="model">res.partner.bank</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="acc_number" />
+                <field name="bank_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="res_bank_search" model="ir.ui.view">
+        <field name="name">res_bank.search</field>
+        <field name="model">res.bank</field>
+        <field name="arch" type="xml">
+            <search string="Search Bank">
+                <field
+                    name="name"
+                    filter_domain="['|', ('name', 'ilike', self), ('vat', 'ilike', self)]"
+                    string="Name or VAT"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="res_bank_search" model="ir.ui.view">
+        <field name="name">res_partner_bank.search</field>
+        <field name="model">res.partner.bank</field>
+        <field name="arch" type="xml">
+            <search string="Search Bank Account">
+                <field
+                    name="acc_number"
+                    filter_domain="['|', ('acc_number', 'ilike', self), ('acc_holder_name', 'ilike', self)]"
+                    string="Account Number or Holder"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="res_bank_action" model="ir.actions.act_window">
+        <field name="name">Banks</field>
+        <field name="res_model">res.bank</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="res_partner_bank_action" model="ir.actions.act_window">
+        <field name="name">Banks account</field>
+        <field name="res_model">res.partner.bank</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="res_bank_menu"
+        action="res_bank_action"
+        parent="account.account_banks_menu"
+        sequence="4"
+    />
+    <menuitem
+        id="res_partner_bank_menu"
+        action="res_partner_bank_action"
+        parent="account.account_banks_menu"
+        sequence="5"
+    />
+</odoo>

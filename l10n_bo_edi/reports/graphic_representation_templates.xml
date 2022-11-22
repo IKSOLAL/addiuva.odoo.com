@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="graphic_representation_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+             <t t-set="ili" t-value="doc.invoice_line_ids"/>
+              <t t-set="self_company" t-value="doc.env.company"/>
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="container" align="center"> 
+
+                            <div class="row">
+                                    <div class="col-6">
+                                        <h2 t-field="self_company.name" class="mt16"/>
+                                    </div>
+                                    
+                                    <div class="col-2">
+                                        <p align="right">NIT:</p>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <p t-field="self_company.vat" class="mt16"/>
+                                    </div>
+                                    
+                                </div>
+                                                    
+                                <div class="row">
+                                    <div class="col-6">
+                                    <p t-field="self_company.street" class="mt16"/>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <p align="right">FACTURA N°</p>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <p t-field="doc.l10n_bo_invoice_number" class="mt16"/>
+                                    </div>
+                                </div>
+                            
+                                <div class="row">
+                                    <div class="col-6">
+                                    Telefono: <p t-field="self_company.phone" class="mt16"/>
+                                    </div>
+                                    
+                                    <div class="col-2">
+                                        <p align="right">CUF:</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p t-field="doc.l10n_bo_cuf" class="mt16" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                    <p t-field="self_company.city" class="mt16"/>
+                                    </div>
+                                    <div class="col-2">
+                                    <p align="right">ACTIVIDAD:</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p  t-field="ili[0].product_id.sin_item.activity_code.code" class="mt16" />
+                                    </div>
+                                </div>
+
+                            <div >
+                                <h3 align="center">FACTURA</h3>  <br/>
+                                <p align="center">(Con Derecho a Credito Fiscal)</p> 
+                            </div>
+                           
+                            <div class="row align-items-center">
+                                <div class="col">
+                                <b>Fecha:</b>
+                                </div>
+                                <div class="col">
+                                <p t-field="doc.invoice_date" class="mt16"/>
+                                </div>
+                                <div class="col">
+                                <b>NIT/KARDEX:</b>
+                                </div>
+                                <div class="col">
+                                <!-- <p t-field="re.vat" class="mt16"/> -->
+                                <p t-field="doc.partner_id.vat" class="mt16"/>
+                                </div>
+                            </div>
+                            <div class="row align-items-center">
+                                <div class="col">
+                                 <b>Nombre/Razón Social:</b>
+                                </div>
+                                <div class="col">
+                                 <p t-field="doc.partner_id" class="mt16"/>
+                                </div>
+
+                                <div class="col">
+                                
+                                </div>
+
+                                <div class="col">
+                                
+                                </div>
+                            </div>
+
+                            <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <!-- <th name="th_name">Codigo Producto</th> -->
+                                    <th name="th_quantity">Cantidad</th>
+                                    <th name="th_name">Descripcion</th>
+                                    <th name="th_price">Precio Unitario</th>
+                                    <th name="th_">Descuentos</th>
+                                    <th name="th_subtotal">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            <!-- <t t-set="ili" t-value="doc.invoice_line_ids"/> -->
+
+                                <tr t-foreach="ili" t-as="i">
+                                    <td t-if="i.quantity" name="td_quantity">
+                                        <t t-esc="i.quantity" align="center"/>
+                                    </td>
+
+                                    <td t-if="i.name" name="td_name">
+                                        <t t-esc="i.name" />
+                                    </td>
+
+                                    <td t-if="i.price_unit" name="td_price_unit">
+                                        <t t-esc="i.price_unit" align="center"/>
+                                    </td>
+
+                                    <td >
+                                        
+                                    </td>
+
+                                    <td t-if="i.price_subtotal" name="td_price_subtotal">
+                                        <t t-esc="i.price_subtotal" align="center"/>
+                                    </td>
+                                </tr>
+
+                                <tr t-foreach="ili" t-as="i">
+                                    <td >
+                                        
+                                    </td>
+
+                                     <td>
+                                         
+                                    </td>
+
+                                     <td>
+                                        
+                                    </td>
+                                     
+                                     <td>
+                                       
+                                    </td>
+                                     <td align="rigth">
+                                        <b>Total bs: </b><p t-field="doc.amount_total" class="mt16" align="rigth"/> <br/>
+                                        <b>Importe Base para Credito Fiscal: </b> <p t-field="doc.amount_total" class="mt16" align="rigth"/>
+
+                                    </td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                        
+                            <div class="container" align="center">
+                                <div class="row align-items-start">
+                                    <div class="col" width="100"> 
+                                        <h2>"ESTA FACTURA CONTRIBUYE AL DESARROLLO DE NUESTRO PAIS, 
+                                            EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LEY"
+                                        </h2>
+                                    </div>    
+                                    <div class="col">
+                                        <img t-att-src="'data:image/*;base64,%s' % to_text(doc.qr_code)" width="200" height="200" style='margin:0px;padding-top:0px;'/>
+                                        <!-- <img t-att-src="'/report/barcode/?type=%s&value=%s&width=%s&height=%s' % ('QR', doc.qr_code, 200, 200)"/> -->
+                                        <!-- <img t-att-src="'data:image/*;base64,%s' % barcode('QR','doc.qr_code')" style="width:100%;height:25px"/> -->
+                                    </div>
+                                    <!-- <field name="doc.qr_code" widget='image' class="oe_avatar"/> -->
+                                </div>
+                            </div>
+                               
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

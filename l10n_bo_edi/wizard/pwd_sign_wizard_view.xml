@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record model="ir.ui.view" id="pwd_sign_wizard_form_view">
+            <field name="name">pwd_sign_wizard_form_view</field>
+            <field name="model">pwd_sign_wizard</field>
+            <field name="arch" type="xml">
+                <form string="PWD wizard">
+                    <group>
+                        <field name="pwd_sign" password="True" />
+                        <field name="pwd_sign_confirm" password="True" />
+                    </group>
+                    <footer>
+                        <button name='save_pwd' type="object" string="Aceptar" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+
+
+</odoo>

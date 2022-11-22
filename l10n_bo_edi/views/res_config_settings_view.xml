@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_bo_form" model="ir.ui.view">
+        <field name="name">res_config_settings_view_bo_form.electronic.inv</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='invoicing_settings']" position="after">
+                <div id="l10n_bo_local" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
+                    <div id="l10n_bo_title">
+                        <h2>Bolivian Localization</h2>
+                    </div>
+
+                    <div id="l10n_bo_section" class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Invoicing Type</span>
+                                <span class="fa fa-lg fa-money" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                                <div class="text-muted">
+                                    Change the current invoicing modality type
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Electronic Billing " for="l10n_bo_invoicing_type" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_invoicing_type" widget="boolean_toggle" />
+
+                                    </div>
+                                </div>
+                                <div class="content-group" attrs="{'invisible': [('l10n_bo_invoicing_type', '!=', True)]}">
+                                    <div class="row mt16">
+                                        <label string="External Connection" for="external_con" class="col-lg-4 o_light_label"/>
+                                        <field name="external_con" widget="boolean_toggle" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Accounting Reports</span>
+                                <span class="fa fa-file-text-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                                <div class="text-muted">
+                                    Install/Uninstall Bolivian accounting reports
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Accounting Reports " for="module_l10n_bo_reports" class="col-lg-4 o_light_label"/>
+                                        <field name="module_l10n_bo_reports" widget="boolean_toggle" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="l10n_bo_section2" class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Graphic Representation Format</span>
+                                <!-- <span class="fa fa-lg fa-money" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/> -->
+                                <div class="text-muted">
+                                    Change the current graphic representation format
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Representation Format (PDF/WebPage) " for="l10n_bo_graphic_rep_format" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_graphic_rep_format" widget="boolean_toggle" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Electronic Invoicing Certification</span>
+                                <!-- <span class="fa fa-lg fa-money" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/> -->
+                                <div class="text-muted">
+                                    Certification settings
+                                </div>
+                                <div class="row mt16">
+                                    <label string="Change invoice status" for="l10n_bo_invoicing_current_status" class="col-lg-4 o_light_label"/>
+                                    <field name="l10n_bo_invoicing_current_status" widget="boolean_toggle"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="Select invoice event" for="invoice_incident" class="col-lg-4 o_light_label"/>
+                                    <field name="invoice_incident"/>
+                                </div>
+                                <button name='generate_cufd' type="object" string="Generate CUFD" class="btn-primary"/>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="l10n_boedi_config_container" attrs="{'invisible': [('l10n_bo_invoicing_type', '!=', True)]}">
+
+                        <div id="l10n_bo_section" class="row mt16 o_settings_container" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
+
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Parameter Management</span>
+                                    <div class="text-muted">
+                                        Manage Electronic Invoicing Parameters
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <!-- <label string="Selling Point" for="l10n_bo_active_selling_point" class="col-lg-4 o_light_label"/>
+                                            <field name="l10n_bo_active_selling_point" context="{'search_by_code': True}"/> -->
+
+                                            <!-- <label string="Current Invoice Number" for="l10n_bo_current_invoice_number" class="col-lg-4 o_light_label"/>
+                                            <field name="l10n_bo_current_invoice_number" context="{'search_by_code': True}"/> -->
+                                        </div>
+                                        <!-- <button name='test_method' icon="fa-arrow-right" type="object" string="CUFD Log" class="btn-link"/>
+                                        <br/> -->
+                                        <button name='%(selling_point_action)d' icon="fa-arrow-right" type="action" string="Manage Selling Points" class="btn-link"/>
+                                        <!--type="object"-->
+                                        <br/>
+                                        <button name='%(branch_office_action)d' icon="fa-arrow-right" type="action" string="Manage Branch Offices" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(cufd_log_action)d' icon="fa-arrow-right" type="action" string="CUFD Log" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(act_sin_token)d' icon="fa-arrow-right" type="action" string="Token Log" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(act_bo_edi_params)d' icon="fa-arrow-right" type="action" string="BO-Edi Params" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(act_partner_activities)d' icon="fa-arrow-right" type="action" string="SIN Company Activities" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(act_sin_items)d' icon="fa-arrow-right" type="action" string="SIN Items" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(act_invoice_events)d' icon="fa-arrow-right" type="action" string="Invoice Events" class="btn-link"/>
+                                        <!--name="%(fetchmail.action_email_server_tree)d"-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Dependency Management</span>
+                                    <div class="text-muted">
+                                        Manage Electronic Invoicing Dependencies
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                        </div>
+                                        <!-- <button name='test_method' icon="fa-arrow-right" type="object" string="CUFD Log" class="btn-link"/>
+                                        <br/> -->
+                                        <button name='%(act_measure_unit)d' icon="fa-arrow-right" type="action" string="Measure Units" class="btn-link"/>
+                                        <!--type="object"-->
+                                        <br/>
+                                        <button name='%(act_emission_types)d' icon="fa-arrow-right" type="action" string="Emission Types" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(act_sector_types)d' icon="fa-arrow-right" type="action" string="Sector Types" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(act_ambience)d' icon="fa-arrow-right" type="action" string="Ambience" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(act_modalities)d' icon="fa-arrow-right" type="action" string="Modalities" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(act_cancellation_reasons)d' icon="fa-arrow-right" type="action" string="Cancellation Reasons" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(act_id_type)d' icon="fa-arrow-right" type="action" string="ID Types" class="btn-link"/>
+                                        <br/>
+                                        <button name='%(act_invoice_captions)d' icon="fa-arrow-right" type="action" string="Invoice Captions" class="btn-link"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Graphic Representation Size</span>
+                                    <div class="text-muted">
+                                        Change graphic representation size
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="Current Size" for="l10n_bo_graphic_rep_size" class="col-lg-4 o_light_label"/>
+                                            <field name="l10n_bo_graphic_rep_size" widget="boolean_toggle"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                        </div>
+
+
+                    </div>
+
+                    <div id="l10n_bo_config_container" attrs="{'invisible': [('l10n_bo_invoicing_type', '!=', False)]}">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Selling Point</span>
+                                <div class="text-muted">
+                                        Manage information related to Dosage
+                                </div>
+                                <div class="content-group">
+                                    <button name='%(invoice_dosage_action)d' icon="fa-arrow-right" type="action" string="Invoice Dosage" class="btn-link"/>
+                                    <br/>
+                                    <button name='%(selling_point_action)d' icon="fa-arrow-right" type="action" string="Manage Selling Points" class="btn-link"/>
+                                    <br/>
+                                    <button name='%(branch_office_action)d' icon="fa-arrow-right" type="action" string="Manage Branch Offices" class="btn-link"/>
+                                    <br/>
+                                    <div class="row mt16">
+                                        <label string="Editable Dosage Data" for="prov_dosage_edit" class="col-lg-4 o_light_label"/>
+                                        <field name="prov_dosage_edit" widget="boolean_toggle" />
+                                    </div>
+                                    <!--name="%(fetchmail.action_email_server_tree)d"-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </xpath>
+
+
+        </field>
+    </record>
+
+</odoo>
