@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_industries,name_access_crm_industries,model_crm_industries,sales_team.group_sale_salesman,1,0,0,0
+access_crm_industries_admin,name_access_crm_industries_admin,model_crm_industries,sales_team.group_sale_manager,1,1,1,1
+access_crm_services,name_access_crm_services,model_crm_services,sales_team.group_sale_salesman,1,0,0,0
+access_crm_services_admin,name_access_crm_services_admin,model_crm_services,sales_team.group_sale_manager,1,1,1,1

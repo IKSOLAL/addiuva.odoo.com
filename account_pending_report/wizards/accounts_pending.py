@@ -46,6 +46,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
     def generate_xlsx_report(self, workbook, data, records):
         self = self.with_context(lang=self.env.user.lang)
         header = workbook.add_format({'font_size': 12, 'font_color':'#FFFFFF', 'bg_color':'#8B46CD','bold':True, 'align':'center', 'valign':'vcenter'})
+        headersub = workbook.add_format({'font_size': 10, 'font_color':'#FFFFFF', 'bg_color':'#8B46CD', 'align':'center', 'valign':'vcenter'})
         subheaders = workbook.add_format({'font_size': 11, 'font_color':'#FFFFFF', 'bg_color':'#E75CE0','bold':True, 'align':'center', 'valign':'vcenter'})
         subyears = workbook.add_format({'font_size': 11, 'font_color':'#303030', 'bg_color':'#e5dfec','bold':True, 'align':'center', 'valign':'vcenter'})
         sublastyears = workbook.add_format({'font_size': 11, 'font_color':'#303030', 'bg_color':'#e5b8b7','bold':True, 'align':'center', 'valign':'vcenter'})
@@ -82,9 +83,12 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         current_datetime = fields.Datetime.context_timestamp(self, fields.Datetime.now()) # Get current day to get numbers of months
         current_date = fields.Date.context_today(self)
         number_months = current_datetime.month
-        sheet.set_row(2, 25) #set height in row number 3 
+        # sheet.set_row(2, 25) #set height in row number 3 
         sheet.set_column('B:C',25)
-        sheet.merge_range(2, 2, 1, int(number_months + 14), title, header) 
+        # sheet.merge_range(2, 2, 1, int(number_months + 14), title, header)
+        sheet.merge_range(1, 2, 1, int(number_months + 14), title, header) # title document
+        user_date = self.env.user.name + " | " + str(current_date)
+        sheet.merge_range(2, 2, 2, int(number_months + 14), user_date, headersub) # user and date generate file 
         concept = _("CLIENTS")  if records['nature'] == 'receivable' else _("PROVIDERS")
         sheet.merge_range(6,1, 6, 2, concept, subtitles) #(first_row, first_col, last_row, last_col, data, cell_format])
        
