@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': """Bolivia - E-invoicing""",
-    "version": "14.0.2.8",
+    "version": "14.0.2.9",
     #     'description': """
     # EDI Bolivian Localization
     # ========================
