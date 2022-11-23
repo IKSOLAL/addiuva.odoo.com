@@ -89,16 +89,16 @@
             </xpath> -->
             <!--//?? WORKAROUND DE DESCUENTO GLOBAL POR NUEVO CAMPO  -->
 
-            <xpath expr="//sheet//group[1]//group[@id='header_right_group']//div[@name='journal_div']" position="after" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
+            <!-- <xpath expr="//sheet//group[1]//group[@id='header_right_group']//div[@name='journal_div']" position="after" attrs="{'invisible': [('country_code', '!=', 'BO')]}"> -->
                 <!--attrs="{'invisible': [('country_code', '!=', 'BO')]}"-->
                 <!-- <div id="l10n_bo_edi_section_config" class="row mt16 o_settings_container"> -->
                     <!-- <field name="invoice_mails" invisible="1"/> -->
-                    <field name="invoice_mails" context="{'search_by_code': True}"/>
+                    <!-- <field name="invoice_mails" context="{'search_by_code': True}"/> -->
                     <!--TODO Verificar razon por la cual no oculta el campo-->
                     <!-- <field name="manual_usd_edit" invisible="1"/>  -->
-                    <field name="manual_usd_edit" widget="boolean_toggle"/>
+                    <!-- <field name="manual_usd_edit" widget="boolean_toggle"/> -->
                 <!-- </div> -->
-            </xpath>
+            <!-- </xpath> -->
 
 
             <!--Para poder obtener el valor del flag, se debe definir en la vista, si se desea ocultar el flag, utilizar invisible="1" -->
@@ -191,6 +191,12 @@
                                         <br/>
                                         <label string="Is Cancelled" for="is_cancelled" class="col-lg-4 o_light_label"/>
                                         <field name="is_cancelled" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Edición Montos USD" for="manual_usd_edit" class="col-lg-4 o_light_label"/>
+                                        <field name="manual_usd_edit" widget="boolean_toggle"/>
+                                        <br/>
+                                        <label string="Correos a Enviar" for="invoice_mails" class="col-lg-4 o_light_label"/>
+                                        <field name="invoice_mails" context="{'search_by_code': True}"/>
                                     </div>
                                 </div>
                             </div>
