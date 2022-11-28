@@ -228,7 +228,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         WHERE aml.account_id in {} AND aml.parent_state = 'posted' GROUP BY aml.partner_id, rp.name ORDER BY rp.name""".format(accounts))
         dic_partners = self.env.cr.dictfetchall() 
         for partner in dic_partners:
-            # if partner['balance'] == 0: continue
+            if partner['balance'] == 0: continue
             columns_months = args['column_position']
             args['sheet'].merge_range("B{0}:C{0}".format(row_position+1),  partner['name'], args['text_partners']) #- establece nombre
             for month in range(args['number_months']):
