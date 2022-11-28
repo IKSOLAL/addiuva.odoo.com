@@ -1,0 +1,50 @@
+<odoo>
+    <!-- View form wizard -->
+    <record id="view_account_provision_report" model="ir.ui.view">
+        <field name="name">Account provision Report</field>
+        <field name="model">account.provision.report</field>
+        <field name="arch" type="xml">
+            <form string="Choose your details">
+                    <group col="2">
+                        <group col="1">
+                            <field name="nature"  widget="radio" options="{'horizontal': true}"/>
+                            <field name="foreign"/>
+                        </group>
+                        <!-- <group col="2">
+                            <field name="dt_initial"/>
+                            <field name="dt_final"/>
+                        </group> -->
+                    </group>
+                <footer>
+                    <button name="print_XLSX" string="Print" type="object" class="oe_highlight" />
+                        or                
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--  -->
+
+    <!-- Action open wizard  -->
+    <record id="action_xlsx_report" model="ir.actions.act_window">
+        <field name="name">Ageing Provision Account Balances</field>
+        <field name="res_model">account.provision.report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- report record to be able to generate this XLS Report -->
+    <report id="ikatech_report_xlsx"
+                model="account.provision.report"
+                string="Accounts Aging"
+                report_type="xlsx"
+                name="account_provision_report.accpend_report_xlsx"
+                file="Accounts Aging"
+                menu="False"/>
+
+    <!-- Menu action -->
+    <menuitem id="menu_account_provision_report" name="Provision Accounts"
+               parent="account.menu_finance_entries" sequence="50" action="action_xlsx_report"/>
+
+</odoo>

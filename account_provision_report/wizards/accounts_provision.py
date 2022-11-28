@@ -13,7 +13,7 @@ from odoo.tools.image import image_data_uri
 
 
 class WizardClassName(models.TransientModel):
-    _name = 'account.pending.report'
+    _name = 'account.provision.report'
     
     nature = fields.Selection([
         ('payable',_("Payable")),
@@ -36,11 +36,11 @@ class WizardClassName(models.TransientModel):
             'detail': self.detail,
             'foreign': self.foreign
         }
-        return self.env.ref('account_pending_report.ikatech_report_xlsx').report_action(self, data=data)
+        return self.env.ref('account_provision_report.ikatech_report_xlsx').report_action(self, data=data)
 
 
-class ReportAccountPendingXlsx(models.AbstractModel):
-    _name = 'report.account_pending_report.accpend_report_xlsx'
+class ReportAccountprovisionXlsx(models.AbstractModel):
+    _name = 'report.account_provision_report.accpend_report_xlsx'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, records):
@@ -69,12 +69,12 @@ class ReportAccountPendingXlsx(models.AbstractModel):
 
         
 
-        title = _('Aging Account Receivable Report') if records['nature'] == 'receivable' else  _('Aging Account Payable Report')
+        title = _('Income Provisions Report') if records['nature'] == 'receivable' else  _('')
         # Cuentas Por Cobrar Pendientes'
         sheet = workbook.add_worksheet(title)
         # inser image
         if self.env.user.company_id.logo:
-            company = self.env['res.company']._company_default_get('report.account_pending_report.accpend_report_xlsx')
+            company = self.env['res.company']._company_default_get('report.account_provision_report.accpend_report_xlsx')
             imgdata = base64.b64decode(company.logo)
             image = io.BytesIO(imgdata)
             sheet.insert_image('B1', 'myimage.png', {'image_data': image, 'x_scale': 0.25, 'y_scale': 0.25})
@@ -89,7 +89,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         sheet.merge_range(1, 2, 1, int(number_months + 14), title, header) # title document
         user_date = self.env.user.name + " | " + str(current_date)
         sheet.merge_range(2, 2, 2, int(number_months + 14), user_date, headersub) # user and date generate file 
-        concept = _("CLIENTS")  if records['nature'] == 'receivable' else _("PROVIDERS")
+        concept = _("NATIONAL INCOME PROVISION")  if records['nature'] == 'receivable' else _("")
         sheet.merge_range(6,1, 6, 2, concept, subtitles) #(first_row, first_col, last_row, last_col, data, cell_format])
        
         row_initial, column_initial = 6, 3
@@ -157,9 +157,9 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         }
         #?Group 1
         if records['nature'] == 'receivable':
-            accounts = tuple(self.env['account.account'].search([('code','=ilike','1100010%')]).ids)
+            accounts = tuple(self.env['account.account'].search([('code','=ilike','11010101%')]).ids)
         else:
-            accounts = tuple(self.env['account.account'].search([('code','=ilike','20000%')]).ids)
+            accounts = tuple(self.env['account.account'].search([('code','=ilike','11010102%')]).ids)
         row_position = self.calculate_data(accounts, row_position, concept, args, records['foreign'])
         
         sheet.merge_range(row_position,1, row_position+1, int(number_months + 14), "")
@@ -167,7 +167,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         #?Group 2
         row_position += 2 #row debtors
         # merge_range(first_row, first_col, last_row, last_col, data, cell_format])
-        concept = _("MISCELLANEOUS DEBTORS")  if records['nature'] == 'receivable' else _("MISCELLANEOUS CREDITORS")
+        concept = _("FOREIGN INCOME PROVISION USD")  if records['nature'] == 'receivable' else _("")
         sheet.merge_range(row_position,1, row_position, 2, concept, subtitles) 
         row_position += 1 #row jump
         if records['nature'] == 'receivable':
@@ -180,11 +180,11 @@ class ReportAccountPendingXlsx(models.AbstractModel):
 
         #?Group 3
         row_position += 2 #row debtors
-        concept = _("ACCOUNT RECEIVABLE INTERCOMPANY")  if records['nature'] == 'receivable' else _("ACCOUNT PAYABLE INTERCOMPANY")
+        concept = _("FOREIGN INCOME PROVISION EUR")  if records['nature'] == 'receivable' else _("")
         sheet.merge_range(row_position,1, row_position, 2, concept, subtitles) 
         row_position += 1 #row jump
         if records['nature'] == 'receivable':
-            accounts = tuple(self.env['account.account'].search([('code','=ilike','12510%')]).ids)
+            accounts = tuple(self.env['account.account'].search([('code','=ilike','11010103%')]).ids)
         else:
             accounts = tuple(self.env['account.account'].search([('code','=ilike','22510%')]).ids)
         row_position = self.calculate_data(accounts, row_position, concept, args, records['foreign'])
@@ -193,11 +193,11 @@ class ReportAccountPendingXlsx(models.AbstractModel):
 
         #?Group 4
         row_position += 2 #row debtors
-        concept = _("ACCOUNT RECEIVABLE LT INTERCOMPANY")  if records['nature'] == 'receivable' else _("ACCOUNT PAYABLE LT INTERCOMPANY")
+        concept = _("LINKED / RELATED INCOME PROVISION")  if records['nature'] == 'receivable' else _("")
         sheet.merge_range(row_position,1, row_position, 2, concept, subtitles) 
         row_position += 1 #row jump
         if records['nature'] == 'receivable':
-            accounts = tuple(self.env['account.account'].search([('code','=ilike','17010%')]).ids)
+            accounts = tuple(self.env['account.account'].search([('code','=ilike','11010103%')]).ids)
         else:
             accounts = tuple(self.env['account.account'].search([('code','=ilike','27010%')]).ids)
         row_position = self.calculate_data(accounts, row_position, concept, args, records['foreign'])
@@ -225,15 +225,15 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         start_position = row_position
         self.env.cr.execute("""SELECT aml.partner_id AS id, rp.name, SUM(aml.debit - aml.credit) AS balance FROM account_move_line aml 
         INNER JOIN res_partner rp ON (aml.partner_id = rp.id) 
-        WHERE aml.account_id in {} AND aml.parent_state = 'posted' GROUP BY aml.partner_id, rp.name ORDER BY rp.name""".format(accounts))
+        WHERE aml.account_id = {} AND aml.parent_state = 'posted' GROUP BY aml.partner_id, rp.name ORDER BY rp.name""".format(accounts[0]))
         dic_partners = self.env.cr.dictfetchall() 
         for partner in dic_partners:
-            # if partner['balance'] == 0: continue
+            if partner['balance'] == 0: continue
             columns_months = args['column_position']
             args['sheet'].merge_range("B{0}:C{0}".format(row_position+1),  partner['name'], args['text_partners']) #- establece nombre
             for month in range(args['number_months']):
-                sql_balance = """SELECT  SUM(debit - credit) AS balance FROM account_move_line WHERE partner_id = {} AND account_id in {} 
-                    AND EXTRACT(YEAR FROM date) <= {} AND EXTRACT(MONTH FROM date) <= {} AND parent_state = 'posted'""".format(partner['id'], accounts, args['current_datetime'].year, month + 1)
+                sql_balance = """SELECT  SUM(debit - credit) AS balance FROM account_move_line WHERE partner_id = {} AND account_id = {} 
+                    AND EXTRACT(YEAR FROM date) <= {} AND EXTRACT(MONTH FROM date) <= {} AND parent_state = 'posted'""".format(partner['id'], accounts[0], args['current_datetime'].year, month + 1)
                 self.env.cr.execute(sql_balance)
                 balance = self.env.cr.dictfetchall()
                 bal = balance[0]['balance']/rate if balance[0]['balance'] else ""
@@ -241,7 +241,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
                     bal = bal * -1
                 args['sheet'].write(row_position, columns_months, bal, args['sum_group'])
                 columns_months += 1 # jump to another month
-            self.calculate_ageing(partner, row_position, args['col_ageing'], args['sheet'], args['text_number'], accounts, "partner", args['sum_group'], args['stl_totv'], 'partner',rate, args['nature'])
+            self.calculate_ageing(partner, row_position, args['col_ageing'], args['sheet'], args['text_number'], accounts[0], "partner", args['sum_group'], args['stl_totv'], 'partner',rate, args['nature'])
             for account in accounts: #- itera por cuentas
                 exist_move, columns_months = True, args['column_position']
                 for month in range(args['number_months']): #check month by month
@@ -291,7 +291,7 @@ class ReportAccountPendingXlsx(models.AbstractModel):
         if type_sum == "accounts":
             query = query +  " AND  account_id = {}  ".format(account)
         else:
-            query = query +  " AND  account_id in {}  ".format(account)
+            query = query +  " AND  account_id = {}  ".format(account)
         #Current month
         self.fill_row_group(0, "", sheet, query, row, col + 1, text_number, sum_group, type_sum, rate, nature)
         # First Month
