@@ -31,7 +31,7 @@ class AccountMoveReversal(models.TransientModel):
         cancel_flag.write({"value" : 0})
 
         if self._context.get('external'):
-            self.env['account.move'].null_invoice(self._context.get('account_move_id'), self.cancellation_reason_id)
+            self.env['account.move'].null_invoice(self._context.get('account_move_id'), self.cancellation_reason_id.code)
         else:                                                  
             self.env['account.move'].invoice_cancellation(self._context.get('inv_type'),
                                                         self._context.get('cufd'),
