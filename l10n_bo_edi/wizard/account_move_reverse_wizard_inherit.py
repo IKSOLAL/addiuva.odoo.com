@@ -15,7 +15,6 @@ class AccountMoveReversal(models.TransientModel):
     inv_type = fields.Boolean(compute="get_invoice_type")
 
     def reverse_moves(self):
-        ##TODO mandar datos y recibir opcionales en "invoice cancellation":
         _logger.info("/////////////INGRESO ANULACIÓN FACTURA///////////////")
         _logger.info('CONTEXTO: ' + str(self._context))
         if self._context.get('inv_type'):
@@ -23,9 +22,14 @@ class AccountMoveReversal(models.TransientModel):
                 raise ValidationError("You must select a cancellation reason, in order to send it to SIN")
             if self.refund_method != 'cancel':
                 raise ValidationError("You must select Full refund option in E-Billing modality")
+        
+        ## Cambiar flag cancel active para registro automatico de reversa y luego retornar a valor 0:
+        cancel_flag = self.env['bo_edi_params'].search(
+            [('name', '=', 'CANCEL_ACTIVE')])
+        cancel_flag.write({"value" : 1})
         super(AccountMoveReversal, self).reverse_moves()
-        # self.env['account.move'].send_email(self.cancellation_reason_id.code, self._context.get('cuf'),
-        #                                     self._context.get('inv_number'), self._context.get('email_to'))
+        cancel_flag.write({"value" : 0})
+
         if self._context.get('external'):
             self.env['account.move'].null_invoice(self._context.get('account_move_id'), self.cancellation_reason_id)
         else:                                                  

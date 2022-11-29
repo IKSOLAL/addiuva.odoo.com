@@ -37,6 +37,26 @@
             <field name="name">FROM_MAIL</field>
             <field name="value">noReply@alphasys.com.bo</field>
         </record>
+        <record id="param_report_page_break" model="bo_edi_params">
+            <field name="param_code">6</field>
+            <field name="name">BREAKPAGE_ITEM_NUMBER</field>
+            <field name="value">12</field>
+        </record>
+        <record id="param_report_change_amount" model="bo_edi_params">
+            <field name="param_code">7</field>
+            <field name="name">CHANGE_AMOUNT</field>
+            <field name="value">6.96</field>
+        </record>
+        <record id="param_ambience" model="bo_edi_params">
+            <field name="param_code">8</field>
+            <field name="name">AMBIENTE</field>
+            <field name="value">2</field>
+        </record>
+        <record id="param_ambience" model="bo_edi_params">
+            <field name="param_code">9</field>
+            <field name="name">CANCEL_ACTIVE</field>
+            <field name="value">0</field>
+        </record>
         <record id="activity_example" model="l10n_bo.company.activities">
             <field name="code">741000</field>
             <field name="name">OTRAS ACTIVIDADES DE SERVICIOS DE APOYO A LAS EMPRESAS</field>
