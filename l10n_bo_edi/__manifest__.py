@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': """Bolivia - E-invoicing""",
-    "version": "14.0.3.1",
+    "version": "14.0.3.2",
     #     'description': """
     # EDI Bolivian Localization
     # ========================
@@ -82,6 +82,7 @@
         'wizard/pwd_sign_wizard_view.xml',
         'wizard/invoice_event_wizard_view.xml',
         'data/mail_template.xml',
+        'data/data.xml'
         # Account Payment
 
         # 'security/account_payment_mode.xml',

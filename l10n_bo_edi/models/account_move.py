@@ -2273,6 +2273,9 @@ class AccountMove(models.Model):
                             headers = {'Content-type': 'application/json'},
                             data = inv_to_cancel)
         des_res = json.loads(res.content)
+        _logger.info("/////////////REGISTRO DE FACTURA ANULADA///////////////")
+        _logger.info('REQUEST: ' + str(inv_to_cancel))
+        _logger.info('RESPONSE ' + str(des_res))
         return des_res["descripcion"]
     
     def _get_random_caption(self):

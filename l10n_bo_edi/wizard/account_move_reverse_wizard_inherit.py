@@ -1,5 +1,8 @@
 from odoo import models, fields, api
 from odoo.exceptions import UserError, Warning, ValidationError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class AccountMoveReversal(models.TransientModel):
     _inherit = "account.move.reversal"
@@ -13,7 +16,8 @@ class AccountMoveReversal(models.TransientModel):
 
     def reverse_moves(self):
         ##TODO mandar datos y recibir opcionales en "invoice cancellation":
-        print(str(self._context))
+        _logger.info("/////////////INGRESO ANULACIÓN FACTURA///////////////")
+        _logger.info('CONTEXTO: ' + str(self._context))
         if self._context.get('inv_type'):
             if not self.cancellation_reason_id:
                 raise ValidationError("You must select a cancellation reason, in order to send it to SIN")

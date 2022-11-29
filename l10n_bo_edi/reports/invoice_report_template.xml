@@ -35,7 +35,7 @@
                                             </td> -->
 
                                             <td>
-                                                <strong style="font-size: 20px !important;">ALPHA SYSTEMS S.R.L.</strong>
+                                                <strong style="font-size: 20px !important;" t-esc="doc.company_id.name"/>
                                                 <table class="table table-condensed" style="width:70%; font-size: 12px !important;" >
                                                     <tbody aling= "center" style="font-size: 12px !important;">
                                                         <!-- <tr>
