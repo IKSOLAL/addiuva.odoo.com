@@ -189,12 +189,13 @@ class AccountMove(models.Model):
 
     ##??  Variable para verificacion nit
     def get_nit_validation(self):
-        self.valid_nit = self.check_nit()
-        print(self.valid_nit)
+        if not self.external_con:
+            self.valid_nit = self.check_nit()
     valid_nit = fields.Boolean(compute="get_nit_validation", default=1)
 
     def view_init(self, fields_list):  # Init method of lifecycle #
-        self.valid_nit = self.check_nit()
+        if not self.external_con:
+            self.valid_nit = self.check_nit()
         return super().view_init(fields_list)
     
     invoice_event_id = fields.Many2one(comodel_name='invoice_event', string='Invoice Event')
@@ -1942,8 +1943,10 @@ class AccountMove(models.Model):
         if template:
             template.attachment_ids = [(6, 0, [data_rep_id.id, data_xml_id.id])]
             # email_values = {'email_to': self.partner_id.email,
+            from_mail = self.env['bo_edi_params'].search(
+                [('name', '=', 'FROM_MAIL')]).value
             email_values = {'email_to': self.invoice_mails,
-                            'email_from': 'noReply@alphasys.com.bo'}
+                            'email_from': from_mail}
             template.send_mail(self.id, email_values=email_values, force_send=True)
             # template.send_mail(self.id, force_send=True)
             template.attachment_ids = [(3, data_rep_id.id, data_xml_id.id)]
@@ -2337,6 +2340,9 @@ class AccountMove(models.Model):
                             headers = {'Content-type': 'application/json'},
                             data = emit_obj)
         des_res = json.loads(res.content)
+        _logger.info("/////////////REGISTRO EMISION FACT///////////////")
+        _logger.info('REQUEST: ' + str(emit_obj))
+        _logger.info('RESPONSE ' + str(des_res))
         if des_res["error"] == 0:
             return True
         else:
@@ -2367,11 +2373,17 @@ class AccountMove(models.Model):
     async def _get_param_invoice(self, selling_point):
         res = requests.get(self.get_back_url() + "Api/Param_Factura?idpuntoventa=" + str(selling_point))
         des_res = json.loads(res.content)
+        _logger.info("/////////////Obtener Cufd///////////////")
+        _logger.info("REQUEST: " + self.get_back_url() + "Api/Param_Factura?idpuntoventa=" + str(selling_point))
+        _logger.info("RESPONSE: " + str(des_res))
         return des_res["_data"]
 
     async def _get_new_cufd(self, selling_point):
         res = requests.get(self.get_back_url() + "Api/cufd?idpuntoventa=" + str(selling_point))
         des_res = json.loads(res.content)
+        _logger.info("/////////////Generar Cufd///////////////")
+        _logger.info("REQUEST: " + self.get_back_url() + "Api/cufd?idpuntoventa=" + str(selling_point))
+        _logger.info("RESPONSE: " + str(des_res))
         return des_res
     
     def execute_new_cufd(self, selling_point):
@@ -2392,9 +2404,6 @@ class AccountMove(models.Model):
 
         # devolución de nuevo/presente registro cufd
         param_inv = asyncio.run(self._get_param_invoice(selling_point))
-        print(param_inv[-1]["cufd_vigen"])
-        print(param_inv[0]["cufd_vigen"])
-        print(param_inv[1]["cufd_vigen"])
         return param_inv[0]
 
     async def _get_captions(self):
@@ -2412,6 +2421,7 @@ class AccountMove(models.Model):
         check_hom = 0
         check_internal = 0
         check_back = 0 ## Verificar si item existe en backend
+        check_back_code = 0 ## Verificar si codigo SIN existe en backend
         for item in new_inv.invoice_line_ids: ##TODO parametrizar el nombre del item global_discount
             if (not item.product_id.measure_unit.measure_unit_code or not item.product_id.sin_item.sin_code or not item.product_id.sin_item.activity_code.code) and 'global_discount' not in item.product_id.name:
                 check_hom = 1
@@ -2435,7 +2445,10 @@ class AccountMove(models.Model):
                 }
                 res_check_back_item = asyncio.run(self._check_back_item(item_to_check))
                 if "Realizada" in res_check_back_item["descripcion"]:
-                    current_product.write({"internal_code": res_check_back_item["error"]})
+                    if res_check_back_item["error"] != 0:
+                        current_product.write({"internal_code": res_check_back_item["error"]})
+                    else:
+                        check_back_code = 1
                 else:
                     check_back = 1
 
@@ -2453,6 +2466,8 @@ class AccountMove(models.Model):
             return [4, "Cannot send invoice with total amount 0"]
         if check_back:
             return [5, "There was an error trying to get the invoice items from DB"]
+        if check_back_code:
+            return [6, "Couldn't find item SIN Code in Database"]
         return [0, "Valid"]
     
     def client_validation(self, client):
@@ -2468,6 +2483,9 @@ class AccountMove(models.Model):
                             headers = {'Content-type': 'application/json'},
                             data = item_obj_json)
         des_res = json.loads(res.content)
+        _logger.info("/////////////Validar Item///////////////")
+        _logger.info("REQUEST: " + str(item_obj_json))
+        _logger.info("RESPONSE: " + str(des_res))
         return des_res
     
     async def _check_client(self, client):
@@ -2488,6 +2506,9 @@ class AccountMove(models.Model):
                             headers = {'Content-type': 'application/json'},
                             data = client_json)
         des_res = json.loads(res.content)
+        _logger.info("/////////////Validar Cliente///////////////")
+        _logger.info("REQUEST: " + str(client_json))
+        _logger.info("RESPONSE: " + str(des_res))
         return des_res
 
 
@@ -2545,6 +2566,9 @@ class AccountMove(models.Model):
                             headers = {'Content-type': 'application/json'},
                             data = new_header_json)
         des_res = json.loads(res.content)
+        _logger.info("/////////////FACTURA ENCABEZADO///////////////")
+        _logger.info('REQUEST: ' + str(new_header_json))
+        _logger.info('RESPONSE ' + str(des_res))
         return des_res["descripcion"]
 
     async def post_line(self, line):
@@ -2552,6 +2576,9 @@ class AccountMove(models.Model):
                             headers = {'Content-type': 'application/json'},
                             data = line)
         des_res = json.loads(res.content)
+        _logger.info("/////////////REGISTRO DE ITEM///////////////")
+        _logger.info('REQUEST: ' + str(line))
+        _logger.info('RESPONSE ' + str(des_res))
         return des_res["descripcion"]
 
     def post_move_lines(self, new_inv, header_id):
@@ -2607,7 +2634,9 @@ class AccountMove(models.Model):
                             headers = {'Content-type': 'application/json'},
                             data = xml_obj)
         des_res = json.loads(res.content)
-        print(des_res)
+        _logger.info("/////////////FACTURA XML///////////////")
+        _logger.info('REQUEST: ' + str(xml_obj))
+        _logger.info('RESPONSE ' + str(des_res))
         return des_res["_data"]
     
     def _send_inv(self, emit_type_id, new_header_id, xml_obj = None):
@@ -2781,20 +2810,14 @@ class AccountMove(models.Model):
                 new_header_id = new_header_id.split('|')[0]
             else:
                 raise ValidationError("There was an error adding invoice header: " + new_header_id)
-            _logger.info("/////////////FACTURA ENCABEZADO///////////////")
-            _logger.info(str(new_header_id))
 
             ##?? Registro de items
             new_lines = self.post_move_lines(new_blank_invoice, new_header_id)
             if not new_lines:
                 raise ValidationError("There was an error adding invoice lines, please check error logs")
-            _logger.info("/////////////REGISTRO DE ITEMS///////////////")
-            _logger.info(str(new_lines))
             
             ##?? Flujo de Contingencias
             new_inv = self._pre_send_valid(new_header_id)
-            _logger.info("/////////////FLUJO DE CONTINGENCIAS///////////////")
-            _logger.info(str(new_inv))
             if new_inv[1][0]["codimpuestos"] !=  908:
                 raise ValidationError("No fue posible emitir la factura en SIN: " + new_inv[1][0]["mensajeimpuestos"])
             # new_inv = new_inv[1][0]
