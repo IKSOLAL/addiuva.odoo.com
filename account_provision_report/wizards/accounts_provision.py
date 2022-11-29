@@ -228,7 +228,7 @@ class ReportAccountprovisionXlsx(models.AbstractModel):
         WHERE aml.account_id = {} AND aml.parent_state = 'posted' GROUP BY aml.partner_id, rp.name ORDER BY rp.name""".format(accounts[0]))
         dic_partners = self.env.cr.dictfetchall() 
         for partner in dic_partners:
-            if partner['balance'] == 0: continue
+            # if partner['balance'] == 0: continue
             columns_months = args['column_position']
             args['sheet'].merge_range("B{0}:C{0}".format(row_position+1),  partner['name'], args['text_partners']) #- establece nombre
             for month in range(args['number_months']):
@@ -236,7 +236,7 @@ class ReportAccountprovisionXlsx(models.AbstractModel):
                     AND EXTRACT(YEAR FROM date) <= {} AND EXTRACT(MONTH FROM date) <= {} AND parent_state = 'posted'""".format(partner['id'], accounts[0], args['current_datetime'].year, month + 1)
                 self.env.cr.execute(sql_balance)
                 balance = self.env.cr.dictfetchall()
-                bal = balance[0]['balance']/rate if balance[0]['balance'] else ""
+                bal = balance[0]['balance']/rate if balance[0]['balance'] != None else ""
                 if args['nature'] == "payable": 
                     bal = bal * -1
                 args['sheet'].write(row_position, columns_months, bal, args['sum_group'])
