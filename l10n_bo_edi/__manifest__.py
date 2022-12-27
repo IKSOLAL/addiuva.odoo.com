@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': """Bolivia - E-invoicing""",
-    "version": "14.0.3.4",
+    "version": "3.6",
     #     'description': """
     # EDI Bolivian Localization
     # ========================
@@ -16,7 +16,7 @@
     #   --
     #     """,
 
-    'author': "Indasoge-Alphasys",
+    'author': "Alphasys",
     'website': "http://www.alphasys.com",
 
     # Categories can be used to filter modules in modules listing
@@ -77,6 +77,7 @@
         'views/cancellation_reasons.xml',
         'views/company_activities_view.xml',
         'views/invoice_event_view.xml',
+        'views/l10n_bo_edi_logs.xml',
         'views/res_config_settings_view.xml',
         'wizard/account_move_reversal_view_inherit.xml',
         'wizard/pwd_sign_wizard_view.xml',

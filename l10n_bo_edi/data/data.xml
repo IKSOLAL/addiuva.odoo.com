@@ -1,165 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
-        <record id="sucursal_matriz" model="branch_office">
-            <field name="id_branch_office">3</field>
-            <field name="description">CASA MATRIZ</field>
-            <field name="address">LAS RAMBLAS EDFIC: CUBO 2, PISO 8 OFIC 1</field>
-        </record>
-        <record id="punto_venta_1" model="selling_point">
-            <field name="id_selling_point">13</field>
-            <field name="description">PUNTO DE VENTA 1 ADDIUVA</field>
-            <field name="branch_office_id" ref="sucursal_matriz"></field>
-            <field name="cuis">A8E81760</field>
-        </record>
-        <record id="param_empresa" model="bo_edi_params">
-            <field name="param_code">1</field>
-            <field name="name">EMPRESA</field>
-            <field name="value">3</field>
-        </record>
-        <record id="param_conex_back" model="bo_edi_params">
-            <field name="param_code">2</field>
-            <field name="name">BACK_PROV_URL</field>
-            <field name="value">http://190.181.63.219:8085/</field>
-        </record>
-        <record id="param_conex_report" model="bo_edi_params">
-            <field name="param_code">3</field>
-            <field name="name">BACK_REP_URL</field>
-            <field name="value">http://190.181.63.219:8086/FormatoGraficoFactura</field>
-        </record>
-        <record id="param_pos" model="bo_edi_params">
-            <field name="param_code">4</field>
-            <field name="name">POS_INVOICING</field>
-            <field name="value">0</field>
-        </record>
-        <record id="param_from_mail" model="bo_edi_params">
-            <field name="param_code">5</field>
-            <field name="name">FROM_MAIL</field>
-            <field name="value">noReply@alphasys.com.bo</field>
-        </record>
-        <record id="param_report_page_break" model="bo_edi_params">
-            <field name="param_code">6</field>
-            <field name="name">BREAKPAGE_ITEM_NUMBER</field>
-            <field name="value">12</field>
-        </record>
-        <record id="param_report_change_amount" model="bo_edi_params">
-            <field name="param_code">7</field>
-            <field name="name">CHANGE_AMOUNT</field>
-            <field name="value">6.96</field>
-        </record>
-        <record id="param_ambience" model="bo_edi_params">
-            <field name="param_code">8</field>
-            <field name="name">AMBIENTE</field>
-            <field name="value">2</field>
-        </record>
-        <record id="param_ambience" model="bo_edi_params">
-            <field name="param_code">9</field>
-            <field name="name">CANCEL_ACTIVE</field>
-            <field name="value">0</field>
-        </record>
-        <record id="activity_example" model="l10n_bo.company.activities">
-            <field name="code">741000</field>
-            <field name="name">OTRAS ACTIVIDADES DE SERVICIOS DE APOYO A LAS EMPRESAS</field>
-            <field name="type">S</field>
-        </record>
-        <record id="sin_item_example" model="sin_items">
-            <field name="sin_code">83911</field>
-            <field name="description">SERVICIOS DE DISEÑO DE INTERIORES</field>
-            <field name="activity_code" ref="activity_example"></field>
-        </record>
-        <record id="measure_product" model="measure_unit">
-            <field name="measure_unit_code">57</field>
-            <field name="description">UNIDAD (BIENES)</field>
-        </record>
-        <record id="measure_service" model="measure_unit">
-            <field name="measure_unit_code">58</field>
-            <field name="description">UNIDAD (SERVICIOS)</field>
-        </record>
-        <record id="emission_online" model="emission_types">
-            <field name="id_emission_type">1</field>
-            <field name="description">En Linea</field>
-        </record>
-        <record id="emission_offline" model="emission_types">
-            <field name="id_emission_type">2</field>
-            <field name="description">FUERA DE LINEA</field>
-        </record>
-        <record id="tipo_sector_fact" model="sector_types">
-            <field name="id_sector_type">1</field>
-            <field name="description">FACTURA COMPRA-VENTA</field>
-        </record>
-        <record id="tipo_sector_nota" model="sector_types">
-            <field name="id_sector_type">24</field>
-            <field name="description">NOTA DE CREDITO-DEBITO</field>
-        </record>
-        <record id="ambiente_prueba" model="ambience">
-            <field name="id_ambience">2</field>
-            <field name="description">PRUEBAS</field>
-        </record>
-        <record id="ambiente_prod" model="ambience">
-            <field name="id_ambience">1</field>
-            <field name="description">PRODUCCION</field>
-        </record>
-        <record id="modalidad_elec" model="modalities">
-            <field name="id_modality">1</field>
-            <field name="description">ELECTRONICA</field>
-        </record>
-        <record id="modalidad_compu" model="modalities">
-            <field name="id_modality">1</field>
-            <field name="description">COMPUTARIZADA EN LINEA</field>
-        </record>
-        <record id="cancel_1" model="cancellation_reasons">
-            <field name="code">1</field>
-            <field name="description">FACTURA MAL EMITIDA</field>
-        </record>
-        <record id="cancel_2" model="cancellation_reasons">
-            <field name="code">2</field>
-            <field name="description">NOTA DE CREDITO-DEBITO MAL EMITIDA</field>
-        </record>
-        <record id="cancel_3" model="cancellation_reasons">
-            <field name="code">3</field>
-            <field name="description">DATOS DE EMISION INCORRECTOS</field>
-        </record>
-        <record id="cancel_4" model="cancellation_reasons">
-            <field name="code">4</field>
-            <field name="description">FACTURA O NOTA DE CREDITO-DEBITO DEVUELTA</field>
-        </record>
-        <record id="id_1" model="id_type">
-            <field name="id_type_code">1</field>
-            <field name="description">CI - CEDULA DE IDENTIDAD</field>
-        </record>
-        <record id="id_2" model="id_type">
-            <field name="id_type_code">2</field>
-            <field name="description">CEX - CEDULA DE IDENTIDAD DE EXTRANJERO</field>
-        </record>
+    <!-- <data noupdate="1"> -->
+    <record id="sucursal_matriz" model="branch_office">
+        <field name="id_branch_office">3</field>
+        <field name="description">CASA MATRIZ</field>
+        <field name="address">LAS RAMBLAS EDFIC: CUBO 2, PISO 8 OFIC 1</field>
+    </record>
+    <record id="punto_venta_1" model="selling_point">
+        <field name="id_selling_point">17</field>
+        <field name="description">PUNTO DE VENTA 1 ADDIUVA</field>
+        <field name="branch_office_id" ref="sucursal_matriz"></field>
+        <field name="cuis">A8E81760</field>
+    </record>
+    <record id="param_empresa" model="bo_edi_params">
+        <field name="param_code">1</field>
+        <field name="name">EMPRESA</field>
+        <field name="value">3</field>
+    </record>
+    <record id="param_conex_back" model="bo_edi_params">
+        <field name="param_code">2</field>
+        <field name="name">BACK_PROV_URL</field>
+        <field name="value">http://190.181.63.219:8085/</field>
+    </record>
+    <record id="param_conex_report" model="bo_edi_params">
+        <field name="param_code">3</field>
+        <field name="name">BACK_REP_URL</field>
+        <field name="value">http://190.181.63.219:8086/FormatoGraficoFactura</field>
+    </record>
+    <record id="param_pos" model="bo_edi_params">
+        <field name="param_code">4</field>
+        <field name="name">POS_INVOICING</field>
+        <field name="value">0</field>
+    </record>
+    <record id="param_from_mail" model="bo_edi_params">
+        <field name="param_code">5</field>
+        <field name="name">FROM_MAIL</field>
+        <field name="value">noReply@alphasys.com.bo</field>
+    </record>
+    <record id="param_report_page_break" model="bo_edi_params">
+        <field name="param_code">6</field>
+        <field name="name">BREAKPAGE_ITEM_NUMBER</field>
+        <field name="value">12</field>
+    </record>
+    <record id="param_report_change_amount" model="bo_edi_params">
+        <field name="param_code">7</field>
+        <field name="name">CHANGE_AMOUNT</field>
+        <field name="value">6.96</field>
+    </record>
+    <record id="param_ambience" model="bo_edi_params">
+        <field name="param_code">8</field>
+        <field name="name">AMBIENTE</field>
+        <field name="value">2</field>
+    </record>
+    <record id="param_ambience" model="bo_edi_params">
+        <field name="param_code">9</field>
+        <field name="name">CANCEL_ACTIVE</field>
+        <field name="value">0</field>
+    </record>
+    <record id="param_url_qr" model="bo_edi_params">
+        <field name="param_code">10</field>
+        <field name="name">URL_QR</field>
+        <field name="value">https://pilotosiat.impuestos.gob.bo/consulta/QR?</field>
+    </record>
+    <record id="activity_example" model="l10n_bo.company.activities">
+        <field name="code">741000</field>
+        <field name="name">OTRAS ACTIVIDADES DE SERVICIOS DE APOYO A LAS EMPRESAS</field>
+        <field name="type">S</field>
+    </record>
+    <record id="sin_item_example" model="sin_items">
+        <field name="sin_code">83911</field>
+        <field name="description">SERVICIOS DE DISEÑO DE INTERIORES</field>
+        <field name="activity_code" ref="activity_example"></field>
+    </record>
+    <record id="measure_product" model="measure_unit">
+        <field name="measure_unit_code">57</field>
+        <field name="description">UNIDAD (BIENES)</field>
+    </record>
+    <record id="measure_service" model="measure_unit">
+        <field name="measure_unit_code">58</field>
+        <field name="description">UNIDAD (SERVICIOS)</field>
+    </record>
+    <record id="emission_online" model="emission_types">
+        <field name="id_emission_type">1</field>
+        <field name="description">En Linea</field>
+    </record>
+    <record id="emission_offline" model="emission_types">
+        <field name="id_emission_type">2</field>
+        <field name="description">FUERA DE LINEA</field>
+    </record>
+    <record id="tipo_sector_fact" model="sector_types">
+        <field name="id_sector_type">1</field>
+        <field name="description">FACTURA COMPRA-VENTA</field>
+    </record>
+    <record id="tipo_sector_nota" model="sector_types">
+        <field name="id_sector_type">24</field>
+        <field name="description">NOTA DE CREDITO-DEBITO</field>
+    </record>
+    <record id="ambiente_prueba" model="ambience">
+        <field name="id_ambience">2</field>
+        <field name="description">PRUEBAS</field>
+    </record>
+    <record id="ambiente_prod" model="ambience">
+        <field name="id_ambience">1</field>
+        <field name="description">PRODUCCION</field>
+    </record>
+    <record id="modalidad_elec" model="modalities">
+        <field name="id_modality">1</field>
+        <field name="description">ELECTRONICA</field>
+    </record>
+    <record id="modalidad_compu" model="modalities">
+        <field name="id_modality">2</field>
+        <field name="description">COMPUTARIZADA EN LINEA</field>
+    </record>
+    <record id="cancel_1" model="cancellation_reasons">
+        <field name="code">1</field>
+        <field name="description">FACTURA MAL EMITIDA</field>
+    </record>
+    <record id="cancel_2" model="cancellation_reasons">
+        <field name="code">2</field>
+        <field name="description">NOTA DE CREDITO-DEBITO MAL EMITIDA</field>
+    </record>
+    <record id="cancel_3" model="cancellation_reasons">
+        <field name="code">3</field>
+        <field name="description">DATOS DE EMISION INCORRECTOS</field>
+    </record>
+    <record id="cancel_4" model="cancellation_reasons">
+        <field name="code">4</field>
+        <field name="description">FACTURA O NOTA DE CREDITO-DEBITO DEVUELTA</field>
+    </record>
+    <record id="id_1" model="id_type">
+        <field name="id_type_code">1</field>
+        <field name="description">CI - CEDULA DE IDENTIDAD</field>
+    </record>
+    <record id="id_2" model="id_type">
+        <field name="id_type_code">2</field>
+        <field name="description">CEX - CEDULA DE IDENTIDAD DE EXTRANJERO</field>
+    </record>
 
-        <record id="id_3" model="id_type">
-            <field name="id_type_code">3</field>
-            <field name="description">PAS - PASAPORTE</field>
-        </record>
+    <record id="id_3" model="id_type">
+        <field name="id_type_code">3</field>
+        <field name="description">PAS - PASAPORTE</field>
+    </record>
 
-        <record id="id_4" model="id_type">
-            <field name="id_type_code">4</field>
-            <field name="description">OD - OTRO DOCUMENTO DE IDENTIDAD</field>
-        </record>
+    <record id="id_4" model="id_type">
+        <field name="id_type_code">4</field>
+        <field name="description">OD - OTRO DOCUMENTO DE IDENTIDAD</field>
+    </record>
 
-        <record id="id_5" model="id_type">
-            <field name="id_type_code">5</field>
-            <field name="description">NIT - NÚMERO DE IDENTIFICACIÓN TRIBUTARIA</field>
-        </record>
+    <record id="id_5" model="id_type">
+        <field name="id_type_code">5</field>
+        <field name="description">NIT - NÚMERO DE IDENTIFICACIÓN TRIBUTARIA</field>
+    </record>
 
-        <record id="caption_ex1" model="invoice_caption">
-            <field name="activity_code">741000</field>
-            <field name="description">Ley N° 453: Tienes derecho a un trato equitativo sin discriminación en la oferta de servicios.</field>
-        </record>
+    <record id="caption_ex1" model="invoice_caption">
+        <field name="activity_code">741000</field>
+        <field name="description">Ley N° 453: Tienes derecho a un trato equitativo sin discriminación en la oferta de servicios.</field>
+    </record>
 
-        <record id="caption_ex2" model="invoice_caption">
-            <field name="activity_code">741000</field>
-            <field name="description">Ley N° 453: Tienes derecho a un trato equitativo sin discriminación en la oferta de servicios.</field>
-        </record>
+    <record id="caption_ex2" model="invoice_caption">
+        <field name="activity_code">741000</field>
+        <field name="description">Ley N° 453: Tienes derecho a un trato equitativo sin discriminación en la oferta de servicios.</field>
+    </record>
 
-        <record id="caption_ex3" model="invoice_caption">
-            <field name="activity_code">741000</field>
-            <field name="description">Ley N° 453: Está prohibido importar, distribuir o comercializar productos expirados o prontos a expirar.</field>
-        </record>
-    </data>
+    <record id="caption_ex3" model="invoice_caption">
+        <field name="activity_code">741000</field>
+        <field name="description">Ley N° 453: Está prohibido importar, distribuir o comercializar productos expirados o prontos a expirar.</field>
+    </record>
+    <!-- </data> -->
 </odoo>

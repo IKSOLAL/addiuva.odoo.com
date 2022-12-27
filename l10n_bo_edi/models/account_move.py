@@ -1299,6 +1299,9 @@ class AccountMove(models.Model):
     ##**************************************************************************
 
     def button_reverse(self):
+        if int(str(self.getTime().strftime("%m"))) != int(str(self.invoice_date.strftime("%m"))):
+            raise ValidationError("You cannot cancel another month's invoice than current's")
+
         if self.invoice_mails == '':
             raise ValidationError("Field 'Correos a Enviar' must be filled")
 
@@ -2300,7 +2303,8 @@ class AccountMove(models.Model):
         return True if not "False" else False
     
     async def _check_conex(self, verif_type, verif_value):
-        res = requests.post(url = self.get_back_url() + "api/Operaciones?operacion=" + str(verif_type) + "&valor=" + str(verif_value),
+        company_id = self._get_company_id()
+        res = requests.post(url = self.get_back_url() + "api/Operaciones?operacion=" + str(verif_type) + "&valor=" + str(verif_value) + "&id_empresa=" + str(company_id),
                             headers = {'Content-type': 'application/json'},
                             data = None)
         des_res = json.loads(res.content)
@@ -2367,9 +2371,11 @@ class AccountMove(models.Model):
         return des_res
     
     async def _send_pack(self, id_event):
-        res = requests.post(self.get_back_url() + "api/FacturacionPaquete?id_suc=" + str(id_event))
+        company_id = self._get_company_id()
+        # res = requests.post(self.get_back_url() + "api/FacturacionPaquete?id_suc=" + str(id_event) + "id_empresa=" + str(company_id))
+        res = requests.post(self.get_back_url() + "api/FacturacionPaquete/FacturacionPaquetes_EnvioPaquete?id_suc=" + str(id_event) + "&id_empresa=" + str(company_id))
         des_res = json.loads(res.content)
-        if des_res["_data"][0]["codimpuestos"] == 905:
+        if des_res["_data"][0]["codimpuestos"] == 908:
             return True
         else:
             return False
@@ -2427,13 +2433,16 @@ class AccountMove(models.Model):
         check_internal = 0
         check_back = 0 ## Verificar si item existe en backend
         check_back_code = 0 ## Verificar si codigo SIN existe en backend
-        for item in new_inv.invoice_line_ids: ##TODO parametrizar el nombre del item global_discount
+        check_analytic_acc = 0 ## Verificar cuenta analitica
+        for item in new_inv.invoice_line_ids:
             if (not item.product_id.measure_unit.measure_unit_code or not item.product_id.sin_item.sin_code or not item.product_id.sin_item.activity_code.code) and 'global_discount' not in item.product_id.name:
                 check_hom = 1
             if (not item.product_id.default_code) and 'global_discount' not in item.product_id.name:
                 check_internal = 1
+            if (not item.analytic_account_id):
+                check_analytic_acc = 1
 
-        if check_hom == 0 and check_internal == 0:
+        if check_hom == 0 and check_internal == 0 and check_analytic_acc == 0:
             for item in new_inv.invoice_line_ids:
                 current_product = item.product_id
                 item_to_check = {
@@ -2457,9 +2466,12 @@ class AccountMove(models.Model):
                 else:
                     check_back = 1
 
-        # for item in new_inv.invoice_line_ids: ##TODO parametrizar el nombre del item global_discount
-        #     if (not item.product_id.default_code) and 'global_discount' not in item.product_id.name:
-        #         check_internal = 1
+        check_tax_analytic = 0
+        for journal_item in new_inv.line_ids: # Validacion de cuentas analiticas en impuesto IT-3
+            if journal_item.name:
+                if "IT - 3%" in journal_item.name:
+                    if not journal_item.analytic_account_id:
+                        check_tax_analytic = 1
 
         if check_hom: # Valida Homologacion de todos los productos
             return [1, "One of the Invoice items is not homologated or does not have measure unit"]
@@ -2473,6 +2485,10 @@ class AccountMove(models.Model):
             return [5, "There was an error trying to get the invoice items from DB"]
         if check_back_code:
             return [6, "Couldn't find item SIN Code in Database"]
+        if check_analytic_acc:
+            return [7, "There must be an analytic account selected for every item"]
+        if check_tax_analytic:
+            return [8, "There must be an analytic account selected for 'IT - 3%' Tax"]
         return [0, "Valid"]
     
     def client_validation(self, client):
@@ -2595,7 +2611,8 @@ class AccountMove(models.Model):
                 "cantidad" : item.quantity,
                 "descripcion" : item.name,
                 "preciounitario" : item.price_unit,
-                "subtotal" : round(item.price_unit * item.quantity, 2),
+                # "subtotal" : round(item.price_unit * item.quantity, 2),
+                "subtotal" : item.price_subtotal,
                 # "total" : item.price_total,
                 "total" : new_inv.amount_total,
                 "descuentos" : 0 if item.discount == 0.0 else round((item.price_unit * item.quantity) * ( item.discount / 100 ) , 2), ##TODO PENDIENTE ADICION EN POS,
@@ -2797,15 +2814,24 @@ class AccountMove(models.Model):
             new_blank_invoice = self._get_invoice(pos_name)
         else:
             new_blank_invoice = self
-            ##?? Validar Items
-            check_val = self.general_validations(is_pos)
-            if check_val[0] != 0:
-                raise ValidationError(check_val[1])
-            ##?? Validar Cliente
-            check_client = self.client_validation(new_blank_invoice.partner_id)
-            if check_client[0] != 0:
-                raise ValidationError(check_client[1])
+        
+        self.invoice_logging()
+        new_log = self.env['bo_edi_logs'].search([])[-1]
 
+        ##?? Validar Items
+        check_val = self.general_validations(is_pos)
+        if check_val[0] != 0:
+            self.invoice_logging(new_log.id,1)
+            raise ValidationError(check_val[1])
+        else:
+            self.invoice_logging(new_log.id,1,1)
+        ##?? Validar Cliente
+        check_client = self.client_validation(new_blank_invoice.partner_id)
+        if check_client[0] != 0:
+            self.invoice_logging(new_log.id,2)
+            raise ValidationError(check_client[1])
+        else:
+            self.invoice_logging(new_log.id,2,1)
 
         if not new_blank_invoice.l10n_bo_cufd:
 
@@ -2813,18 +2839,27 @@ class AccountMove(models.Model):
             new_header_id = self.post_header(new_blank_invoice)
             if "Realizada" in new_header_id:
                 new_header_id = new_header_id.split('|')[0]
+                self.invoice_logging(new_log.id,3,1)
             else:
+                self.invoice_logging(new_log.id,3)
                 raise ValidationError("There was an error adding invoice header: " + new_header_id)
 
             ##?? Registro de items
             new_lines = self.post_move_lines(new_blank_invoice, new_header_id)
             if not new_lines:
+                self.invoice_logging(new_log.id,4)
                 raise ValidationError("There was an error adding invoice lines, please check error logs")
-            
+            else:
+                self.invoice_logging(new_log.id,4,1)
+                
             ##?? Flujo de Contingencias
             new_inv = self._pre_send_valid(new_header_id)
             if new_inv[1][0]["codimpuestos"] !=  908:
+                self.invoice_logging(new_log.id,5)
                 raise ValidationError("No fue posible emitir la factura en SIN: " + new_inv[1][0]["mensajeimpuestos"])
+            else:
+                self.invoice_logging(new_log.id,5,1)
+
             # new_inv = new_inv[1][0]
             ##?? Registro de Códigos Factura
             new_blank_invoice.write({"l10n_bo_cufd" : new_inv[1][0]["cufd"]})
@@ -2857,5 +2892,56 @@ class AccountMove(models.Model):
         pos_param = self.env['bo_edi_params'].search(
             [('name', '=', 'POS_INVOICING')])
         pos_param.write({"value" : 0})
+    
+    def invoice_logging(self, code = 0, level= 0, success = 0, 
+                         last_req = 'N/A', last_res = 'N/A', status = "SIN ENVIAR", 
+                            internal_code = 0): ## New: define si se debe registrar o modificar, Code: define en que punto se debe actualizar el registro
+        inv_log = {
+                "date" : str(self.getDate().strftime("%Y-%m-%d %H:%M:%S")),
+                "invoice_date" : str(self.invoice_date.strftime("%Y-%m-%d %H:%M:%S")),
+                "user": self.env.user.name,
+                "inv_name": self.name,
+                "item_val": False,
+                "client_val": False,
+                "header": False,
+                "emit": False,
+                "xml": False,
+                "last_req" : last_req,
+                "last_res" : last_res,
+                "status" : status,
+                "internal_code": internal_code
+            }
+        if not code:
+            return self.env['bo_edi_logs'].create(inv_log)
+        else:
+            if level == 1: #Validacion de Items
+                if success:
+                    inv_log["item_val"] = True
+            elif level == 2: #validacion de Clientes
+                if success:
+                    inv_log["item_val"] = True
+                    inv_log["client_val"] = True
+            elif level == 3: #Validacion de Cabecera
+                if success:
+                    inv_log["item_val"] = True
+                    inv_log["client_val"] = True
+                    inv_log["header"] = True
+            elif level == 4: #Validacion de Emision
+                if success:
+                    inv_log["item_val"] = True
+                    inv_log["client_val"] = True
+                    inv_log["header"] = True
+                    inv_log["emit"] = True
+            elif level == 5: #Validacion de XML Envio SIN
+                if success:
+                    inv_log["item_val"] = True
+                    inv_log["client_val"] = True
+                    inv_log["header"] = True
+                    inv_log["emit"] = True
+                    inv_log["xml"] = True
+            self.env['bo_edi_logs'].search(
+            [('id', '=', code)]).write(inv_log)
+            
+
 
 

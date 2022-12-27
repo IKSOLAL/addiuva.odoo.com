@@ -32,7 +32,12 @@
                                     <div class="row mt16">
                                         <label string="External Connection" for="external_con" class="col-lg-4 o_light_label"/>
                                         <field name="external_con" widget="boolean_toggle" />
-
+                                    </div>
+                                </div>
+                                <div class="content-group" attrs="{'invisible': [('l10n_bo_invoicing_type', '!=', True)]}">
+                                    <div class="row mt16">
+                                        <button name='%(bo_edi_logs_action)d' icon="fa-arrow-right" type="action" string="E-Billing Logs" class="btn-link"/>
+                                        <br/>
                                     </div>
                                 </div>
                             </div>

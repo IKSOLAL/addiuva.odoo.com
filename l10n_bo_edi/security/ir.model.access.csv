@@ -32,3 +32,4 @@ acl_l10n_bo_edi_cancelled_invoices,cancelled_invoices,model_cancelled_invoices,b
 acl_l10n_bo_edi_pwd_sign_wizard,pwd_sign_wizard,model_pwd_sign_wizard,base.group_user,1,1,1,1
 acl_l10n_bo_edi_invoice_event_wizard,invoice_event_wizard,model_invoice_event_wizard,base.group_user,1,1,1,1
 acl_l10n_bo_edi_sin_token,sin_token,model_sin_token,base.group_user,1,1,1,1
+acl_l10n_bo_edi_logs,edi_logs,model_bo_edi_logs,base.group_user,1,1,1,

@@ -73,4 +73,6 @@ from . import cancelled_invoices
 
 from . import sin_token
 
+from . import bo_edi_logs
+
 # from . import account_payment_register, account_payment

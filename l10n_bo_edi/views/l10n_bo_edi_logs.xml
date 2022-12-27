@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="bo_edi_logs_action">
+        <field name="name">Bo Edi Logs</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">bo_edi_logs</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
