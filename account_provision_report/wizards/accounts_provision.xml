@@ -4,10 +4,10 @@
         <field name="name">Account provision Report</field>
         <field name="model">account.provision.report</field>
         <field name="arch" type="xml">
-            <form string="Choose your details">
+            <form>
                     <group col="2">
                         <group col="1">
-                            <field name="nature"  widget="radio" options="{'horizontal': true}"/>
+                            <p>Accounts receivable</p>
                             <field name="foreign"/>
                         </group>
                         <!-- <group col="2">

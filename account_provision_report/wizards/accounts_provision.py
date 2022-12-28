@@ -171,7 +171,7 @@ class ReportAccountprovisionXlsx(models.AbstractModel):
         sheet.merge_range(row_position,1, row_position, 2, concept, subtitles) 
         row_position += 1 #row jump
         if records['nature'] == 'receivable':
-            accounts = tuple(self.env['account.account'].search( ['|', ('code','=ilike','115%'), ('code','=ilike','120%'), '!', ('code', 'in', ('12040001','12040002'))]).ids)
+            accounts = tuple(self.env['account.account'].search([('code','=ilike','11010102%')]).ids)
         else:
             accounts = tuple(self.env['account.account'].search([('code','=ilike','20010%')]).ids)
         row_position = self.calculate_data(accounts, row_position, concept, args, records['foreign'])
