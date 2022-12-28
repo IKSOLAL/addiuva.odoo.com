@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_activities_search" model="ir.ui.view">
+        <field name="name">l10n_bo.sin.items.search</field>
+        <field name="model">sin_items</field>
+        <field name="arch" type="xml">
+            <search string="Search By">
+                <field name="sin_code"/>
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_partner_activities_form" model="ir.ui.view">
+        <field name="name">l10n_bo.sin.items.form</field>
+        <field name="model">sin_items</field>
+        <field name="arch" type="xml">
+            <form string="SIN Items">
+                <group>
+                    <field name="sin_code"/>
+                    <field name="description"/>
+                    <field name="activity_code" />
+                    <field name="active"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_partner_activities_tree" model="ir.ui.view">
+        <field name="name">l10n_bo.sin.items.tree</field>
+        <field name="model">sin_items</field>
+        <field name="arch" type="xml">
+            <tree string="SIN Items">
+                <field name="sin_code"/>
+                <field name="description"/>
+                <field name="activity_code" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_sin_items">
+        <field name="name">SIN Items</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sin_items</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem name="SIN Items"
+        id="menu_action_act_sin_items"
+        action="act_sin_items" 
+        parent="l10n_bo_edi.menu_sin_bolivia"
+        sequence="16"/> -->
+</odoo>

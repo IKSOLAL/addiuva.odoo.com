@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_invoice_incident_search" model="ir.ui.view">
+        <field name="name">l10n_bo.invoice.incident.search</field>
+        <field name="model">invoice_incident</field>
+        <field name="arch" type="xml">
+            <search string="Search By">
+                <field name="description"/>
+                <field name="begin_date" />
+                <field name="end_date"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_invoice_incident_form" model="ir.ui.view">
+        <field name="name">l10n_bo.invoice.incident.form</field>
+        <field name="model">invoice_incident</field>
+        <field name="arch" type="xml">
+            <form string="Invoice Events">
+                <group>
+                    <field name="description"/>
+                    <field name="begin_date" />
+                    <field name="end_date"/>
+                    <field name="incident_status_id"/>
+                    <field name="sin_code"/>
+                </group>
+                <group>
+                    <field name="invoice_event_id"/>
+                    <field name="selling_point_id"/>
+                    <field name="cufd_log_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_invoice_incident_tree" model="ir.ui.view">
+        <field name="name">l10n_bo.invoice.incident.tree</field>
+        <field name="model">invoice_incident</field>
+        <field name="arch" type="xml">
+            <tree string="SIN Items">
+                <field name="description"/>
+                <field name="begin_date" />
+                <field name="end_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_invoice_incidents">
+        <field name="name">Invoice Incidents</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">invoice_incident</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Invoice Incidents"
+        id="menu_action_act_invoice_incidents"
+        action="act_invoice_incidents" 
+        parent="l10n_bo_edi.menu_sin_bolivia"
+        sequence="8"/>
+</odoo>

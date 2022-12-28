@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+        <record id="res_users_bo_edi_form" model="ir.ui.view">
+            <field name="model">res.users</field>
+            <field name="name">res.users.bo.edi.form</field>
+            <field name="inherit_id" ref="base.view_users_form"></field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//sheet//notebook" position="inside">
+                    <!-- <page id="bo_edi_info" string="BO EDI Settings" attrs="{'invisible': [('country_code', '!=', 'BO')]}"> -->
+                    <page id="bo_edi_info" string="BO EDI Settings">
+                        <br/>
+                        <label string="Branch Office" for="l10n_bo_branch_office_id" class="col-lg-4 o_light_label"/>
+                        <field name="l10n_bo_branch_office_id" context="{'search_by_code': True}"/>
+                        <br/>
+                        <label string="Selling Point User" for="l10n_bo_is_seller" class="col-lg-4 o_light_label"/>
+                        <field name="l10n_bo_is_seller" context="{'search_by_code': True}"/>
+                        <br/>
+                        <label string="Selling Point" for="l10n_bo_selling_point_id" class="col-lg-4 o_light_label"/>
+                        <field name="l10n_bo_selling_point_id" context="{'search_by_code': True}"/>
+                        <br/>
+                        <label string="Internal Server Code" for="internal_code" class="col-lg-4 o_light_label"/>
+                        <field name="internal_code" context="{'search_by_code': True}"/>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+    
+</odoo>

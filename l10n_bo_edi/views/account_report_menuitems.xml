@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem name="Bolivian SIN Reports" id="menu_sin_bolivia_report" sequence="5" parent="account.menu_finance_reports" groups="base.group_user"/>
+    <menuitem name="SIN Sales Book" id="menu_action_act_sales_book" action="launch_sales_book_wizard" parent="l10n_bo_edi.menu_sin_bolivia_report" sequence="6" groups="base.group_user"/>
+
+
+
+</odoo>

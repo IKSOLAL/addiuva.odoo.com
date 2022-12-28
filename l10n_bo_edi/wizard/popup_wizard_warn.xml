@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record model="ir.ui.view" id="pop_up_wizard_warning_form_view">
+            <field name="name">pop_up_wizard_warning_form_view</field>
+            <field name="model">popup_warn_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Warning">
+                    <div class="alert alert-warning" role="alert">
+                        <span class="fa fa-lg fa-exclamation-triangle "></span>
+                        El NIT del cliente es inexistente, desea continuar de todos modos?
+                    </div>
+                    <footer>
+                        <button name="to_continue" type="object" string="Continuar" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id='popup_wizard_warning' model='ir.actions.act_window'>
+            <field name="name">Warn PopUp </field>
+            <!-- <field name="binding_model_id" ref="model_exploracion_mision"/> -->
+            <field name="res_model">popup_warn_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+    
+</odoo>

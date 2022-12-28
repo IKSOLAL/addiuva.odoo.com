@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_id_type_search" model="ir.ui.view">
+        <field name="name">l10n_bo_edi.id_type.search</field>
+        <field name="model">id_type</field>
+        <field name="arch" type="xml">
+            <search string="Search By">
+                <field name="id_type_code"/>
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_id_type_form" model="ir.ui.view">
+        <field name="name">l10n_bo_edi.id_type.form</field>
+        <field name="model">id_type</field>
+        <field name="arch" type="xml">
+            <form string="ID Type">
+                <group>
+                    <field name="id_type_code"/>
+                    <field name="description"/>
+                    <field name="active"/>
+                </group>
+                <group>
+                    <field name="res_partner_ids"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_id_type_tree" model="ir.ui.view">
+        <field name="name">l10n_bo_edi.id_type.tree</field>
+        <field name="model">id_type</field>
+        <field name="arch" type="xml">
+            <tree string="ID Type">
+                <field name="id_type_code"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_id_type">
+        <field name="name">ID Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">id_type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem name="ID Types"
+        id="menu_action_act_id_type"
+        action="act_id_type" 
+        parent="l10n_bo_edi.menu_sin_bolivia"
+        sequence="19"/> -->
+</odoo>

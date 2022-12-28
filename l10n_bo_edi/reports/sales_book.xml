@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_sales_book" model="report.paperformat">
+        <field name="name">Sales Book</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">400</field>
+        <field name="page_width">200</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">3</field>
+        <field name="margin_bottom">3</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">80</field>
+    </record>
+
+    <record id="sales_book" model="ir.actions.report">
+        <field name="name">Libro de Ventas</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_bo_edi.sales_book_template</field>
+        <field name="report_file">l10n_bo_edi.sales_book_template</field>
+        <field name="paperformat_id" ref="l10n_bo_edi.paperformat_sales_book"></field>
+    </record>
+
+
+
+</odoo>

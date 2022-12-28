@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="bank_bisa_cbba" model="res.bank">
+        <field name="name">BANCO BISA S.A. (CBBA)</field>
+        <field name="bic">BANIBOLXCBB</field>
+        <field name="street">Av. Ballivián </field>
+        <field name="zip">00000</field>
+        <field name="city">Cochabamba</field>
+        <field name="country" ref="base.bo" />
+    </record>
+    <record id="bank_bnb_scz" model="res.bank">
+        <field name="name">BNB SCZ</field>
+        <field name="bic">BNBOBOLXSCZ</field>
+        <field name="street">Calle Isabel La Católica N° 149, Agencia BNB, Zona Casco Viejo</field>
+        <field name="zip">00000</field>
+        <field name="city">Santa Cruz</field>
+        <field name="country" ref="base.fo" />
+    </record>
+    <!-- Asustek already has a demo IBAN provided by base_iban -->
+    <record id="payment_mode_outbound_ct1" model="account.payment.mode">
+        <field name="name">Credit Transfer to Suppliers</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="bank_account_link">variable</field>
+        <field
+            name="payment_method_id"
+            ref="account.account_payment_method_manual_out"
+        />
+    </record>
+    <record id="payment_mode_outbound_dd1" model="account.payment.mode">
+        <field name="name">Direct Debit of suppliers from Société Générale</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="bank_account_link">variable</field>
+        <field
+            name="payment_method_id"
+            ref="account.account_payment_method_manual_out"
+        />
+    </record>
+    <record id="payment_mode_outbound_dd2" model="account.payment.mode">
+        <field name="name">Direct Debit of suppliers from La Banque Postale</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="bank_account_link">variable</field>
+        <field
+            name="payment_method_id"
+            ref="account.account_payment_method_manual_out"
+        />
+    </record>
+    <record id="payment_mode_inbound_ct1" model="account.payment.mode">
+        <field name="name">Inbound Credit Trf Société Générale</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="bank_account_link">variable</field>
+        <!-- TODO: convert to fixed -->
+        <field
+            name="payment_method_id"
+            ref="account.account_payment_method_manual_in"
+        />
+    </record>
+    <record id="payment_mode_inbound_ct2" model="account.payment.mode">
+        <field name="name">Inbound Credit Trf La Banque Postale</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="bank_account_link">variable</field>
+        <!-- TODO: convert to fixed -->
+        <field
+            name="payment_method_id"
+            ref="account.account_payment_method_manual_in"
+        />
+    </record>
+    <record id="payment_mode_inbound_dd1" model="account.payment.mode">
+        <field name="name">Direct Debit of customers</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="bank_account_link">variable</field>
+        <field
+            name="payment_method_id"
+            ref="account.account_payment_method_manual_in"
+        />
+    </record>
+</odoo>

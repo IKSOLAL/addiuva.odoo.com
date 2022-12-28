@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <data noupdate="1"> -->
+
+    <record id="account_move_bo_edi_form" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="name">account.move.bo.edi.form</field>
+        <field name="inherit_id" ref="account.view_move_form"></field>
+        <field name="arch" type="xml">
+
+            <!-- <xpath expr="//sheet" position="before" attrs="{'invisible': [('journal_type', '!=', 'sale')]}">
+                <field name="is_drafted" invisible="1"/>
+                <field name="is_cancelled" invisible="1"/>
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px;"
+                        attrs="{'invisible': [('is_drafted', '=', False)]}">
+                    <bold>
+                        <span title="light" class="fa fa-lightbulb-o" role="img"/>
+                    </bold>
+                    Since the current invoice has been confirmed, we cannot resend it to SIN after returned to draft; in order to resend it please cancel and confirm.
+                </div>
+            </xpath> --> <!--Habilitar alerta en cuanto se pueda filtrar por journal_type-->
+
+            <!--//?? Alert para notificar a usuario de nit invalido-->
+            <!-- <xpath expr="//sheet" position="before" attrs="{'invisible': [('valid_nit', '!=', True)]}">
+                <field name="valid_nit" invisible="1"/>
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px;">
+                    <bold>
+                        <span title="light" class="fa fa-lightbulb-o" role="img"/>
+                    </bold>
+                    El NIT actual del cliente seleccionado es inexistente en el servicio de Impuestos Nacionales
+                </div>
+            </xpath> 
+
+            <xpath expr="//header//button[@name='action_post']" position="replace">
+                <button confirm="Está seguro de confirmar la factura?" 
+                name="action_post" string="Confirm" class="oe_highlight" type="object" groups="account.group_account_invoice" attrs="{'invisible': ['|', '|', ('state', '!=', 'draft'), ('auto_post', '=', True), ('move_type', '=', 'entry')]}"/>
+            </xpath> -->
+
+            <!-- <xpath expr="//sheet" position="before" attrs="{'invisible': [('manual_usd_edit', '!=', True)]}">
+                <field name="manual_usd_edit" invisible="1"/>
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px;">
+                    <bold>
+                        <span title="light" class="fa fa-lightbulb-o" role="img"/>
+                    </bold>
+                    La edición manual de montos está habilitada, verifique montos unitarios/cantidad/subtotal y total antes de emitir la factura
+                </div>
+            </xpath>  -->
+            
+            <!--//?? Alerts para notificar a usuario de Token por vencer o vencido-->
+            <!--//TODO pendiente hacer invisible cuando corresponda-->
+            <!-- <xpath expr="//sheet" position="before" attrs="{'invisible': [('token_check', '!=', 0)]}">
+                <field name="token_check" invisible="1"/>
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px;">
+                    <bold>
+                        <span title="light" class="fa fa-lightbulb-o" role="img"/>
+                    </bold>
+                    Su Token de Facturación Electrónica esta por vencer en unos días, favor de renovarlo
+                </div>
+            </xpath> 
+
+            <xpath expr="//sheet" position="before" attrs="{'invisible': [('token_check', '!=', -1)]}">
+                <field name="token_check" invisible="1"/>
+                <div class="alert alert-danger" role="alert" style="margin-bottom:0px;">
+                    <bold>
+                        <span title="light" class="fa fa-lightbulb-o" role="img"/>
+                    </bold>
+                    Su Token de Facturación Electrónica venció favor de renovarlo
+                </div>
+            </xpath>  -->
+
+            <xpath expr="//header" position="inside" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
+                <field name="is_cancelled" invisible="1"/>
+                <!-- <button name='button_reverse' type="object" string="Null Invoice" class="btn-primary" attrs="{'readonly': [('is_cancelled', '=', True)], 'invisible': [('state', '!=', 'posted')]}"/> -->
+                <button name='button_reverse' type="object" string="Null Invoice" class="btn-primary" attrs="{'invisible':['|' ,('state','!=','posted'), ('is_cancelled','=',True)]}"/>
+                <button name="print_report" type="object" string="Invoice Representation" class="btn-primary" attrs="{'invisible': ['&amp;',('state', '!=', 'posted'), ('inv_type', '=', True)]}"/>
+            </xpath>
+
+            <!-- Averiguar de Pasar de account.move a account.move.line-->
+            <!-- <xpath expr="//sheet//notebook//page[1]//field[1]//tree[1]//field[@name='price_total']" position="after">
+                <field name="total_discount" invisible="1"/>
+                <field name="total_discount" context="{'search_by_code': True}"/>
+            </xpath> -->
+
+            <!--//?? WORKAROUND DE DESCUENTO GLOBAL POR NUEVO CAMPO  -->
+            <!-- <xpath expr="//sheet//group[1]//group[2]//div[@name='journal_div']" position="after">
+                <field name="total_discount" invisible="1"/>
+                <field name="total_discount" context="{'search_by_code': True}"/>
+            </xpath> -->
+            <!--//?? WORKAROUND DE DESCUENTO GLOBAL POR NUEVO CAMPO  -->
+
+            <!-- <xpath expr="//sheet//group[1]//group[@id='header_right_group']//div[@name='journal_div']" position="after" attrs="{'invisible': [('country_code', '!=', 'BO')]}"> -->
+                <!--attrs="{'invisible': [('country_code', '!=', 'BO')]}"-->
+                <!-- <div id="l10n_bo_edi_section_config" class="row mt16 o_settings_container"> -->
+                    <!-- <field name="invoice_mails" invisible="1"/> -->
+                    <!-- <field name="invoice_mails" context="{'search_by_code': True}"/> -->
+                    <!--TODO Verificar razon por la cual no oculta el campo-->
+                    <!-- <field name="manual_usd_edit" invisible="1"/>  -->
+                    <!-- <field name="manual_usd_edit" widget="boolean_toggle"/> -->
+                <!-- </div> -->
+            <!-- </xpath> -->
+
+
+            <!--Para poder obtener el valor del flag, se debe definir en la vista, si se desea ocultar el flag, utilizar invisible="1" -->
+            <xpath expr="//sheet//notebook" position="inside" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
+                <field name="e_billing" invisible="1"/>
+                <field name="inv_type" invisible=" 1"/>
+                <field name="is_confirmed" invisible="1"/>
+                <field name="journal_type" invisible="1"/>
+                <field name="dosage_data_edit" invisible="1"/>
+                <field name="with_tax" invisible="1"/>
+                <page id="bo_edi_info" string="BO EDI Information" attrs="{'invisible': ['|',('e_billing', '=', False), ('inv_type', '=', False)]}">
+
+                    <!-- <div class="container">
+                        <div class="row">
+                            <button name='get_last_CUFD' type="object" string="Limpiar" class="btn-secondary"/>
+                            <button name='sync_activities' type="object" string="Comunicación SIN" class="btn-info"/>
+                            <button name='set_bo_edi_info' type="object" string="Llenado de Codigos" class="btn-info"/>
+                            <button name='check_conectivity' type="object" string="Generar Factura XML" class="btn-primary"/>
+                            <button name="print_report" type="object" string="Representación Gráfica" class="btn-primary"/>
+                        </div>
+                    </div> -->
+
+                    <br/>
+                    <!-- <button name="print_report" type="object" string="Invoice Representation" class="btn-primary" attrs="{'invisible': [('is_confirmed', '=', False)]}"/> -->
+                    <!-- <br/>
+                    <span class="o_form_label">SIN Codes</span>
+                    <label string="CUFD Code" for="l10n_bo_cufd" class="col-lg-4 o_light_label"/>
+                    <field name="l10n_bo_cufd" context="{'search_by_code': True}"/>
+                    <br/>
+                    <br/>
+                    <label string="CUF Code" for="l10n_bo_cuf" class="col-lg-4 o_light_label"/>
+                    <field name="l10n_bo_cuf" context="{'search_by_code': True}"/> -->
+
+                    <div id="l10n_bo_section" class="row mt16 o_settings_container" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
+
+                        <!-- <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Sending Mails</span>
+                                <br/>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Emails" for="invoice_mails" class="col-lg-4 o_light_label"/>
+                                        <field name="invoice_mails" force_save="1"  context="{'search_by_code': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Branch Office Info</span>
+                                <br/>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Branch Office" for="l10n_bo_branch_office" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_branch_office" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Selling Point" for="l10n_bo_selling_point" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_selling_point" context="{'search_by_code': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Emission Info</span>
+                                <br/>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Invoice Number" for="l10n_bo_invoice_number" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_invoice_number" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Internal Code" for="internal_code" class="col-lg-4 o_light_label"/>
+                                        <field name="internal_code" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Emission type" for="l10n_bo_emission_type" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_emission_type" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Document Status" for="l10n_bo_document_status" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_document_status" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Invalid NIT" for="invalid_nit" class="col-lg-4 o_light_label"/>
+                                        <field name="invalid_nit" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Manual Invoice" for="is_manual" class="col-lg-4 o_light_label"/>
+                                        <field name="is_manual" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Is Cancelled" for="is_cancelled" class="col-lg-4 o_light_label"/>
+                                        <field name="is_cancelled" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Edición Montos USD" for="manual_usd_edit" class="col-lg-4 o_light_label"/>
+                                        <field name="manual_usd_edit" widget="boolean_toggle"/>
+                                        <br/>
+                                        <label string="Correos a Enviar" for="invoice_mails" class="col-lg-4 o_light_label"/>
+                                        <field name="invoice_mails" context="{'search_by_code': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <!--?? FACTURAS MANUALES-->
+                        <!-- <div class="col-12 col-lg-4 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Manual Invoicing</span>
+                                <br/>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <button name='launch_new_event_wizard' type="object" string="Send Manual Invoices" class="btn-link"/>
+                                    </div>
+                                    <div class="row mt16">
+                                        <label string="Manual Invoice Date Date" for="manual_invoice_date" class="col-lg-4 o_light_label"/>
+                                        <field name="manual_invoice_date" context="{'search_by_code': True}"/>
+                                        <button name='manual_inv' type="object" string="Manual XML Invoice" class="btn-info"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!--??###################-->
+                        <div class="col-12 col-lg-8 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">SIN Codes</span>
+                                <br/>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="CUFD Code" for="l10n_bo_cufd" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_cufd" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="CUF Code" for="l10n_bo_cuf" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_cuf" context="{'search_by_code': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/>
+
+                    </div>
+                </page>
+
+                <!-- <page id="bo_edi_info" string="BO Information" attrs="{'invisible': [('e_billing', '!=', False)]}"> -->
+                <page id="bo_edi_info" string="BO Information" attrs="{'invisible': ['&amp;',('e_billing', '=', True), ('inv_type', '=', True)]}">
+                    <field name="inv_type" invisible=" 1"/>
+                    <form string="BO Dosage Set">
+                        <sheet>
+                            <group>
+                                <field name="with_tax" context="{'search_by_code': True}" widget="boolean_toggle"/>
+                            </group>
+                            <group>
+                                <group string="Invoice Dosage Data">
+                                    <field name="auth_number" attrs="{'readonly':[('inv_type', '!=', False)]}" context="{'search_by_code': True}"/>
+                                    <!-- <field name="control_code" attrs="{'readonly':[('inv_type', '!=', False)]}" context="{'search_by_code': True}"/> --><!-- Usar este-->
+                                    <!-- <field name="l10n_bo_invoice_number" attrs="{'readonly':[('state', '=', 'cancel')]}" context="{'search_by_code': True}"/> -->
+                                    <!-- <field name="l10n_bo_invoice_number" attrs="{'readonly':[('inv_type', '!=', False)]}" context="{'search_by_code': True}"/> --> <!-- Usar este-->
+                                    <!--Cambio correlativo provisional-->
+                                    <field name="control_code" attrs="{'readonly':[('dosage_data_edit', '!=', True)]}" context="{'search_by_code': True}"/>
+                                    <field name="l10n_bo_invoice_number" attrs="{'readonly':[('dosage_data_edit', '!=', True)]}" context="{'search_by_code': True}"/>
+                                    <field name="dui" attrs="{'invisible':[('inv_type', '!=', False)], 'readonly':[('inv_type', '!=', False)]}" context="{'search_by_code': True}"/>
+                                </group>
+                                <group string="Dosages" attrs="{'invisible':[('inv_type', '!=', True)]}">
+                                    <field name="dosage_id" attrs="{'readonly':[('state','=','cancel')]}"/>
+                                    <field name="reversed_inv_id" domain="['&amp;',('invoice_dosage_id', '=', dosage_id), ('inv_reversed' , '=', False)]" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                </group>
+                                <group>
+                                    <button name="print_report" type="object" string="Invoice Report" class="btn-primary" attrs="{'invisible': ['|',('is_confirmed', '=', False) , ('state', '!=', 'posted')]}"/>
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+                </page>
+            </xpath>
+
+            <!-- <xpath expr="//sheet//group" position="before">
+                <div class="card text-dark bg-light mb-3" attrs="{'invisible':[('inv_type', '=', True)]}" style="width: 50%;">
+                    <div class="card-header">Invoice Dosage</div>
+                    <div class="card-body">
+                        <form string="BO Dosage Set">
+                            <sheet>
+                                <group>
+                                    <field name="inv_type" invisible="1"/>
+                                    <group string="Dosages">
+                                        <field name="dosage_id"/>
+                                    </group>
+                                    <group string="Invoice Dosage Data">
+                                        <field name="auth_number" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                        <field name="control_code" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                        <field name="l10n_bo_invoice_number" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                        <field name="dui" attrs="{'invisible':[('inv_type', '=', False)], 'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                    </group>
+                                </group>
+                            </sheet>
+                        </form>
+                    </div>
+                </div>
+            </xpath> -->
+
+        </field>
+    </record>
+
+    <record id="account_move_bo_edi_in_tree" model="ir.ui.view">
+        <field name="name">account.move.bo.edi.in.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_in_invoice_tree"></field>
+        <field name="arch" type="xml">
+           
+            <xpath expr="//tree[1]/field[@name='invoice_partner_display_name']" position="after">
+                <field name="l10n_bo_invoice_number"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="account_move_bo_edi_tree" model="ir.ui.view">
+        <field name="name">account.move.bo.edi.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_out_invoice_tree"></field>
+        <field name="arch" type="xml">
+           <!-- <xpath expr="//tree" position="attributes">
+                <field name="l10n_bo_invoice_number"></field>
+            </xpath> -->
+
+            <xpath expr="//tree[1]/field[@name='invoice_partner_display_name'][2]" position="after">
+                <field name="l10n_bo_invoice_number"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+
+    <!-- </data> -->
+
+
+
+
+</odoo>

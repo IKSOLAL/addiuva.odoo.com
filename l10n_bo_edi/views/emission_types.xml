@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_emission_types_search" model="ir.ui.view">
+        <field name="name">l10n_bo.emission_types.search</field>
+        <field name="model">emission_types</field>
+        <field name="arch" type="xml">
+            <search string="Search By">
+                <field name="id_emission_type"/>
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_emission_types_form" model="ir.ui.view">
+        <field name="name">l10n_bo.emission_types.form</field>
+        <field name="model">emission_types</field>
+        <field name="arch" type="xml">
+            <form string="Emission Types">
+                <group>
+                    <field name="id_emission_type"/>
+                    <field name="description"/>
+                    <field name="active"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_emission_types_tree" model="ir.ui.view">
+        <field name="name">l10n_bo.emission_types.tree</field>
+        <field name="model">emission_types</field>
+        <field name="arch" type="xml">
+            <tree string="Emission Types">
+                <field name="id_emission_type"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_emission_types">
+        <field name="name">Emission Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">emission_types</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem name="Emission Types"
+        id="menu_action_act_emission_types"
+        action="act_emission_types" 
+        parent="l10n_bo_edi.menu_sin_bolivia"
+        sequence="11"/> -->
+</odoo>

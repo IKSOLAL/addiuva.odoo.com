@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+    
+        <record id="res_partner_bo_edi" model="ir.ui.view">
+        <field name="name">res.partner.bo.edi</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//notebook" position="inside" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
+                <page id="bo_edi_info" string="BO EDI Settings">
+                <br/>
+                <label string="Complement" for="complement" class="col-lg-4 o_light_label"/>
+                <field name="complement" context="{'search_by_code': True}"/>
+                <br/>
+                <label string="ID Type" for="l10n_bo_id_type" class="col-lg-4 o_light_label"/>
+                <field name="l10n_bo_id_type" context="{'search_by_code': True}"/>
+                <br/>
+                </page>
+
+            </xpath>
+        </field>
+        </record>
+    
+    </data>
+    
+
+</odoo>
