@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ik_account_group,Acceso a ik_account_group,model_ik_account_group,ik_account_group,1,1,1,1
+
+
+
