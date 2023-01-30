@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-03 03:56+0000\n"
-"PO-Revision-Date: 2022-06-03 03:56+0000\n"
+"POT-Creation-Date: 2023-01-05 18:30+0000\n"
+"PO-Revision-Date: 2023-01-05 18:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,6 +32,12 @@ msgstr "1er Semestre Año Anterior"
 #, python-format
 msgid "2nd Semester"
 msgstr "2do Semestre Año Anterior"
+
+#. module: account_pending_report
+#: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#, python-format
+msgid "2nd Year"
+msgstr "2do Año"
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
@@ -98,6 +104,7 @@ msgstr "Cuentas Antiguas"
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__foreign
 #, python-format
 msgid "American currency"
 msgstr "Moneda Americana"
@@ -106,13 +113,13 @@ msgstr "Moneda Americana"
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "April"
-msgstr "Abril"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "August"
-msgstr "Agosto"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
@@ -150,14 +157,14 @@ msgstr "Corriente "
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "December"
-msgstr "Diciembre"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__detail
 #, python-format
 msgid "Detailed"
 msgstr "Detallado"
-
 
 #. module: account_pending_report
 #: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__display_name
@@ -168,18 +175,23 @@ msgstr "Nombre a mostrar"
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "February"
-msgstr "Febrero"
-
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__dt_final
 #, python-format
 msgid "Final Date"
 msgstr "Fecha final"
 
+#. module: account_pending_report
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__id
+msgid "ID"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__dt_initial
 #, python-format
 msgid "Initial Date"
 msgstr "Fecha Inicial"
@@ -188,26 +200,34 @@ msgstr "Fecha Inicial"
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "January"
-msgstr "Enero"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "July"
-msgstr "Julio"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "June"
-msgstr "Junio"
-
+msgstr ""
 
 #. module: account_pending_report
-#: code:addons/account_pending_report/wizards/accounts_pending.py:0
-#, python-format
-msgid "2nd Year"
-msgstr "2do Año"
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_pending_report
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_pending_report
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__write_date
+msgid "Last Updated on"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
@@ -225,25 +245,25 @@ msgstr "DEUDORES VARIOS"
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "March"
-msgstr "Marzo"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "May"
-msgstr "Mayo"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "November"
-msgstr "Noviembre"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "October"
-msgstr "Octubre"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
@@ -265,9 +285,10 @@ msgstr "PROVEEDORES"
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#: model:ir.model.fields.selection,name:account_pending_report.selection__account_pending_report__nature__payable
 #, python-format
 msgid "Payable"
-msgstr "Por Pagar"
+msgstr ""
 
 #. module: account_pending_report
 #: model_terms:ir.ui.view,arch_db:account_pending_report.view_account_pending_report
@@ -276,16 +297,16 @@ msgstr "Imprimir"
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#: model:ir.model.fields.selection,name:account_pending_report.selection__account_pending_report__nature__receivable
 #, python-format
 msgid "Receivable"
-msgstr "Por Cobrar"
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
 #, python-format
 msgid "September"
-msgstr "Septiembre"
-
+msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
@@ -295,13 +316,22 @@ msgstr ""
 
 #. module: account_pending_report
 #: code:addons/account_pending_report/wizards/accounts_pending.py:0
+#: model:ir.model.fields,field_description:account_pending_report.field_account_pending_report__nature
 #, python-format
 msgid "Type of report"
 msgstr "Tipo de reporte"
 
+#. module: account_pending_report
+#: model:ir.model,name:account_pending_report.model_account_pending_report
+msgid "account.pending.report"
+msgstr ""
 
 #. module: account_pending_report
 #: model_terms:ir.ui.view,arch_db:account_pending_report.view_account_pending_report
 msgid "or"
 msgstr "O"
 
+#. module: account_pending_report
+#: model:ir.model,name:account_pending_report.model_report_account_pending_report_accpend_report_xlsx
+msgid "report.account_pending_report.accpend_report_xlsx"
+msgstr ""

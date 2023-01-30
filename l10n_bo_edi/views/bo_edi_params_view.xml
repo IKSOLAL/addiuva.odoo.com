@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    
+    <record id="view_bo_edi_params_search" model="ir.ui.view">
+        <field name="name">l10n_bo.edi.params.search</field>
+        <field name="model">bo_edi_params</field>
+        <field name="arch" type="xml">
+            <search string="Search By">
+                <field name="param_code"/>
+                <field name="name" />
+                <field name="value"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_bo_edi_params_form" model="ir.ui.view">
+        <field name="name">l10n_bo.edi.params.form</field>
+        <field name="model">bo_edi_params</field>
+        <field name="arch" type="xml">
+            <form string="Invoice Events">
+                <group>
+                    <field name="param_code"/>
+                    <field name="name"/>
+                    <field name="value"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_bo_edi_params_tree" model="ir.ui.view">
+        <field name="name">l10n_bo.edi.params.tree</field>
+        <field name="model">bo_edi_params</field>
+        <field name="arch" type="xml">
+            <!-- <xpath expr="//header" position="inside">
+            </xpath> -->
+            <tree string="SIN Items">
+                <field name="param_code"/>
+                <field name="name" />
+                <field name="value"/>
+                <!-- HABILITAR PARA SETEAR PIN DIGITAL FIRMA ELECTRONICA -->
+                <!-- <button name='launch_pwd_wizard' type="object" string="SET DIGITAL SIGN PASS" class="btn-primary"/> -->
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_bo_edi_params">
+        <field name="name">BO edi params</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">bo_edi_params</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem name="BO edi params"
+        id="menu_action_act_bo_edi_params"
+        action="act_bo_edi_params" 
+        parent="l10n_bo_edi.menu_sin_bolivia"
+        sequence="9"/> -->
+</odoo>

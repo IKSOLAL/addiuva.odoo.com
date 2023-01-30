@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sales_book_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <!-- <h2 t-field="doc.amount_total" class="mt16"/> -->
+                        <h2 style="color:blue;">Registro de Ventas Estandar</h2>
+                        <p>(Expresado en Bolivianos)</p>
+
+                        <table class="table table-striped">
+                            <thead style="color:blue;" class="bg-primary">
+                                <tr>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Especificacion</th>
+                                    <th scope="col">Fecha de la factura</th>
+                                    <th scope="col">N° de la Factura</th>
+                                    <th scope="col">Código de Autorización / CUF</th>
+                                    <th scope="col">NIT/CI Cliente</th>
+                                    <th scope="col">Complemento</th>
+                                    <th scope="col">Nombre o Razón Social</th>
+                                    <th scope="col">Importe Total de la Venta</th>
+                                    <th scope="col">Importe ICE</th>
+                                    <th scope="col">Importe IEHD</th>
+                                    <th scope="col">Importe IPJ</th>
+                                    <th scope="col">Tasas</th>
+                                    <th scope="col">Otros No Sujetos al IVA</th>
+                                    <th scope="col">Exportaciones y Operaciones Exentas</th>
+                                    <th scope="col">Tasas</th>
+                                    <th scope="col">Otros no sujetos al IVA</th>
+                                    <th scope="col">Exportaciones y Operaciones Exentas</th>
+                                    <th scope="col">Ventas Gravadas a Tasa Cero</th>
+                                    <th scope="col">Subtotal</th>
+                                    <th scope="col">Descuentos, Bonificaciones y Rebajas Sujetas al IVA</th>
+                                    <th scope="col">Importe Gift Card</th>
+                                    <th scope="col">Importe Base para Débito Fiscal</th>
+                                    <th scope="col">Débito Fiscal</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Código de Control / CUFD</th>
+                                    <th scope="col">Tipo de Venta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        <p t-esc="doc_index + 1"/>
+                                    </th>
+                                    <td>2</td>
+                                    <td>
+                                        <p t-field="doc.invoice_date_due"/>
+                                    </td>
+                                    <td>
+                                        <p t-field="doc.l10n_bo_invoice_number"/>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <p t-field="doc.partner_id.vat"/>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <p t-field="doc.partner_id.name"/>
+                                    </td>
+                                    <td>
+                                        <p t-field="doc.amount_total" />
+                                    </td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>
+                                        <p t-field="doc.amount_total" />
+                                    </td>
+                                    <td>
+                                        <p t-field="doc.amount_by_group" />
+                                    </td>
+                                    <td>0.00</td>
+                                    <td>
+                                        <p t-field="doc.amount_untaxed" />
+                                    </td>
+                                    <td>a</td>
+                                    <td>V</td>
+                                    <td>a</td>
+                                    <td>a</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

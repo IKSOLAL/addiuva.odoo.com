@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_invoice_event_search" model="ir.ui.view">
+        <field name="name">l10n_bo.invoice.event.search</field>
+        <field name="model">invoice_event</field>
+        <field name="arch" type="xml">
+            <search string="Search By">
+                <field name="code"/>
+                <field name="description" />
+            </search>
+        </field>
+    </record>
+
+    <record id="view_invoice_event_form" model="ir.ui.view">
+        <field name="name">l10n_bo.invoice.event.form</field>
+        <field name="model">invoice_event</field>
+        <field name="arch" type="xml">
+            <form string="Invoice Events">
+                <group>
+                    <field name="code" />
+                    <field name="description"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_invoice_event_tree" model="ir.ui.view">
+        <field name="name">l10n_bo.invoice.event.tree</field>
+        <field name="model">invoice_event</field>
+        <field name="arch" type="xml">
+            <tree string="SIN Items">
+                <field name="code" />
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_invoice_events">
+        <field name="name">Invoice Events</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">invoice_event</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem name="Invoice Events"
+        id="menu_action_act_invoice_events"
+        action="act_invoice_events" 
+        parent="l10n_bo_edi.menu_sin_bolivia"
+        sequence="20"/> -->
+</odoo>

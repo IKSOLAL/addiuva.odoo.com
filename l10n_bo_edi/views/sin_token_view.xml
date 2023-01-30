@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sin_token_activities_search" model="ir.ui.view">
+        <field name="name">l10n_bo.sin.token.search</field>
+        <field name="model">sin_token</field>
+        <field name="arch" type="xml">
+            <search string="Search By">
+                <field name="begin_date"/>
+                <field name="end_date"/>
+                <field name="token"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_sin_token_activities_form" model="ir.ui.view">
+        <field name="name">l10n_bo.sin.token.form</field>
+        <field name="model">sin_token</field>
+        <field name="arch" type="xml">
+            <form string="SIN Token">
+                <group>
+                    <field name="begin_date"/>
+                    <field name="end_date"/>
+                    <field name="token"/>
+                    <field name="notif_days" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sin_token_activities_tree" model="ir.ui.view">
+        <field name="name">l10n_bo.sin.token.tree</field>
+        <field name="model">sin_token</field>
+        <field name="arch" type="xml">
+            <tree string="SIN Token">
+                <field name="begin_date"/>
+                <field name="end_date"/>
+                <field name="token"/>
+                <field name="notif_days" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_sin_token">
+        <field name="name">SIN Token</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sin_token</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem name="SIN Token"
+        id="menu_action_act_sin_token"
+        action="act_sin_token" 
+        parent="l10n_bo_edi.menu_sin_bolivia"
+        sequence="16"/> -->
+</odoo>

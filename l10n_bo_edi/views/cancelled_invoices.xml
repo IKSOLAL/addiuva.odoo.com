@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_cancelled_invoices_search" model="ir.ui.view">
+        <field name="name">l10n_bo_edi.cancelled_invoices.search</field>
+        <field name="model">cancelled_invoices</field>
+        <field name="arch" type="xml">
+            <search string="Search By">
+                <field name="invoice_num"/>
+                <field name="reason_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_cancelled_invoices_form" model="ir.ui.view">
+        <field name="name">l10n_bo_edi.cancelled_invoices.form</field>
+        <field name="model">cancelled_invoices</field>
+        <field name="arch" type="xml">
+            <form string="Canceled Invoices">
+                <group>
+                    <field name="invoice_num"/>
+                    <field name="inv_reversed"/>
+                    <field name="account_move_id"/>
+                </group>
+                <group>
+                    <field name="date"/>
+                    <field name="reason_id" />
+                    <field name="invoice_dosage_id"/>
+                    <field name="active" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cancelled_invoices_tree" model="ir.ui.view">
+        <field name="name">l10n_bo_edi.cancelled_invoices.tree</field>
+        <field name="model">cancelled_invoices</field>
+        <field name="arch" type="xml">
+            <tree string="Canceled Invoices">
+                <field name="date"/>
+                <field name="invoice_num"/>
+                <field name="account_move_id" />
+                <field name="inv_reversed" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_cancelled_invoices">
+        <field name="name">Canceled Invoices</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cancelled_invoices</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Cancelled Invoices"
+        id="menu_action_act_cancelled_invoices"
+        action="act_cancelled_invoices" 
+        parent="l10n_bo_edi.menu_sin_bolivia"
+        sequence="18"/>
+</odoo>

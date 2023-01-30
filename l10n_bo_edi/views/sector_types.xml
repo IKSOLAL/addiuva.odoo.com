@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sector_types_search" model="ir.ui.view">
+        <field name="name">l10n_bo.sector_types.search</field>
+        <field name="model">sector_types</field>
+        <field name="arch" type="xml">
+            <search string="Search By">
+                <field name="id_sector_type"/>
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_sector_types_form" model="ir.ui.view">
+        <field name="name">l10n_bo.sector_types.form</field>
+        <field name="model">sector_types</field>
+        <field name="arch" type="xml">
+            <form string="Sector Types">
+                <group>
+                    <field name="id_sector_type"/>
+                    <field name="description"/>
+                    <field name="active"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sector_types_tree" model="ir.ui.view">
+        <field name="name">l10n_bo.sector_types.tree</field>
+        <field name="model">sector_types</field>
+        <field name="arch" type="xml">
+            <tree string="Sector Types">
+                <field name="id_sector_type"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_sector_types">
+        <field name="name">Sector Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sector_types</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem name="Sector Types"
+        id="menu_action_act_sector_types"
+        action="act_sector_types" 
+        parent="l10n_bo_edi.menu_sin_bolivia"
+        sequence="12"/> -->
+</odoo>

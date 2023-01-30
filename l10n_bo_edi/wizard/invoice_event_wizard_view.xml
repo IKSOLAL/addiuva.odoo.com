@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record model="ir.ui.view" id="invoice_event_wizard_form_view">
+            <field name="name">invoice_event_wizard_form_view</field>
+            <field name="model">invoice_event_wizard</field>
+            <field name="arch" type="xml">
+                <form string="New Invoice event">
+                    <group>
+                        <div class="row mt16">
+                            <label string="Invoice Event" for="invoice_event_id" class="col-lg-4 o_light_label"/>
+                            <field name="invoice_event_id" context="{'search_by_code': True}"/>
+                            <label string="Event Begin Date" for="event_begin_date" class="col-lg-4 o_light_label"/>
+                            <field name="event_begin_date" context="{'search_by_code': True}"/>
+                            <label string="Event End Date" for="event_end_date" class="col-lg-4 o_light_label"/>
+                            <field name="event_end_date" context="{'search_by_code': True}"/>
+                        </div>
+                    </group>
+                    <footer>
+                        <button name="send_package" type="object" string="Send Package" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+
+
+</odoo>

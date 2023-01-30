@@ -69,6 +69,7 @@ class AccountFiscalyear(models.Model):
                     'date_stop': ds,
                     'special': True,
                     'fiscalyear_id': fy.id,
+                    'company_id': self.company_id.id,
                 })
             while ds.strftime('%Y-%m-%d') < str(fy.date_stop):
                 de = ds + relativedelta(months=interval, days=-1)
@@ -81,6 +82,7 @@ class AccountFiscalyear(models.Model):
                     'date_start': ds.strftime('%Y-%m-%d'),
                     'date_stop': de.strftime('%Y-%m-%d'),
                     'fiscalyear_id': fy.id,
+                    'company_id': self.company_id.id,
                 })
                 ds = ds + relativedelta(months=interval)
         return

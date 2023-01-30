@@ -24,7 +24,7 @@ class AccountInvoice(models.Model):
         for record in self:
             if record.invoice_date or record.date:
                 today = record.invoice_date or record.date
-                company_enabled = self.env.company.id
+                company_enabled = self.company_id.id
                 period_ids = self.env['account.period'].search([('date_start','<=',today), ('date_stop','>=',today), ('company_id','=',company_enabled)], limit=1)
                 record.period_id = period_ids
 
@@ -135,7 +135,7 @@ class AccountInvoice(models.Model):
             }
             inv.write(vals)
         return True
-
+    """
     @api.depends(
         'line_ids.debit',
         'line_ids.credit',
@@ -243,7 +243,7 @@ class AccountInvoice(models.Model):
                     move.payment_state = 'paid'
             else:
                 move.payment_state = 'not_paid'
-
+"""
 
 class AccountJournal(models.Model):
     _inherit = "account.journal"
@@ -272,7 +272,7 @@ class AccountMove(models.Model):
         Then, trigger the _onchange_amount_currency manually.
         '''
         if self.date:
-            company_enabled = self.env.company.id
+            company_enabled = self.company_id.id
             period_id = self.env['account.period'].search([('date_start','<=',self.date),('date_stop','>=',self.date),('company_id','=',company_enabled)], limit=1)
             self.period_id = period_id.id
         self.line_ids._onchange_amount_currency()

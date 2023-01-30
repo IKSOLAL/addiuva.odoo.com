@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+
+        <!-- CUFD Form -->
+        <record model="ir.ui.view" id="cufd_view_form">
+            <field name="name">cufd.view.form</field>
+            <field name="model">cufd_log</field>
+            <field name="arch" type="xml">
+                <form string="CUFD Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="id_cufd" attrs="{'invisible': 0}"/>
+                                <field name="cufd"/>
+                            </group>
+                            <group>
+                                <field name="begin_date"/>
+                                <field name="end_date"/>
+                            </group>
+                            <group>
+                                <field name="invoice_number" />
+                                <field name="selling_point" />
+                            </group>
+                            <group>
+                                <field name="controlCode" />
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <!-- <notebook>
+                            <page string="Selling Points">
+                                <field name="selling_point"/>
+                            </page>
+                        </notebook> -->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- CUFD List -->
+        <record model="ir.ui.view" id="cufd_view_list">
+            <field name="name">cufd.view.list</field>
+            <field name="model">cufd_log</field>
+            <field name="arch" type="xml">
+                <tree string="CUFD">
+                    <field name="id_cufd" attrs="{'invisible': 1}"/>
+                    <field name="cufd"/>
+                    <field name="invoice_number"/>
+                    <field name="begin_date"/>
+                    <field name="end_date"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- CUFD Search -->
+        <record model="ir.ui.view" id="cufd_view_search">
+            <field name="name">cufd.view.search</field>
+            <field name="model">cufd_log</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="id_cufd" attrs="{'invisible': 1}"/>
+                    <field name="cufd"/>
+                    <field name="begin_date"/>
+                    <field name="invoice_number"/>
+                    <field name="active"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>
