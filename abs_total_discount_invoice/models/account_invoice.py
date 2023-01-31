@@ -23,11 +23,11 @@ from odoo import api,fields,models,_
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    discount_total = fields.Monetary("Discount Total",compute='total_discount')
+    discount_total = fields.Monetary("Discount Total",compute='total_discount_move')
 
     #Count the total discount
     @api.depends('invoice_line_ids.quantity','invoice_line_ids.price_unit','invoice_line_ids.discount')
-    def total_discount(self):
+    def total_discount_move(self):
         for invoice in self:
             total_price = 0
             discount_amount = 0
