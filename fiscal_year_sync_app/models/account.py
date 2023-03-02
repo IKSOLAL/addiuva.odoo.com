@@ -264,7 +264,10 @@ class AccountJournal(models.Model):
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-
+    def copy(self,default=None):
+        self.state = 'draft'
+        return super(AccountMove,self).copy(default)
+    
     @api.onchange('date')
     def _onchange_date(self):
         '''On the form view, a change on the date will trigger onchange() on account.move
