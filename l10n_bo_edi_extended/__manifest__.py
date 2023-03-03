@@ -5,7 +5,7 @@
 
     'author': "Ivan Porras",
     'category': 'Accounting/Localizations',
-    'depends': ['l10n_bo_edi_extended',],
+    'depends': ['l10n_bo_edi',],
     'data': [
         'reports/invoice_report_template_extended.xml',
     ],
