@@ -7,7 +7,7 @@
     'category': 'Accounting/Localizations',
     'depends': ['l10n_bo_edi_extended',],
     'data': [
-        'reports/invoice_report_template.xml',
+        'reports/invoice_report_template_extended.xml',
     ],
     'installable': True,
     'auto_install': False,
