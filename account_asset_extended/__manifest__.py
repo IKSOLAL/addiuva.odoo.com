@@ -13,9 +13,9 @@ Keeps track of depreciations, and creates corresponding journal entries.
     'category': 'Accounting/Accounting',
     'sequence': 32,
     'depends': ['account_asset'],
-    'data': [
-        
+    "data": [
+        "views/account_asset_view.xml",
     ],
     'license': 'OEEL-1',
-    
+
 }
