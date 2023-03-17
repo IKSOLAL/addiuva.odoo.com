@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 product_planes,pruduct_planes_name,model_product_planes,base.group_user,1,1,1,1
+product_services_plans,product_services_plans_name,model_product_services_plans,base.group_user,1,1,1,1

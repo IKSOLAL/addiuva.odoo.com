@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="planes_action" model="ir.actions.act_window">
-        <field name="name">Planes - Servicios</field>
+        <field name="name">Planes</field>
         <field name="res_model">product.planes</field>
         <field name="view_mode">tree,form</field>
     </record>
 
+     <record id="plan_servicio_action" model="ir.actions.act_window">
+        <field name="name">Plan - Servicio</field>
+        <field name="res_model">product.services.plans</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
-    <menuitem name="Planes Servicios" id="soa_integrations_planes" parent="account.account_account_menu" action="planes_action"/>
-
+    <menuitem name="Planes" id="soa_integrations_planes" parent="account.account_account_menu" action="planes_action"/>
+    <menuitem name="Plan - Servicios" id="soa_integrations_plan_servicio" parent="account.account_account_menu" action="plan_servicio_action"/>
 </odoo>

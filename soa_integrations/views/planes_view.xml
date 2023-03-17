@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="planes_form_view_integra" model="ir.ui.view">
+        <field name="name">planes.form.view.integra</field>
+        <field name="model">product.planes</field>
+        <field name="arch" type="xml">
+            <form string="Plan">
+                <group>
+                    <field name="name"/>
+                    <field name="cod_soa"/>
+                    <field name="company_id" groups="base.group_multi_company" required="1" readonly="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="planes_tree_view_integra" model="ir.ui.view">
+        <field name="name">planes.tree.view.integra</field>
+        <field name="model">product.planes</field>
+        <field name="arch" type="xml">
+            <tree string="Plan">
+                <field name="name"/>
+                <field name="cod_soa"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
