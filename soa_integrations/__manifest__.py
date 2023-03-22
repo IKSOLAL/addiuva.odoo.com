@@ -1,7 +1,7 @@
 
 {
     "name": "SOA Integrations",
-    "version": "15.0.0.0.4",
+    "version": "15.0.0.0.3",
     "category": "SOA",
     "summary": "Modulo de integración SOA - ODOO",
     "author": "Ikatech Solutions",
