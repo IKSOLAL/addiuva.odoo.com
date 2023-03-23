@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_ik_account_group" model="ir.actions.act_window">
+        <field name="name">Agrupación de Cuentas</field>
+        <field name="res_model">ik.account.group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="ik_account_group_menu"  parent="account.account_account_menu" action="action_ik_account_group"/>
+</odoo>

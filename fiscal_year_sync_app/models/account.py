@@ -3,7 +3,10 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
-from datetime import date
+from datetime import date, timedelta
+from odoo.tools.misc import formatLang, format_date, get_lang
+
+from odoo.tools import float_compare, date_utils, email_split, email_re, html_escape, is_html_empty
 
 class AccountAccountType(models.Model):
     _inherit = "account.account.type"
@@ -264,6 +267,35 @@ class AccountJournal(models.Model):
 class AccountMove(models.Model):
     _inherit = "account.move"
 
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        default = dict(default or {})
+        if (fields.Date.to_date(default.get('date')) or self.date) <= self.company_id._get_user_fiscal_lock_date():
+            default['date'] = self.company_id._get_user_fiscal_lock_date() + timedelta(days=1)
+        if self.move_type == 'entry':
+            default['partner_id'] = False
+        if not self.journal_id.active:
+            default['journal_id'] = self.with_context(
+                default_company_id=self.company_id.id,
+                default_move_type=self.move_type,
+            )._get_default_journal().id
+        today = date.today()
+        default['state'] = 'draft'
+        default['date'] = date.today()
+        default['invoice_date'] = False
+        default['period_id'] = False
+        copied_am = super().copy(default)
+        copied_am._message_log(body=_(
+            'This entry has been duplicated from <a href=# data-oe-model=account.move data-oe-id=%(id)d>%(title)s</a>',
+            id=self.id, title=html_escape(self.display_name)
+        ))
+
+        if copied_am.is_invoice(include_receipts=True):
+            # Make sure to recompute payment terms. This could be necessary if the date is different for example.
+            # Also, this is necessary when creating a credit note because the current invoice is copied.
+            copied_am._recompute_payment_terms_lines()
+
+        return copied_am
 
     @api.onchange('date')
     def _onchange_date(self):
