@@ -19,9 +19,10 @@
             <form string="Actualizar Apuntes de Diario">
                 <group class="oe_title">
                     <field name="account_analytic_id" string="Cuenta Analítica"/>
-                    <field name="analytic_tags_id" string="Etiqueta" widget="many2many_tags"/>
+                    <field name="analytic_tags_id" string="Etiqueta Analítica" widget="many2many_tags"/>
                     <field name="account_id" string="Cuenta"/>
                     <field name="partner_id" string="Partner"/>
+                    <field name="tag" string="Etiqueta"/>
                 </group>
                 <footer>
                     <button name="update_records_edit" string="Aplicar" type="object" class="oe_highlight"/>

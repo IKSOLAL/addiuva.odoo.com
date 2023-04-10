@@ -25,6 +25,7 @@ class AccountMoveLineMassediting(models.TransientModel):
 
     account_analytic_id = fields.Many2one('account.analytic.account')
     analytic_tags_id = fields.Many2many('account.analytic.tag')
+    tag = fields.Char()
     account_id = fields.Many2one('account.account')
     partner_id = fields.Many2one('res.partner')
 
@@ -44,4 +45,8 @@ class AccountMoveLineMassediting(models.TransientModel):
             if self.partner_id:
                 line.write({'partner_id': self.partner_id.id})
                 self.env['account.analytic.line'].search([('move_id','=', line.id)]).write({'partner_id':self.partner_id.id})
+            if self.tag:
+                line.write({'name': self.tag})
+                self.env['account.analytic.line'].search([('move_id','=', line.id)]).write({'name':self.tag})
+
 
