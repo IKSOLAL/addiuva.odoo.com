@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report id="l10n_bo_edi_extended_report"
+            model="account.move"
+            string="Report invoice representation bolivia"
+            menu="False"
+            report_type="qweb-pdf"
+            name="l10n_bo_edi_extended.invoice_bolivia_extended"
+            file="l10n_bo_edi_extended.invoice_bolivia_extended"/>
+
+</odoo>
