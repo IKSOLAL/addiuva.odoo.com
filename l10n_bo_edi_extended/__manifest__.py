@@ -7,6 +7,7 @@
     'depends': ['l10n_bo_edi'],
     'data': [
         'reports/invoice_report_template_extended.xml',
+        'reports/invoice_report_template.xml',
     ],
     'license': 'AGPL-3',
     'installable': True,
