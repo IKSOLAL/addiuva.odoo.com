@@ -12,7 +12,7 @@
             <t t-if="not o or not 'company_id' in o">
                 <t t-set="company" t-value="res_company"></t>
             </t>
-            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
             <t t-call="web.basic_layout">
                 <div class="page" style="padding-top: -10px; font-size:18px;">
                     <div class="row">
@@ -29,8 +29,10 @@
                             <center>
                                 <strong>
                                     <p>Servicios de Asistencia Tecnica Concentra Asistencia S.A</p>
-                                    </strong>
-                                    <p style="font-size:11px;">Av. las Ramblas Edif. Cubo ll Piso 8 Ofic. 1 Barrio Equipetrol Norte Cuarto Anillo <br/>Tel.: 3630000 <br/>Santa Cruz - Bolivia</p>
+                                </strong>
+                                <p style="font-size:11px;">Av. las Ramblas Edif. Cubo ll Piso 8 Ofic. 1 Barrio
+                                    Equipetrol Norte Cuarto Anillo<br/>Tel.: 3630000<br/>Santa Cruz - Bolivia
+                                </p>
                                 <br/>
                                 <br/>
                                 <strong>
@@ -95,103 +97,109 @@
                             </table>
                         </div>
                     </div>
-                    <table class="table table-condensed" style="width:100%; font-size: 15px;margin-left:-15px;">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <strong>Nombre/ Razon Social:</strong>
-                                    <span t-field="doc.partner_id"/>
-                                </td>
-                                <td>
-                                    <!-- <strong>NIT/CI/CEX: </strong> <span t-field="doc.partner_id.vat"/> - <span t-field="doc.partner_id.complement"/> -->
-                                    <div t-if="doc.partner_id.complement">
-                                        <strong>NIT/CI/CEX:</strong>
-                                        <span t-field="doc.partner_id.vat"/>
-                                        -
-                                        <span t-field="doc.partner_id.complement"/>
-                                    </div>
-                                    <div t-else="">
-                                        <strong>NIT/CI/CEX:</strong>
-                                        <span t-field="doc.partner_id.vat"/>
-                                        <br/>
-                                        <!-- <strong>NIT/CI/CEX: </strong> <span t-field="doc.partner_id.vat"/> -->
-                                        <strong>Cod. Cliente</strong>
-                                        <span t-field="doc.partner_id.vat"/>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-condensed">
-                        <thead>
-                            <tr align="center">
-                                <hr/>
-                                <th style="width:40%;background-color:#D9E5DC;color:black; padding:10px;color:black;font-size:15px;">
-                                    <strong>
-                                        <span>CODIGO PRODUCTO/ SERVICIO</span>
-                                    </strong>
-                                </th>
-                                <th style="width:40%;background-color:#D9E5DC;color:black; padding:10px;color:black;font-size:15px;">
-                                    <strong>
-                                        <span>CANTIDAD</span>
-                                    </strong>
-                                </th>
-                                <th style="width:40%;background-color:#D9E5DC;color:black; padding:10px ;color:black;font-size:15px;">
-                                    <strong>
-                                        <span>UNIDAD DE MEDIDA</span>
-                                    </strong>
-                                </th>
-                                <th style="width:40%;background-color:#D9E5DC;color:black;padding:10px;color:black;font-size:15px;">
-                                    <strong>
-                                        <span>DESCRIPCION</span>
-                                    </strong>
-                                </th>
-                                <th style="width:40%;background-color:#D9E5DC;color:black; padding:10px;color:black;font-size:15px;">
-                                    <strong>
-                                        <span>PRECIO UNITARIO</span>
-                                    </strong>
-                                </th>
-                                <th style="width:40%;background-color:#D9E5DC;color:black; padding:10px;color:black;font-size:15px;">
-                                    <strong>
-                                        <span>DESCUENTOS</span>
-                                    </strong>
-                                </th>
-                                <th style="width:40%;background-color:#D9E5DC;color:black; padding:10px;color:black;font-size:15px;">
-                                    <strong>
-                                        <span>SUBTOTAL</span>
-                                    </strong>
-                                </th>
-                            </tr>
-                        </thead>
+                    <div class="row" name="info_row" style="border: 2px; border-style: groove;border-radius: 10px;">
+                        <table class="table table-condensed" style="font-size: 15px;margin-left:-15px;">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong style="padding-left:5px;">Nombre/ Razon Social:</strong>
+                                        <span t-field="doc.partner_id"/>
+                                    </td>
+                                    <td>
+                                        <!-- <strong>NIT/CI/CEX: </strong> <span t-field="doc.partner_id.vat"/> - <span t-field="doc.partner_id.complement"/> -->
+                                        <div t-if="doc.partner_id.complement">
+                                            <strong>NIT/CI/CEX:</strong>
+                                            <span t-field="doc.partner_id.vat"/>
+                                            -
+                                            <span t-field="doc.partner_id.complement"/>
+                                        </div>
+                                        <div t-else="">
+                                            <strong>NIT/CI/CEX:</strong>
+                                            <span t-field="doc.partner_id.vat"/>
+                                            <br/>
+                                            <!-- <strong>NIT/CI/CEX: </strong> <span t-field="doc.partner_id.vat"/> -->
+                                            <strong>Cod. Cliente</strong>
+                                            <span t-field="doc.partner_id.vat"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
 
-                        <tbody style="text-align:center; font-size: 14px">
-                            <tr t-foreach="ili" t-as="i">
-                                <td align="center">
-                                    <span t-field="i.product_id.default_code"/>
-                                </td>
-                                <td align="center">
-                                    <span t-field="i.quantity"
-                                          t-options='{"widget":"False", "widget": "float", "precision": 0}'/>
-                                </td>
-                                <td align="center">
-                                    <span t-field="i.product_id.measure_unit.description"/>
-                                </td>
-                                <td align="center">
-                                    <span t-field="i.name" style="font-size: 14px !important;"/>
-                                </td>
-                                <td align="center">
-                                    <span t-field="i.price_unit"
-                                          t-options='{"widget":"False", "widget": "float", "precision": 2}'/>
-                                </td>
-                                <td align="center">0.00
-                                </td>
-                                <td align="center">
-                                    <span t-esc="'{0:,.2f}'.format(float(i.price_unit*i.quantity))"
-                                          style="text-align:center;"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="row" style="border: 2px; border-style: groove;border-radius: 10px;">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr align="center">
+                                    <hr/>
+                                    <th style="width:20%;background-color:#e9ecef;color:black; padding:5px;color:black;font-size:12px;">
+                                        <strong>
+                                            <span>CODIGO PRODUCTO/ SERVICIO</span>
+                                        </strong>
+                                    </th>
+                                    <th style="width:10%;background-color:#e9ecef;color:black; padding:5px;color:black;font-size:12px;">
+                                        <strong>
+                                            <span>CANTIDAD</span>
+                                        </strong>
+                                    </th>
+                                    <th style="width:10%;background-color:#e9ecef;color:black; padding:5px ;color:black;font-size:12px;">
+                                        <strong>
+                                            <span>UNIDAD DE MEDIDA</span>
+                                        </strong>
+                                    </th>
+                                    <th style="width:40%;background-color:#e9ecef;color:black;padding:5px;color:black;font-size:12px;">
+                                        <strong>
+                                            <span>DESCRIPCION</span>
+                                        </strong>
+                                    </th>
+                                    <th style="width:10%;background-color:#e9ecef;color:black; padding:5px;color:black;font-size:12px;">
+                                        <strong>
+                                            <span>PRECIO UNITARIO</span>
+                                        </strong>
+                                    </th>
+                                    <th style="width:10%;background-color:#e9ecef;color:black; padding:5px;color:black;font-size:12px;">
+                                        <strong>
+                                            <span>DESCUENTOS</span>
+                                        </strong>
+                                    </th>
+                                    <th style="width:10%;background-color:#e9ecef;color:black; padding:5px;color:black;font-size:12px;">
+                                        <strong>
+                                            <span>SUBTOTAL</span>
+                                        </strong>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody style="text-align:center; font-size: 14px">
+                                <tr t-foreach="ili" t-as="i">
+                                    <td align="center">
+                                        <span t-field="i.product_id.default_code"/>
+                                    </td>
+                                    <td align="center">
+                                        <span t-field="i.quantity"
+                                              t-options='{"widget":"False", "widget": "float", "precision": 0}'/>
+                                    </td>
+                                    <td align="center">
+                                        <span t-field="i.product_id.measure_unit.description"/>
+                                    </td>
+                                    <td align="center">
+                                        <span t-field="i.name" style="font-size: 14px !important;"/>
+                                    </td>
+                                    <td align="center">
+                                        <span t-field="i.price_unit"
+                                              t-options='{"widget":"False", "widget": "float", "precision": 2}'/>
+                                    </td>
+                                    <td align="center">0.00
+                                    </td>
+                                    <td align="center">
+                                        <span t-esc="'{0:,.2f}'.format(float(i.price_unit*i.quantity))"
+                                              style="text-align:center;"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="row justify-content-end">
                         <div class="col-4">
                             <table class="table table-sm" style="margin-left:-15px;">
@@ -305,8 +313,12 @@
                             <hr/>
                         </div>
                     </div>
-                     <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" name="payment_communication" style="font-size:14px">
-                        Utilize la siguiente referencia al realizar su pago : <b><span t-field="o.payment_reference"/></b>
+                    <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference"
+                       name="payment_communication" style="font-size:14px">
+                        Utilize la siguiente referencia al realizar su pago :
+                        <b>
+                            <span t-field="o.payment_reference"/>
+                        </b>
                     </p>
                     <p t-if="o.invoice_payment_term_id" name="payment_term" style="font-size:14px">
                         <span t-field="o.invoice_payment_term_id.note"/>
@@ -317,29 +329,35 @@
                     </div>
                     <br/>
                     <br/>
-                     <br/>
                     <br/>
-                     <br/>
+                    <br/>
+                    <br/>
                     <br/>
                     <p style="font-size:12px;">
-    ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAIS,EL USO ILICITO SERA SANCIONADO PENALMENTE DE ACUERDO A LEY"
+                        ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAIS,EL USO ILICITO SERA SANCIONADO PENALMENTE DE
+                        ACUERDO A LEY"
                     </p>
                     <span t-if="doc.is_offline">
-                                                    <p style="font-size: 10px !important;">"Este documento es la Representación Gráfica de un Documento Fiscal Digital emitido fuera de línea, verifique su envío con su proveedor o en la página web www.impuestos.gob.bo"</p>
-                                                </span>
-                                                <span t-else="">
-                                                    <p style="font-size: 10px !important;">"Este documento es la Representación Gráfica de un Documento Fiscal Digital emitido en una modalidad de facturación en línea"</p>
-                                                </span>
+                        <p style="font-size: 10px !important;">"Este documento es la Representación Gráfica de un
+                            Documento Fiscal Digital emitido fuera de línea, verifique su envío con su proveedor o en la
+                            página web www.impuestos.gob.bo"
+                        </p>
+                    </span>
+                    <span t-else="">
+                        <p style="font-size: 10px !important;">"Este documento es la Representación Gráfica de un
+                            Documento Fiscal Digital emitido en una modalidad de facturación en línea"
+                        </p>
+                    </span>
                 </div>
-               </t>
+            </t>
         </xpath>
     </template>
 
     <template id="report_invoice_bolivia_lang">
-    <t t-call="web.html_container">
-        <t t-foreach="docs" t-as="doc">
-            <t t-call="l10n_bo_edi_extended.invoice_bolivia_extended" t-lang="doc.partner_id.lang"/>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="l10n_bo_edi_extended.invoice_bolivia_extended" t-lang="doc.partner_id.lang"/>
+            </t>
         </t>
-    </t>
-</template>
+    </template>
 </odoo>
