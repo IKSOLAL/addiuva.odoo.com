@@ -1302,6 +1302,10 @@ class AccountMove(models.Model):
         #@ivan_porras: These lines were commented.
         #if int(str(self.getTime().strftime("%m"))) != int(str(self.invoice_date.strftime("%m"))):
         #    raise ValidationError("You cannot cancel another month's invoice than current's")
+        if int(str(self.getTime().strftime("%m"))) != int(str(self.invoice_date.strftime("%m"))):
+            if int(str(self.getTime().strftime("%d"))) >= 10:
+                raise ValidationError("You cannot cancel another month's invoice than current's")
+
 
         if self.invoice_mails == '':
             raise ValidationError("Field 'Correos a Enviar' must be filled")
