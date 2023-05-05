@@ -1299,8 +1299,9 @@ class AccountMove(models.Model):
     ##**************************************************************************
 
     def button_reverse(self):
-        if int(str(self.getTime().strftime("%m"))) != int(str(self.invoice_date.strftime("%m"))):
-            raise ValidationError("You cannot cancel another month's invoice than current's")
+        #@ivan_porras: These lines were commented.
+        #if int(str(self.getTime().strftime("%m"))) != int(str(self.invoice_date.strftime("%m"))):
+        #    raise ValidationError("You cannot cancel another month's invoice than current's")
 
         if self.invoice_mails == '':
             raise ValidationError("Field 'Correos a Enviar' must be filled")
