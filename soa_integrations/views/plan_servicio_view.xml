@@ -26,7 +26,7 @@
                     <field name="cod_soa"/>
                     <field name="plan_id"/>
                     <field name="company_id"/>
-                    <field name="prod_ids"/>
+                    <field name="prod_id"/>
                 </tree>
             </field>
         </record>
