@@ -21,6 +21,8 @@
         ,'views/product_view.xml'
         ,'views/planes_view.xml'
         ,'views/plan_servicio_view.xml'
+        ,'views/account_move_view.xml'
+        ,
     ],
     "installable": True
 }
