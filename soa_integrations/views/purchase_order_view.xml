@@ -12,6 +12,7 @@
                             <field name="support_num_soa"/>
                             <field name="cod_soa"/>
                             <field name="record_num_soa"/>
+                            <field name="product_service_plan_id"/>
                         </group>
                     </page>
                 </xpath>
