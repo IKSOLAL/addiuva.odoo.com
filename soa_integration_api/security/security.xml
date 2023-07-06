@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+     <record id="soa_integration_api_category" model="ir.module.category">
+        <field name="name">SOA Integration</field>
+    </record>
+
+
+    <record id="access_soa_integration_api_group_user" model="res.groups">
+        <field name="name">SOA Integration API</field>
+        <field name="category_id" ref="soa_integration_api_category"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+</odoo>
