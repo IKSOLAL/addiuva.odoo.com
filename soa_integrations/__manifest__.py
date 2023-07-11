@@ -10,7 +10,8 @@
     "depends": [
             'stock',
             'account',
-            'base'
+            'base',
+            'product',
         ],
     "data": [
         'security/integrations_group_security.xml',
@@ -23,6 +24,10 @@
         ,'views/plan_servicio_view.xml'
         ,'views/account_move_view.xml'
         ,'views/purchase_order_view.xml'
+        ,'views/account_analytic_account_view_form.xml'
+        ,'views/soa_integration_api_view.xml'
+        ,'views/res_partner_view_form.xml'
+        
     ],
     "installable": True
 }

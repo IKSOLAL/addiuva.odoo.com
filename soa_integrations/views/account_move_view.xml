@@ -10,6 +10,7 @@
                     <group>
                         <field name="cod_soa"/>
                         <field name="payment_module_soa"/>
+                         <button name="sync_soa" string="Sync Soa" class="btn-primary" type="object"/>
                     </group>
                 </page>
             </xpath>

@@ -5,3 +5,6 @@ class AccountMove(models.Model):
 
     cod_soa = fields.Integer(string="Código SOA", required=True, default=0)
     payment_module_soa = fields.Boolean(string="Modulo Pagos SOA", default=0)
+
+    def sync_soa(self):
+        print("test")
