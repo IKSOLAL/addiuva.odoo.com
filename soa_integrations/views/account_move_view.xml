@@ -14,7 +14,12 @@
                     </group>
                 </page>
             </xpath>
-             <xpath expr="//sheet//notebook/page[@name='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='analytic_account_id']" position="before">
+            
+             <xpath expr="//sheet//notebook/page[1]/field[@name='invoice_line_ids']/tree/field[@name='analytic_account_id']" position="after">
+                <field name="plan_id"/>
+            </xpath>
+
+            <xpath expr="//sheet//notebook/page[2]/field[@name='line_ids']/tree/field[@name='analytic_account_id']" position="after">
                 <field name="plan_id"/>
             </xpath>
         </field>
