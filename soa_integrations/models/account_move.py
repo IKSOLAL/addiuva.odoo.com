@@ -16,6 +16,16 @@ class AccountMoveLine(models.Model):
 
     plan_id = fields.Many2one(comodel_name="product.planes",string="Plan")
 
+    @api.model
+    def create(self,vals):
+        line = super(AccountMoveLine,self).create(vals)
+        analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)])
+        if analytic:
+            line.account_analytic_id = analytic.id
+        else:
+            raise UserError("El plan no tiene una cuenta analitica asociada")
+
+        return line
 
     @api.onchange('plan_id')
     def _onchange_plan_id(self):

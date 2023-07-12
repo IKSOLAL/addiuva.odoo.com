@@ -14,7 +14,17 @@ class PurchaseOrderLine(models.Model):
 
     plan_id = fields.Many2one(comodel_name="product.planes",string="Plan")
 
+    @api.model
+    def create(self,vals):
+        order_line = super(PurchaseOrderLine,self).create(vals)
+        analytic = self.env['account.analytic.account'].search([('product_plan_id','=',order_line.plan_id.id)])
+        if analytic:
+            order_line.account_analytic_id = analytic.id
+        else:
+            raise UserError("El plan no tiene una cuenta analitica asociada")
 
+        return order_line
+    
     @api.onchange('plan_id')
     def _onchange_plan_id(self):
         for line in self:
