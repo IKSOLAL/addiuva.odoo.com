@@ -9,7 +9,7 @@ class category(models.Model):
                                  default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('ik_integrations_group')))
     active = fields.Boolean('Active', default=True, help="If unchecked, it will allow you to hide the plan without removing it.")
 
-  @api.model
+    @api.model
     def create(self,vals):
         new_product_plan = super(category,self).create(vals)
         account_vals = {'name': new_product_plan.name, 'product_plan_id': new_product_plan.id,'cod_soa': new_product_plan.cod_soa}
