@@ -13,12 +13,15 @@ class category(models.Model):
     @api.model
     def create(self,vals):
         new_product_plan = super(category,self).create(vals)
+        #group_id:17 es Cecos Ingresos y Costos (objeto PA)
         account_vals = {
                 'name': new_product_plan.name, 
                 'product_plan_id': new_product_plan.id,
                 'cod_soa': new_product_plan.cod_soa,
                 'code':new_product_plan.cod_soa,
-                'partner_id':new_product_plan.partner_id.id}
+                'partner_id':new_product_plan.partner_id.id,
+                'company_id':new_product_plan.company_id.id,
+                'group_id':17,}
         account = self.env['account.analytic.account'].create(account_vals)
         return new_product_plan
      

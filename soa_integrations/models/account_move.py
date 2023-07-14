@@ -21,7 +21,8 @@ class AccountMoveLine(models.Model):
         line = super(AccountMoveLine,self).create(vals)
         analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
         if analytic:
-            line.account_analytic_id = analytic.id
+            if line.account_id.user_type_id.property_analytic_policy != 'never':
+                line.analytic_account_id = analytic.id
         else:
             raise UserError("El plan no tiene una cuenta analitica asociada")
 
