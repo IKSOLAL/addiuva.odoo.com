@@ -17,7 +17,7 @@ class PurchaseOrderLine(models.Model):
     @api.model
     def create(self,vals):
         order_line = super(PurchaseOrderLine,self).create(vals)
-        analytic = self.env['account.analytic.account'].search([('product_plan_id','=',order_line.plan_id.id)])
+        analytic = self.env['account.analytic.account'].search([('product_plan_id','=',order_line.plan_id.id)],limit=1)
         if analytic:
             order_line.account_analytic_id = analytic.id
         else:
@@ -28,7 +28,7 @@ class PurchaseOrderLine(models.Model):
     @api.onchange('plan_id')
     def _onchange_plan_id(self):
         for line in self:
-            analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)])
+            analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)], limit=1)
             if analytic:
                 line.account_analytic_id = analytic.id
             else:

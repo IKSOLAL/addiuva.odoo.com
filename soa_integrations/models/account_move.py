@@ -19,7 +19,7 @@ class AccountMoveLine(models.Model):
     @api.model
     def create(self,vals):
         line = super(AccountMoveLine,self).create(vals)
-        analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)])
+        analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
         if analytic:
             line.account_analytic_id = analytic.id
         else:
@@ -30,7 +30,7 @@ class AccountMoveLine(models.Model):
     @api.onchange('plan_id')
     def _onchange_plan_id(self):
         for line in self:
-            analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)])
+            analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
             if analytic:
                 line.analytic_account_id = analytic.id
             else:
