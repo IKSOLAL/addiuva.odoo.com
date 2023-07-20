@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="account_move_form_inherits_view">
+        <field name="name">account.move.form.inherits</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group[1]" position="inside">
+                <field name="cfdi_cancel_to_cancel" invisible="1"/>
+                <field name="cancel_type_id" attrs="{'invisible' : [('cfdi_cancel_to_cancel', '=', False)],'required' : [('cfdi_cancel_to_cancel', '=', True)]}"/>
+                <field name="code_motive" invisible="1"/>
+                <field name="replace_uuid"  attrs="{'required' : [('code_motive', '=', '01')],'invisible' : [('cfdi_cancel_to_cancel', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

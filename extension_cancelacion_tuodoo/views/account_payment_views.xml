@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="account_payment_iherits_form_view">
+        <field name="name">account.payment.form.inherits</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">           
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="cfdi_cancel_to_cancel" invisible="1"/>               
+                <field name="code_motive" invisible="1"/>
+                
+                <label for="cancel_type_id"/>
+                <div class="o_row">
+                     <field name="cancel_type_id" attrs="{'invisible' : [('cfdi_cancel_to_cancel', '=', False)]}"/>
+                </div>
+                 <label for="replace_uuid"/>
+                <div class="o_row">
+                     <field name="replace_uuid"  attrs="{'required' : [('code_motive', '=', '01')],'invisible' : [('cfdi_cancel_to_cancel', '=', False)]}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>

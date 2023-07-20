@@ -1,0 +1,24 @@
+<odoo>
+    <data noupdate="1">
+        <record model="cancel.motive" id="motive_01">
+            <field name="default_code">01</field>
+            <field name="name">Comprobante emitido con errores de relación</field>
+            <field name="is_to_payment">True</field>
+        </record>
+        <record model="cancel.motive" id="motive_02">
+            <field name="default_code">02</field>
+            <field name="name">Comprobante emitido con errores sin relación</field>
+            <field name="is_to_payment">True</field>
+        </record>
+        <record model="cancel.motive" id="motive_03">
+            <field name="default_code">03</field>
+            <field name="name">No se llevó acabo la operación</field>
+            <field name="is_to_payment">False</field>
+        </record>
+        <record model="cancel.motive" id="motive_04">
+            <field name="default_code">04</field>
+            <field name="name">Operación nominativa relacionada en una factura global</field>
+            <field name="is_to_payment">False</field>
+        </record>
+    </data>
+</odoo>
