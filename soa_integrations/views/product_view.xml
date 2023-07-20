@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="product_template_form_view_integra" model="ir.ui.view">
+            <field name="name">product.template.form.view.integra</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[@name='general_information']" position="after">
+                    <page string="Planes Servicio SOA" name="plan_servicio">
+                        <group name="Planes">
+                            <field name="plan_servicio_ids" readonly="1">
+                                <tree>
+                                    <field name="cod_soa" string="Cod-SOA-PlanServicio"/>
+                                    <field name="id" string="Cod ODOO-PlanServicio"/>
+                                    <field name="plan_id" string="Plan"/>
+                                    <field name="prod_id"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="replace">
+                    <field name="company_id" groups="base.group_multi_company" required="1" readonly="1"></field>
+                    <field name="cod_soa"/>
+                </xpath>
+            </field>
+        </record>
+
+         <record id="product_template_tree_view_integra" model="ir.ui.view">
+            <field name="name">product.template.tree.view.integra</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="company_id"></field>
+                    <field name="cod_soa"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

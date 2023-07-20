@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_move_soa_form" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="name">account.move.soa.form</field>
+        <field name="inherit_id" ref="account.view_move_form"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//notebook" position="inside">
+                <page id="soa_info" string="SOA Information">
+                    <group>
+                        <field name="cod_soa"/>
+                        <field name="payment_module_soa"/>
+                         <button name="sync_soa" string="Sync Soa" class="btn-primary" type="object"/>
+                    </group>
+                </page>
+            </xpath>
+            
+             <xpath expr="//sheet//notebook/page[1]/field[@name='invoice_line_ids']/tree/field[@name='analytic_account_id']" position="after">
+                <field name="plan_id"/>
+            </xpath>
+
+            <xpath expr="//sheet//notebook/page[2]/field[@name='line_ids']/tree/field[@name='analytic_account_id']" position="after">
+                <field name="plan_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
