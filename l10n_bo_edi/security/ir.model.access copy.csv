@@ -1,0 +1,37 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acl_l10n_bo_edi_company_activities,company_activities,model_l10n_bo_company_activities,base.group_user,1,1,1,1
+acl_l10n_bo_edi_ambience,ambience,model_ambience,base.group_user,1,1,1,1
+acl_l10n_bo_edi_emission_types,emission_types,model_emission_types,base.group_user,1,1,1,1
+acl_l10n_bo_edi_modalities,modalities,model_modalities,base.group_user,1,1,1,1
+acl_l10n_bo_edi_branch_office,branch_office,model_branch_office,base.group_user,1,1,1,1
+acl_l10n_bo_edi_selling_point,selling_point,model_selling_point,base.group_user,1,1,1,1
+acl_l10n_bo_edi_cufd,cufd,model_cufd_log,base.group_user,1,1,1,1
+acl_l10n_bo_edi_id_type,id_type,model_id_type,base.group_user,1,1,1,1
+acl_l10n_bo_edi_sector_types,sector_types,model_sector_types,base.group_user,1,1,1,1
+acl_l10n_bo_edi_sin_items,sin_items,model_sin_items,base.group_user,1,1,1,1
+acl_l10n_bo_edi_measure_unit,measure_unit,model_measure_unit,base.group_user,1,1,1,1
+acl_l10n_bo_edi_bo_edi_params,bo_edi_params,model_bo_edi_params,base.group_user,1,1,1,1
+acl_l10n_bo_edi_sin_sync,sin_sync,model_sin_sync,base.group_user,1,1,1,1
+acl_l10n_bo_edi_date_time,boedi_date_time,model_boedi_date_time,base.group_user,1,1,1,1
+acl_l10n_bo_edi_activity_doc_sector,activity_doc_sector,model_activity_doc_sector,base.group_user,1,1,1,1
+acl_l10n_bo_edi_messages_service,messages_service,model_messages_service,base.group_user,1,1,1,1
+acl_l10n_bo_edi_invoice_event,invoice_event,model_invoice_event,base.group_user,1,1,1,1
+acl_l10n_bo_edi_null_reason,null_reason,model_null_reason,base.group_user,1,1,1,1
+acl_l10n_bo_edi_native_country,native_country,model_native_country,base.group_user,1,1,1,1
+acl_l10n_bo_edi_document_sec_type,document_sec_type,model_document_sec_type,base.group_user,1,1,1,1
+acl_l10n_bo_edi_standard_billing,standard_billing,model_standard_billing,base.group_user,1,1,1,1
+acl_l10n_bo_edi_invoice_dosage,invoice_dosage,model_invoice_dosage,base.group_user,1,1,1,1
+acl_l10n_bo_edi_document_status,document_status,model_document_status,base.group_user,1,1,1,1
+acl_l10n_bo_edi__account_payment_method,Full access on account.payment.method to Financial Manager,account.model_account_payment_method,account.group_account_manager,1,1,1,1
+acl_l10n_bo_edi__account_payment_mode_read,Read access on account.payment.mode to Employees,model_account_payment_mode,base.group_user,1,1,1,1
+acl_l10n_bo_edi__account_payment_mode_full,Full access on account.payment.mode to Financial Manager,model_account_payment_mode,account.group_account_manager,1,1,1,1
+acl_l10n_bo_edi_invoice_caption,invoice_caption,model_invoice_caption,base.group_user,1,1,1,1
+acl_l10n_bo_edi_invoice_cancellation_reason_wizard,invoice_cancellation_reason_wizard,model_invoice_cancel_reason_wizard,base.group_user,1,1,1,1
+acl_l10n_bo_edi_invoice_cancellation_reason,invoice_cancellation_reasons,model_cancellation_reasons,base.group_user,1,1,1,1
+acl_l10n_bo_edi_invoice_incident,invoice_incident,model_invoice_incident,base.group_user,1,1,1,1
+acl_l10n_bo_edi_popup_success_wizard,popup_success_wizard,model_popup_success_wizard,base.group_user,1,1,1,1
+acl_l10n_bo_edi_popup_warn_wizard,popup_warn_wizard,model_popup_warn_wizard,base.group_user,1,1,1,1
+acl_l10n_bo_edi_cancelled_invoices,cancelled_invoices,model_cancelled_invoices,base.group_user,1,1,1,1
+acl_l10n_bo_edi_pwd_sign_wizard,pwd_sign_wizard,model_pwd_sign_wizard,base.group_user,1,1,1,1
+acl_l10n_bo_edi_invoice_event_wizard,invoice_event_wizard,model_invoice_event_wizard,base.group_user,1,1,1,1
+acl_l10n_bo_edi_sin_token,sin_token,model_sin_token,base.group_user,1,1,1,1

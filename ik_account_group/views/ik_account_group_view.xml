@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="ik_account_group_view_form" model="ir.ui.view">
+        <field name="name">ik.account.group</field>
+        <field name="model">ik.account.group</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="ik_company" groups="base.group_multi_company" required="1" readonly="1"/>
+                        <field name="ik_account_ids" widget="many2many" options="{'no_create_edit': True}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+       <record id="ik_account_account" model="ir.ui.view">
+        <field name="name">ik.account.account</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="ik_groups_account"/>
+            </field>
+        </field>
+    </record>
+
+     <record id="ik_account_group_view_tree" model="ir.ui.view">
+        <field name="name">ik.account.group</field>
+        <field name="model">ik.account.group</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="ik_company" groups="base.group_multi_company" required="1" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+</odoo>

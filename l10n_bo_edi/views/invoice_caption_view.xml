@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.actions.act_window" id="act_invoice_captions">
+        <field name="name">Invoice Captions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">invoice_caption</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem name="Invoice Captions"
+        id="menu_action_act_invoice_captions"
+        action="act_invoice_captions" 
+        parent="l10n_bo_edi.menu_sin_bolivia"
+        sequence="21"/> -->
+</odoo>

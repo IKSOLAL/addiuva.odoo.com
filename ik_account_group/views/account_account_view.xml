@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="ik_account_account_view_form" model="ir.ui.view">
+        <field name="name">ik.account.account</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page/group/group[2]/field[@name='deprecated']" position="after">
+                <field name="ik_groups_account" readonly="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

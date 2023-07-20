@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+
+        <record model="ir.actions.act_window" id="selling_point_action">
+            <field name="name">Manage Selling Points</field>
+            <field name="res_model">selling_point</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="cufd_log_action">
+            <field name="name">See CUFD log</field>
+            <field name="res_model">cufd_log</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="branch_office_action">
+            <field name="name">Manage Branch Offices</field>
+            <field name="res_model">branch_office</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--Standard Invoicing-->>
+        <record model="ir.actions.act_window" id="invoice_dosage_action">
+            <field name="name">Invoice Dosage</field>
+            <field name="res_model">invoice_dosage</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+    </data>
+
+
+</odoo>

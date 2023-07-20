@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+    
+        <!-- Branch Office Form -->
+        <record model="ir.ui.view" id="branch_office_view_form">
+            <field name="name">branch.office.view.form</field>
+            <field name="model">branch_office</field>
+            <field name="arch" type="xml">
+                <form string="Branch Office Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="id_branch_office"/>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                                <field name="address"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>
+                            <page string="Users">
+                                <field name="user_ids"/>
+                            </page>
+                            <page string="Selling Points">
+                                <field name="selling_point_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Branch Office List -->
+        <record model="ir.ui.view" id="branch_office_view_list">
+            <field name="name">branch.office.view.list</field>
+            <field name="model">branch_office</field>
+            <field name="arch" type="xml">
+                <tree string="Branch Office">
+                    <field name="id_branch_office"/>
+                    <field name="description"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Branch Office Search -->
+        <record model="ir.ui.view" id="branch_office_view_search">
+            <field name="name">branch.office.view.search</field>
+            <field name="model">branch_office</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="id_branch_office"/>
+                    <field name="description"/>
+                    <field name="active"/>
+                </search>
+            </field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

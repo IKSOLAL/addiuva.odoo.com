@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="reporte_compras">
+        <t t-call="web.html_container">
+            <t t-set="data_report_margin_top" t-value="20"/>
+            <t t-set="data_report_header_spacing" t-value="10"/>
+            <div class="header">
+                Folio: <span class="page" t-esc="data['folio_inicial']-1"></span>
+            </div>
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 class="text-center">COMPRAS</h2>
+
+                    <table style="width:400px;margin:0px auto 0px auto">
+                        <tr>
+                            <td>Nombre Empresa:</td>
+                            <td><span t-field="user.company_id.partner_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td>NIT:</td>
+                            <td><span t-field="user.company_id.partner_id.vat"/></td>
+                        </tr>
+                        <tr>
+                            <td>Registro:</td>
+                            <td><span t-field="user.company_id.partner_id.numero_registro"/></td>
+                        </tr>
+                        <tr>
+                            <td>Giro:</td>
+                            <td><span t-field="user.company_id.partner_id.giro_negocio_id"/></td>
+                        </tr>
+                        <tr>
+                            <td>Año:</td>
+                            <td><span t-esc="data['fecha_desde'][0:4]"/></td>
+                        </tr>
+                        <tr>
+                            <td>Mes:</td>
+                            <td><span t-esc="mes(data['fecha_desde'][5:7])"/></td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                    <t t-set="result" t-value="lineas(data)"/>
+
+                    <table style="width:900px;margin:0px auto 0px auto">
+                        <thead>
+                            <tr style="font-size:10px; border: 1px solid black">
+                                <th style="width:40px; border: 1px solid black" class="text-center">No.<br/>COR.</th>
+                                <th style="width:60px; border: 1px solid black" class="text-center">FECHA</th>
+                                <th style="width:50px; border: 1px solid black" class="text-center">NO. DE<br/>COMPROB.</th>
+                                <th style="width:48px; border: 1px solid black" class="text-center">NIT</th>
+                                <th style="width:48px; border: 1px solid black" class="text-center">NUMERO DE<br/>REGISTRO</th>
+                                <th style="width:160px; border: 1px solid black" class="text-center">NOMBRE DEL PROVEEDOR</th>
+                                <th style="width:48px; border: 1px solid black" class="text-center">COMPRA<br/>EXENTA<br/>INTERN</th>
+                                <th style="width:48px; border: 1px solid black" class="text-center">COMPRA<br/>EXENTA<br/>IMPORT</th>
+                                <th style="width:48px; border: 1px solid black" class="text-center">COMPRA<br/>GRAVADA<br/>INTERNAS</th>
+                                <th style="width:48px; border: 1px solid black" class="text-center">COMPRA<br/>GRAVADA<br/>IMPORTAC</th>
+                                <th style="width:48px; border: 1px solid black" class="text-center">IVA</th>
+                                <th style="width:48px; border: 1px solid black" class="text-center">TOTAL<br/>COMPRAS</th>
+                                <th style="width:48px; border: 1px solid black" class="text-center">RETENCION</th>
+                                <th style="width:30px; border: 1px solid black" class="text-center">RETENCION 2%</th>
+                                <th style="width:30px; border: 1px solid black" class="text-center">IVA<br/>TERCEROS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="font-size:10px" t-foreach="result['lineas']" t-as="l">
+                                <td>
+                                    <span t-esc="l['correlativo']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="l['fecha']" t-options='{"widget": "date"}'/>
+                                </td>
+                                <td>
+                                    <span t-esc="l['numero']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="l['proveedor'].vat"/>
+                                </td>
+                                <td>
+                                    <span t-esc="l['proveedor'].numero_registro"/>
+                                </td>
+                                <td>
+                                    <span t-esc="l['proveedor'].name"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="0.00" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="0.00" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                     <span t-esc="l['compra'] + l['servicio']" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="l['importacion']" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="l['iva']" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="l['total']" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="l['compra_exento']" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="0.00" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="0.00" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr style="font-size:10px">
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    TOTALES
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="0.00" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="0.00" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                     <span t-esc="result['totales']['compra']['neto'] + result['totales']['servicio']['neto']" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="result['totales']['importacion']['neto']" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="result['totales']['compra']['iva'] + result['totales']['servicio']['iva'] + result['totales']['combustible']['iva'] + result['totales']['importacion']['iva']" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="result['totales']['compra']['total'] + result['totales']['servicio']['total'] + result['totales']['combustible']['total'] + result['totales']['importacion']['total']" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="result['totales']['compra']['exento']" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="0.00" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="0.00" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <br/><br/>
+                    <table style="width:700px;margin:0px auto 0px auto">
+                        <tr>
+                            <td style="width:250px"><strong>TOTAL COMPRAS</strong></td>
+                            <td style="width:100px" class="text-right"></td>
+                            <td style="width:250px" class="text-right"></td>
+                            <td style="width:100px" class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL N/C</strong></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>COMPRAS GRAVADAS</strong></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>IVA GRAVADO</strong></td>
+                            <td class="text-right"></td>
+                            <td>PERCEPCION 1%</td>
+                            <td class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>COMPRAS EXENTAS</strong></td>
+                            <td class="text-right"></td>
+                            <td><strong>ANT. A CTA. IVA 2%</strong></td>
+                            <td class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>NO SUJETAS</strong></td>
+                            <td class="text-right"></td>
+                            <td><strong>IVA TERCEROS</strong></td>
+                            <td class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL DE COMPRAS</strong></td>
+                            <td class="text-right"></td>
+                            <td><strong>TOTAL DE IMPUESTOS</strong></td>
+                            <td class="text-right"></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

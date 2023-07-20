@@ -7,8 +7,6 @@
         <field name="arch" type="xml">
             <field name="ei_operation" position="replace"/>
             <field name="ei_correction_concept_debit_id" position="replace"/>
-
-
             <xpath expr="//field[@name='ref']" position="after">
                 <field name="flag_colombia" invisible="1"/>
                 <field name="ei_operation" attrs="{'invisible' : [('flag_colombia', '=', False)]}"/>

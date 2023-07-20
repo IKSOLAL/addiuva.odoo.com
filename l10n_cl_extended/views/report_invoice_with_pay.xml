@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="l10n_cl_report_invoice_inh" inherit_id="l10n_cl.report_invoice_with_payments">
+        <xpath expr="//t[@t-call='l10n_cl.report_invoice_document']" position="replace">
+
+        </xpath>
+    </template>
+</odoo>
