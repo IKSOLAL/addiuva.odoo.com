@@ -1,13 +1,22 @@
 from odoo import models, fields, api
+import requests
 
 class AccountMove(models.Model):
     _inherit = ["account.move"]
 
     cod_soa = fields.Integer(string="Código SOA", required=True, default=0)
     payment_module_soa = fields.Boolean(string="Modulo Pagos SOA", default=0)
+    paid = fields.Boolean(string="Pagada")
 
-    def sync_soa(self):
-        print("test")
+    @api.onchange('payment_state')
+    def onchange_state(self):
+        for invoice in self:
+            invoice.sync_soa(invoice.payment_state)
+                
+
+    def sync_soa(self,payment_state):
+        if payment_state == 'paid':
+            response = requests.put('https://api.sistemaoperaciones.com/payment-provider/invoice/odoo-update-status/'+self.cod_soa+'/', data = {'IvStatus':'5'})
 
 
 class AccountMoveLine(models.Model):

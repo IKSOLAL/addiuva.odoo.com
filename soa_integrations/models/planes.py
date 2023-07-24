@@ -24,5 +24,18 @@ class category(models.Model):
                 'group_id':17,}
         account = self.env['account.analytic.account'].create(account_vals)
         return new_product_plan
+    
+    def write(self,vals):
+        new_product_plan = super(category,self).write(vals)
+        analytic_account = self.env['account.analytic.account'].search([('product_plan_id','=',self.id)])
+        if 'partner_id' in vals:
+            analytic_account.partner_id = self.partner_id.id
+        if 'cod_soa' in vals:
+            analytic_account.cod_soa =  self.cod_soa
+            analytic_account.code =  self.cod_soa
+        if 'name' in vals:
+            analytic_account.name =self.name
+            
+        return new_product_plan
      
  
