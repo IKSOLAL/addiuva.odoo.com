@@ -1,14 +1,12 @@
 {
-    'name': 'l10n_eg_edi_eta_extended',
+    'name': 'Egipto',
     'summary': '''
-        Round currency 5 decimals only for Egypt
+        Redondear la divisa a cinco decimales, solo para EGP
     ''',
     'author': 'Ivan Porras',
-    'category': 'Accounting',
+    'category': 'Contabilidad',
     'version': '1.0.0',
     'depends':['l10n_eg_edi_eta'],
     'data': [
-
     ]
-
 }

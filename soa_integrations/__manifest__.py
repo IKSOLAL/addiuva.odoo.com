@@ -12,6 +12,7 @@
             'account',
             'base',
             'product',
+            'purchase',
         ],
     "data": [
         'security/integrations_group_security.xml',

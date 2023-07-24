@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="cancel_motive_form_view">
+        <field name="name">cancel.motive.form</field>
+        <field name="model">cancel.motive</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="is_to_payment"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="cancel_motive_tree_view">
+        <field name="name">edi.cancel.motive.tree</field>
+        <field name="model">cancel.motive</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="default_code"/>
+                <field name="name"/>
+                <field name="is_to_payment"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="cancel_motive_act_window">
+        <field name="name">Motivo de cancelacion</field> <!-- TODO -->
+        <field name="res_model">cancel.motive</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record model="ir.ui.menu" id="cancel_motive_menu">
+        <field name="name">Motivo de cancelacion</field>
+        <field name="parent_id" ref="account.account_account_menu"/>
+        <field name="action" ref="cancel_motive_act_window"/>
+        <field name="sequence" eval="16"/>
+    </record>
+
+</odoo>

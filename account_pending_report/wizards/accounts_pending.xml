@@ -10,10 +10,10 @@
                             <field name="nature"  widget="radio" options="{'horizontal': true}"/>
                             <field name="foreign"/>
                         </group>
-                        <!-- <group col="2">
-                            <field name="dt_initial"/>
+                        <group col="2">
+                            <!-- <field name="dt_initial"/> -->
                             <field name="dt_final"/>
-                        </group> -->
+                        </group>
                     </group>
                 <footer>
                     <button name="print_XLSX" string="Print" type="object" class="oe_highlight" />

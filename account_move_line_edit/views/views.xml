@@ -1,0 +1,52 @@
+<odoo>
+  <data>
+
+  <!-- action for updte records move line -->
+    <record id="model_move_line_update" model="ir.actions.server">
+        <field name="name">Actualizar Apuntes de Diario</field>
+        <field name="model_id" ref="model_account_move_line"/>
+        <field name="binding_model_id" ref="account.model_account_move_line" />
+        <field name="state">code</field>
+        <field name="code">action = record.open_wizard()</field>
+    </record>
+
+
+    <!--  -->
+    <record id="account_line_massediting_wizard" model="ir.ui.view">
+        <field name="name">account.line.massediting.form</field>
+        <field name="model">account.line.massediting</field>
+        <field name="arch" type="xml">
+            <form string="Actualizar Apuntes de Diario">
+                <group col="1">
+                    <group col="4">
+                      <field name="account_analytic_id" string="Cuenta Analítica"/>
+                      <field name="delete_aa" string="Eliminar"/>
+                    </group>
+                    <group col="4">
+                      <field name="analytic_tags_id" string="Etiqueta Analítica" widget="many2many_tags"/>
+                      <field name="delete_at" string="Eliminar"/>
+                    </group>
+                    <group col="4">
+                      <field name="account_id" string="Cuenta"/>
+                      <field name="delete_cc" string="Eliminar"/>  
+                    </group>
+                    <group col="4">
+                      <field name="partner_id" string="Partner"/>
+                      <field name="delete_partner" string="Eliminar"/>
+                    </group>
+                   <group col="4">
+                      <field name="tag" string="Etiqueta"/>
+                      <field name="delete_tag" string="Eliminar"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="update_records_edit" string="Aplicar" type="object" class="oe_highlight"/>
+                      ó
+                    <button string="Cancel" special="cancel" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+  
+  </data>
+</odoo>
