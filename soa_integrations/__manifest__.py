@@ -5,7 +5,7 @@
     "category": "SOA",
     "summary": "Modulo de integración SOA - Odoo",
     "author": "Ikatech Solutions",
-    "maintainers": ["veronicadelgadillo"],
+    "maintainers": ["veronicadelgadillo","iporras"],
     "website": "https://ikatechsolutions.com",
     "depends": [
             'stock',
