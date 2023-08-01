@@ -10,7 +10,10 @@
                     <group>
                         <field name="cod_soa"/>
                         <field name="payment_module_soa"/>
-                         <button name="sync_soa" string="Sync Soa" class="btn-primary" type="object"/>
+                        <field name="status_soa" widget="badge"
+                           decoration-danger="status_soa == 'not_paid'"
+                           decoration-success="status_soa == 'paid'"/>
+                       <!-- <button name="sync_soa" string="Sync Soa" class="btn-primary" type="object"/>-->
                     </group>
                 </page>
             </xpath>
@@ -24,4 +27,23 @@
             </xpath>
         </field>
     </record>
+
+    <record id="account_move_soa_tree" model="ir.ui.view">
+        <field name="name">account.move.soa.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_in_invoice_bill_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="cod_soa" optional="show"/>
+                <field name="payment_module_soa" optional="show"/>
+                <field name="status_soa" widget="badge"
+                           decoration-danger="status_soa == 'not_paid'"
+                           decoration-success="status_soa == 'paid'"  optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    
+
+  
 </odoo>
