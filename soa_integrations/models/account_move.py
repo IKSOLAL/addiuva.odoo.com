@@ -21,7 +21,7 @@ class AccountMove(models.Model):
             soa_api = self.env['soa.integration.api'].search([],limit=1)
             if soa_api:
                 if invoice.cod_soa != 0:
-                    headers = {'Content-Type': 'application/json','client-id':'1','Authorization':soa_api.token}
+                    headers = {'Content-Type': 'application/json','client-id':soa_api.client_id,'Authorization':soa_api.token}
                     url = soa_api.url_invoice+str(invoice.cod_soa)+'/'
                     if invoice.payment_state == 'paid' or invoice.payment_state == 'in_payment':
                         #IvStatus =5 es pagado, 3 es NO PAGADO, 4 es en proceso de pago
