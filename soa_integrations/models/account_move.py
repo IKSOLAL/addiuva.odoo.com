@@ -68,12 +68,11 @@ class AccountMoveLine(models.Model):
     @api.model
     def create(self,vals):
         line = super(AccountMoveLine,self).create(vals)
-        analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
-        if analytic:
-            if line.account_id.user_type_id.property_analytic_policy != 'never':
-                line.analytic_account_id = analytic.id
-        else:
-            raise UserError("El plan no tiene una cuenta analitica asociada")
+        if line.plan_id:
+            analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
+            if analytic:
+                if line.account_id.user_type_id.property_analytic_policy != 'never':
+                    line.analytic_account_id = analytic.id
 
         return line
 
@@ -83,5 +82,3 @@ class AccountMoveLine(models.Model):
             analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
             if analytic:
                 line.analytic_account_id = analytic.id
-            else:
-                raise UserError("El plan no tiene una cuenta analitica asociada")
