@@ -65,7 +65,7 @@ class AccountMoveLine(models.Model):
 
     plan_id = fields.Many2one(comodel_name="product.planes",string="Plan")
 
-    @api.model
+    @api.model_create_multi
     def create(self,vals):
         line = super(AccountMoveLine,self).create(vals)
         if line.plan_id:
@@ -79,6 +79,7 @@ class AccountMoveLine(models.Model):
     @api.onchange('plan_id')
     def _onchange_plan_id(self):
         for line in self:
-            analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
-            if analytic:
-                line.analytic_account_id = analytic.id
+            if line.plan_id:
+                analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
+                if analytic:
+                    line.analytic_account_id = analytic.id
