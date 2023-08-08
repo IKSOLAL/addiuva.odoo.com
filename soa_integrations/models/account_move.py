@@ -46,8 +46,8 @@ class AccountMove(models.Model):
                                    }
                                 }
                         return notification
-                    #else:
-                    #    raise UserError(_("!Algo malo sucedio!  " + response.reason))
+                    else:
+                        raise UserError(_("!Algo malo sucedio!  " + response.reason))
                     
                     
             else:
