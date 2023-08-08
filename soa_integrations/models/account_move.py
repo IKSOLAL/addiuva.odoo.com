@@ -67,6 +67,12 @@ class AccountMoveLine(models.Model):
 
     @api.model_create_multi
     def create(self,vals):
+        account = self.env['account.account'].search([('id','=',vals['account_id'])])
+        for t in account.user_type_id:
+            if t.property_analytic_policy == 'never':
+                vals['analytic_account_id'] = False
+                        
+
         line = super(AccountMoveLine,self).create(vals)
         if line.plan_id:
             analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
@@ -74,8 +80,6 @@ class AccountMoveLine(models.Model):
                 for l in line.account_id.user_type_id:
                     if l.property_analytic_policy != 'never':
                         line.analytic_account_id = analytic.id
-                    else:
-                        line.analytic_account_id = False
 
         return line
 
