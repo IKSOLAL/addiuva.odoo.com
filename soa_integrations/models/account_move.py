@@ -53,10 +53,6 @@ class AccountMove(models.Model):
             else:
                 raise UserError(_("Please configure SOA API!"))
         
-            
-
-      
-
     
 
 class AccountMoveLine(models.Model):
@@ -67,7 +63,7 @@ class AccountMoveLine(models.Model):
 
     @api.model_create_multi
     def create(self,vals):
-        account = self.env['account.account'].search([('id','=',vals['account_id'])])
+        account = self.env['account.account'].search([('id','=',int(vals['account_id']))])
         for t in account.user_type_id:
             if t.property_analytic_policy == 'never':
                 vals['analytic_account_id'] = False
