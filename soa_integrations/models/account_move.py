@@ -83,4 +83,6 @@ class AccountMoveLine(models.Model):
             if line.plan_id:
                 analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
                 if analytic:
-                    line.analytic_account_id = analytic.id
+                    for l in line.account_id.user_type_id:
+                        if l.property_analytic_policy != 'never':
+                            line.analytic_account_id = analytic.id
