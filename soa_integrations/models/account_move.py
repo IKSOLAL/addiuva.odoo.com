@@ -74,6 +74,8 @@ class AccountMoveLine(models.Model):
                 for l in line.account_id.user_type_id:
                     if l.property_analytic_policy != 'never':
                         line.analytic_account_id = analytic.id
+                    else:
+                        line.analytic_account_id = False
 
         return line
 
@@ -86,3 +88,5 @@ class AccountMoveLine(models.Model):
                     for l in line.account_id.user_type_id:
                         if l.property_analytic_policy != 'never':
                             line.analytic_account_id = analytic.id
+                        else:
+                            line.analytic_account_id = False
