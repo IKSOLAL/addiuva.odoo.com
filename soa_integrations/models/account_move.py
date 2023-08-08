@@ -66,7 +66,7 @@ class AccountMoveLine(models.Model):
         line = super(AccountMoveLine,self).create(vals)
         for l in line:
             if l.plan_id:
-                analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
+                analytic = self.env['account.analytic.account'].search([('product_plan_id','=',l.plan_id.id)],limit=1)
                 if analytic:
                     for u in l.account_id.user_type_id:
                         if u.property_analytic_policy != 'never':
