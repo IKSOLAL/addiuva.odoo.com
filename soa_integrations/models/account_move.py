@@ -48,8 +48,10 @@ class AccountMove(models.Model):
                         return notification
                     else:
                         raise UserError(_("!Algo malo sucedio con SOA!  " + response.reason))
+                    
+                    
             else:
-                invoice.status_soa = 'not_paid'
+                raise UserError(_("Please configure SOA API!"))
         
     
 
