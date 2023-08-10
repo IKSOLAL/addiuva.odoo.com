@@ -49,7 +49,7 @@ class AccountMove(models.Model):
                     else:
                         raise UserError(_("!Algo malo sucedio con SOA!  " + response.reason))
             else:
-                return False
+                invoice.status_soa = 'not_paid'
         
     
 
