@@ -51,7 +51,7 @@ class AccountMove(models.Model):
                     
                     
             else:
-                print("Por alguna razon debo dejar el print aqui")
+                print("Por alguna razon debo dejar el print aqui 2")
                 #raise UserError(_("Please configure SOA API!"))
         
     
