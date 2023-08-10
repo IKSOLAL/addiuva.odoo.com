@@ -49,7 +49,7 @@ class AccountMove(models.Model):
                     else:
                         raise UserError(_("!Algo malo sucedio con SOA!  " + response.reason))
             else:
-                continue
+                return False
         
     
 
