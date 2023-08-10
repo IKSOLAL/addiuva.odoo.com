@@ -21,7 +21,7 @@ class AccountMove(models.Model):
             soa_api = self.env['soa.integration.api'].search([],limit=1)
             if soa_api:
                 if invoice.cod_soa != 0:
-                    headers = {'Content-Type': 'application/json','client-id':'1','Authorization':soa_api.token}
+                    headers = {'Content-Type': 'application/json','client-id':soa_api.client_id,'Authorization':soa_api.token}
                     url = soa_api.url_invoice+str(invoice.cod_soa)+'/'
                     if invoice.payment_state == 'paid' or invoice.payment_state == 'in_payment':
                         #IvStatus =5 es pagado, 3 es NO PAGADO, 4 es en proceso de pago
@@ -47,16 +47,12 @@ class AccountMove(models.Model):
                                 }
                         return notification
                     else:
-                        raise UserError(_("!Algo malo sucedio!  " + response.reason))
+                        raise UserError(_("!Algo malo sucedio con SOA!  " + response.reason))
                     
                     
             else:
                 raise UserError(_("Please configure SOA API!"))
         
-            
-
-      
-
     
 
 class AccountMoveLine(models.Model):
@@ -65,20 +61,27 @@ class AccountMoveLine(models.Model):
 
     plan_id = fields.Many2one(comodel_name="product.planes",string="Plan")
 
-    @api.model
+    @api.model_create_multi
     def create(self,vals):
         line = super(AccountMoveLine,self).create(vals)
-        if line.plan_id:
-            analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
-            if analytic:
-                if line.account_id.user_type_id.property_analytic_policy != 'never':
-                    line.analytic_account_id = analytic.id
+        for l in line:
+            if l.plan_id:
+                analytic = self.env['account.analytic.account'].search([('product_plan_id','=',l.plan_id.id)],limit=1)
+                if analytic:
+                    for u in l.account_id.user_type_id:
+                        if u.property_analytic_policy != 'never':
+                            l.analytic_account_id = analytic.id
 
         return line
 
     @api.onchange('plan_id')
     def _onchange_plan_id(self):
         for line in self:
-            analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
-            if analytic:
-                line.analytic_account_id = analytic.id
+            if line.plan_id:
+                analytic = self.env['account.analytic.account'].search([('product_plan_id','=',line.plan_id.id)],limit=1)
+                if analytic:
+                    for l in line.account_id.user_type_id:
+                        if l.property_analytic_policy != 'never':
+                            line.analytic_account_id = analytic.id
+                        else:
+                            line.analytic_account_id = False
