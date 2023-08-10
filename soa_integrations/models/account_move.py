@@ -18,8 +18,8 @@ class AccountMove(models.Model):
     def _status_soa(self):
         for invoice in self:
             invoice.status_soa = 'not_paid'
-            #soa_api = self.env['soa.integration.api'].search([('company_id','=',invoice.company_id.id)],limit=1)
-            soa_api = self.env['soa.integration.api'].search([],limit=1)
+            soa_api = self.env['soa.integration.api'].search([('company_id','=',invoice.company_id.id)],limit=1)
+            #soa_api = self.env['soa.integration.api'].search([],limit=1)
             if soa_api:
                 if invoice.cod_soa != 0:
                     headers = {'Content-Type': 'application/json','client-id':soa_api.client_id,'Authorization':soa_api.token}
