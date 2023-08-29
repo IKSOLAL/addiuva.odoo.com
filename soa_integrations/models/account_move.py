@@ -11,6 +11,7 @@ class AccountMove(models.Model):
     cod_soa = fields.Integer(string="Código SOA", required=True, default=0)
     payment_module_soa = fields.Boolean(string="Modulo Pagos SOA", default=0)
     status_soa = fields.Selection([('paid','Pagada'),('not_paid','No Pagada')],string="Status SOA", compute='_status_soa')
+    soa_support_file = fields.Binary(string="SOA Support File")
 
 
                 
