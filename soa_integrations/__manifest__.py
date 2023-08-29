@@ -1,11 +1,11 @@
 
 {
     "name": "SOA Integrations",
-    "version": "15.0.0.0.3",
+    "version": "1.4",
     "category": "SOA",
     "summary": "Modulo de integración SOA - Odoo",
     "author": "Ikatech Solutions",
-    "maintainers": ["veronicadelgadillo","iporras"],
+    "maintainers": ["veronicadelgadillo"],
     "website": "https://ikatechsolutions.com",
     "depends": [
             'stock',

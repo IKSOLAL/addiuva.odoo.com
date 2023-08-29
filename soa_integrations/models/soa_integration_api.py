@@ -15,6 +15,10 @@ class SoaIntegrationApi(models.Model):
     url_login = fields.Char(string="Url Login")
     url_invoice = fields.Char(string="Url Factura")
 
+    company_id = fields.Many2one(comodel_name='res.company', string="Empresa",
+                                 default=lambda self:    self.env['res.company'].browse(self.env['res.company']._company_default_get('ik_integrations_group')))
+    #company_id = fields.Many2one(comodel_name='res.company', string="Empresa", default=1)
+
 
 
     def get_token(self):
