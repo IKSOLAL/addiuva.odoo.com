@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+      <template inherit_id="l10n_mx_reports.cfdicoa" id="cfdicoa_extend">
+        <xpath expr="//catalogocuentas__Catalogo/t" position="replace">
+             <t t-foreach="accounts" t-as="account">
+                <catalogocuentas__Ctas
+                        t-att-CodAgrup="account.get('code')"
+                        t-att-NumCta="account.get('number')"
+                        t-att-Desc="account.get('name')"
+                        t-att-SubCtaDe="account.get('subaccount')"
+                        t-att-Nivel="account.get('level')"
+                        t-att-Natur="account.get('nature')"/>
+              </t>
+        </xpath>
+      </template>
+  </data>
+</odoo>
