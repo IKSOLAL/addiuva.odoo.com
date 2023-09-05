@@ -1993,49 +1993,49 @@ class AccountMove(models.Model):
     def action_post(self):
         cancel_flag = int(self.env['bo_edi_params'].search(
                                             [('name', '=', 'CANCEL_ACTIVE')]).value) ##Flag para facturas de reversión automáticas
-        for move in self:
-            if move.country_code == 'BO':
-                if not cancel_flag:
-                    if (move.journal_id.type == 'sale' or move.journal_id.type == 'purchase'):
-                        if move.inv_type: ## Si es factura de venta
-                            if move.e_billing: ## Si la modalidad es electronica...
-                                if not move.external_con: ## Si la conexion al SIN será por Odoo o por backend .NET
-                                    if not move.invoice_date:
-                                        raise ValidationError("The invoice date field is required")
-                                    if move.is_cancelled:
-                                        raise ValidationError("The current invoice has been cancelled, we cannot resend it to SIN")
-                                    else:
-                                        res_conectivity = move.check_conectivity()
-                                        if res_conectivity:
-                                            move.is_confirmed = True
-                                            current_status = int(move.env['bo_edi_params'].search(
-                                                    [('name', '=', 'ONLINE')]).value)
-                                            internet_status = int(move.env['bo_edi_params'].search(
-                                                    [('name', '=', 'DEMO_INT_STATUS')]).value)
-
-                                            if current_status:
-                                                move.send_email_with_attachment(0)
-                                            elif internet_status:
-                                                move.send_email_with_attachment(1)
-
-                                            move.print_report()
+        
+        if self.country_code == 'BO':
+            if not cancel_flag:
+                if (self.journal_id.type == 'sale' or self.journal_id.type == 'purchase'):
+                    if self.inv_type: ## Si es factura de venta
+                        if self.e_billing: ## Si la modalidad es electronica...
+                            if not self.external_con: ## Si la conexion al SIN será por Odoo o por backend .NET
+                                if not self.invoice_date:
+                                    raise ValidationError("The invoice date field is required")
+                                if self.is_cancelled:
+                                    raise ValidationError("The current invoice has been cancelled, we cannot resend it to SIN")
                                 else:
-                                    new_inv = move.post_invoice(0)
-                                    if new_inv[0]:
-                                        move.send_email_with_attachment(0 , new_inv[1][0]["xml"])
-                                    elif new_inv[0] == 0:
-                                        raise ValidationError("The current invoice is already posted in SIN")
-                                        
-                            else: ## Si la modalidad es estandar
-                                nit = move.partner_id.vat
-                                currency_name = move.invoice_line_ids.mapped('sale_line_ids').order_id.pricelist_id.currency_id.name
-                                if not nit:
-                                    raise ValidationError("There is no VAT/NIT for the client company")
-                                else:
-                                    move.generate_control_code()
-                                    move.is_confirmed = True
-                                    move.print_report()
-        super(AccountMove, move).action_post()
+                                    res_conectivity = self.check_conectivity()
+                                    if res_conectivity:
+                                        self.is_confirmed = True
+                                        current_status = int(self.env['bo_edi_params'].search(
+                                                [('name', '=', 'ONLINE')]).value)
+                                        internet_status = int(self.env['bo_edi_params'].search(
+                                                [('name', '=', 'DEMO_INT_STATUS')]).value)
+
+                                        if current_status:
+                                            self.send_email_with_attachment(0)
+                                        elif internet_status:
+                                            self.send_email_with_attachment(1)
+
+                                        self.print_report()
+                            else:
+                                new_inv = self.post_invoice(0)
+                                if new_inv[0]:
+                                    self.send_email_with_attachment(0 , new_inv[1][0]["xml"])
+                                elif new_inv[0] == 0:
+                                    raise ValidationError("The current invoice is already posted in SIN")
+                                    
+                        else: ## Si la modalidad es estandar
+                            nit = self.partner_id.vat
+                            currency_name = self.invoice_line_ids.mapped('sale_line_ids').order_id.pricelist_id.currency_id.name
+                            if not nit:
+                                raise ValidationError("There is no VAT/NIT for the client company")
+                            else:
+                                self.generate_control_code()
+                                self.is_confirmed = True
+                                self.print_report()
+        super(AccountMove, self).action_post()
 
     ########### HELPERS ################
 
