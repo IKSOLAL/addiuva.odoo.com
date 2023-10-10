@@ -11,6 +11,7 @@
                 <sheet>
                     <group>
                         <group>
+                            <field name="company_id"/>
                             <field name="username"/>
                             <field name="password"/>
                         </group>
@@ -31,6 +32,7 @@
         <field name="model">soa.integration.api</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="company_id"/>
                 <field name="username"/>
                 <field name="password"/>
                 <field name="client_id"/>

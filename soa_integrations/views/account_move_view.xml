@@ -10,6 +10,7 @@
                     <group>
                         <field name="cod_soa"/>
                         <field name="payment_module_soa"/>
+                        <field name="soa_support_file"/>
                         <field name="status_soa" widget="badge"
                            decoration-danger="status_soa == 'not_paid'"
                            decoration-success="status_soa == 'paid'"/>

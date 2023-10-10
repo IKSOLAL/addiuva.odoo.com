@@ -11,6 +11,7 @@ class AccountMove(models.Model):
     cod_soa = fields.Integer(string="Código SOA", required=True, default=0)
     payment_module_soa = fields.Boolean(string="Modulo Pagos SOA", default=0)
     status_soa = fields.Selection([('paid','Pagada'),('not_paid','No Pagada')],string="Status SOA", compute='_status_soa')
+    soa_support_file = fields.Binary(string="SOA Support File")
 
 
                 
@@ -18,7 +19,8 @@ class AccountMove(models.Model):
     def _status_soa(self):
         for invoice in self:
             invoice.status_soa = 'not_paid'
-            soa_api = self.env['soa.integration.api'].search([],limit=1)
+            soa_api = self.env['soa.integration.api'].search([('company_id','=',invoice.company_id.id)],limit=1)
+            #soa_api = self.env['soa.integration.api'].search([],limit=1)
             if soa_api:
                 if invoice.cod_soa != 0:
                     headers = {'Content-Type': 'application/json','client-id':soa_api.client_id,'Authorization':soa_api.token}
@@ -51,6 +53,7 @@ class AccountMove(models.Model):
                     
                     
             else:
+                #print("Por alguna razon debo dejar el print aqui 2")
                 raise UserError(_("Please configure SOA API!"))
         
     
