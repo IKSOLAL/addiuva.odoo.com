@@ -17,7 +17,7 @@ class AccountPeriodClose(models.TransientModel):
         for record in self:
             if record.sure:
                 for period_id in period_ids:
-                    account_move_ids = account_move_obj.search([('period_id', '=', period_id.id), ('state', '=', "draft")])
+                    account_move_ids = account_move_obj.search([('period_id', '=', period_id.id), ('state', '=', "draft"), ('company_id','=',record.company_id.id)])
                     if account_move_ids:
                         raise UserError(_('In order to close a period, you must first post related journal entries.'))
                     self._cr.execute('update account_journal_period set state=%s where period_id=%s', (mode, period_id.id))
