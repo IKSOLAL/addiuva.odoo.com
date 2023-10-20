@@ -2,6 +2,8 @@
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+import logging
+_logger = logging.getLogger(__name__)
 
 class AccountPeriodClose(models.TransientModel):
     _name = "account.period.close"
@@ -18,6 +20,7 @@ class AccountPeriodClose(models.TransientModel):
             if record.sure:
                 for period_id in period_ids:
                     account_move_ids = account_move_obj.search([('period_id', '=', period_id.id), ('state', '=', "draft"), ('company_id','=',period_id.company_id.id)])
+                    logger.warning("Periodo " "%s: %s : %s" % (period_id.name, period_id.company_id.name,count(account_move_ids))
                     if account_move_ids:
                         raise UserError(_('In order to close a period, you must first post related journal entries.'))
                     self._cr.execute('update account_journal_period set state=%s where period_id=%s', (mode, period_id.id))
