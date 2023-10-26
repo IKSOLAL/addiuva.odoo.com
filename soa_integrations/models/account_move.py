@@ -68,6 +68,8 @@ class AccountMoveLine(models.Model):
     def create(self,vals):
         line = super(AccountMoveLine,self).create(vals)
         for l in line:
+            if l.product_id:
+                l.tax_ids = l.product_id.supplier_taxes_id.ids
             if l.plan_id:
                 analytic = self.env['account.analytic.account'].search([('product_plan_id','=',l.plan_id.id)],limit=1)
                 if analytic:
