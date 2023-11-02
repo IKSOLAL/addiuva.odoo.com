@@ -13,8 +13,6 @@ class AccountMove(models.Model):
     status_soa = fields.Selection([('paid','Pagada'),('not_paid','No Pagada')],string="Status SOA", compute='_status_soa')
     soa_support_file = fields.Binary(string="SOA Support File")
 
-
-                
     @api.onchange('payment_state','status_soa')
     def _status_soa(self):
         for invoice in self:
@@ -53,7 +51,8 @@ class AccountMove(models.Model):
                             if response.reason == 'Unauthorized':
                                 soa_api.get_token()
                                 self._status_soa()
-                            raise UserError(_("!Algo malo sucedio con SOA!  " + response.reason))
+                            else:
+                                raise UserError(_("!Algo malo sucedio con SOA!  " + response.reason))
                     
                     
             else:
