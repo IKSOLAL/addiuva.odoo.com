@@ -13,8 +13,6 @@ class AccountMove(models.Model):
     status_soa = fields.Selection([('paid','Pagada'),('not_paid','No Pagada')],string="Status SOA", compute='_status_soa')
     soa_support_file = fields.Binary(string="SOA Support File")
 
-
-                
     @api.onchange('payment_state','status_soa')
     def _status_soa(self):
         for invoice in self:
@@ -22,34 +20,39 @@ class AccountMove(models.Model):
             soa_api = self.env['soa.integration.api'].search([('company_id','=',invoice.company_id.id)],limit=1)
             #soa_api = self.env['soa.integration.api'].search([],limit=1)
             if soa_api:
-                if invoice.cod_soa != 0:
-                    headers = {'Content-Type': 'application/json','client-id':soa_api.client_id,'Authorization':soa_api.token}
-                    url = soa_api.url_invoice+str(invoice.cod_soa)+'/'
-                    if invoice.payment_state == 'paid' or invoice.payment_state == 'in_payment':
-                        #IvStatus =5 es pagado, 3 es NO PAGADO, 4 es en proceso de pago
-                        data = {'IvStatus':5}
-                        response = requests.put(url, data=json.dumps(data),headers=headers)
-                        invoice.status_soa = 'paid'
-                    elif invoice.payment_state == 'not_paid':
-                        data = {'IvStatus':3}
-                        response = requests.put(url, data=json.dumps(data),headers=headers)
-                        invoice.status_soa = 'not_paid'
-        
-                    if response.status_code == 200:
-                        msg = response.json()['detail']
-                        notification = {
-                                   'type': 'ir.actions.client',
-                                   'tag': 'display_notification',
-                                   'params': {
-                                       'title': _('Success'),
-                                       'type': 'success',
-                                       'message': msg,
-                                       'sticky': True,
-                                   }
-                                }
-                        return notification
-                    else:
-                        raise UserError(_("!Algo malo sucedio con SOA!  " + response.reason))
+                if soa_api.soa_enabled:
+                    if invoice.cod_soa != 0:
+                        headers = {'Content-Type': 'application/json','client-id':soa_api.client_id,'Authorization': 'Token ' + str(soa_api.token)}
+                        url = soa_api.url_invoice+str(invoice.cod_soa)+'/'
+                        if invoice.payment_state == 'paid' or invoice.payment_state == 'in_payment':
+                            #IvStatus =5 es pagado, 3 es NO PAGADO, 4 es en proceso de pago
+                            data = {'IvStatus':5}
+                            response = requests.put(url, data=json.dumps(data),headers=headers)
+                            invoice.status_soa = 'paid'
+                        elif invoice.payment_state == 'not_paid':
+                            data = {'IvStatus':3}
+                            response = requests.put(url, data=json.dumps(data),headers=headers)
+                            invoice.status_soa = 'not_paid'
+            
+                        if response.status_code == 200:
+                            msg = response.json()['detail']
+                            notification = {
+                                       'type': 'ir.actions.client',
+                                       'tag': 'display_notification',
+                                       'params': {
+                                           'title': _('Success'),
+                                           'type': 'success',
+                                           'message': msg,
+                                           'sticky': True,
+                                       }
+                                    }
+                            return notification
+                        else:
+                            if response.reason == 'Unauthorized':
+                                soa_api.get_token()
+                                self._status_soa()
+                            else:
+                                raise UserError(_("!Algo malo sucedio con SOA!  " + response.reason))
                     
                     
             else:

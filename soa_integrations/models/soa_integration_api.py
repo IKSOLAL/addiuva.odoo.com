@@ -18,6 +18,7 @@ class SoaIntegrationApi(models.Model):
     #company_id = fields.Many2one(comodel_name='res.company', string="Empresa",
     #                             default=lambda self:    self.env['res.company'].browse(self.env['res.company']._company_default_get('ik_integrations_group')))
     company_id = fields.Many2one(comodel_name='res.company', string="Empresa")
+    soa_enabled = fields.Boolean(string="Activar SOA")
 
 
 

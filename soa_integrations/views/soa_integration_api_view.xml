@@ -11,6 +11,7 @@
                 <sheet>
                     <group>
                         <group>
+                            <field name="soa_enabled"/>
                             <field name="company_id"/>
                             <field name="username"/>
                             <field name="password"/>
