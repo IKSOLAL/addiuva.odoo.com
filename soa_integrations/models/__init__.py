@@ -8,3 +8,4 @@ from . import purchase_order
 from . import soa_integration_api
 from . import account_analytic_account
 from . import res_partner
+from . import amount_total
