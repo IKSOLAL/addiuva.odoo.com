@@ -11,9 +11,8 @@
     'depends': ['base','account','contacts','stock','analytic'],
 
     'data': [
-        # 'security/ir.model.access.csv',
         'security/res_groups.xml',
-        'views/views.xml',
+        # 'views/views.xml',
     ],
 
 }

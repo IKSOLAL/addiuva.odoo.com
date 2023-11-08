@@ -10,13 +10,13 @@ class ResPartnerAccess(models.Model):
     @api.model
     def create(self, vals):
         res = super(ResPartnerAccess, self).create(vals)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
     def write(self, vals):
         res = super(ResPartnerAccess, self).write(vals)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
@@ -26,13 +26,13 @@ class AccountAccountAccess(models.Model):
     @api.model
     def create(self, vals_list):
         res = super(AccountAccountAccess, self).create(vals_list)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
     def write(self, vals):
         res = super(AccountAccountAccess, self).write(vals)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
      
@@ -42,13 +42,13 @@ class AccountAnalyticAccountAccess(models.Model):
     @api.model
     def create(self, vals_list):
         res = super(AccountAnalyticAccountAccess, self).create(vals_list)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
     def write(self, vals):
         res = super(AccountAnalyticAccountAccess, self).write(vals)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
@@ -58,13 +58,13 @@ class AccountAnalyticTagAccess(models.Model):
     @api.model
     def create(self, vals_list):
         res = super(AccountAnalyticTagAccess, self).create(vals_list)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
     def write(self, vals):
         res = super(AccountAnalyticTagAccess, self).write(vals)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
@@ -74,13 +74,13 @@ class AccountTaxAccess(models.Model):
     @api.model
     def create(self, vals_list):
         res = super(AccountTaxAccess, self).create(vals_list)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
     def write(self, vals):
         res = super(AccountTaxAccess, self).write(vals)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
 
@@ -90,13 +90,13 @@ class AccountJournalAccess(models.Model):
     @api.model
     def create(self, vals_list):
         res = super(AccountJournalAccess, self).create(vals_list)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
     def write(self, vals):
         res = super(AccountJournalAccess, self).write(vals)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
@@ -106,13 +106,13 @@ class ProductTemplateAccess(models.Model):
     @api.model
     def create(self, vals_list):
         res = super(ProductTemplateAccess, self).create(vals_list)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
     def write(self, vals):
         res = super(ProductTemplateAccess, self).write(vals)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
@@ -122,12 +122,12 @@ class ProductCategoryAccess(models.Model):
     @api.model
     def create(self, vals_list):
         res = super(ProductCategoryAccess, self).create(vals_list)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
     
     def write(self, vals):
         res = super(ProductCategoryAccess, self).write(vals)
-        if not self.env.user.has_group('access_rights_extend.ikatech_permissions'):
+        if not self.env.user.has_group('access_rights_extend.ikatech_permissions_full'):
             raise exceptions.ValidationError(msg_alert)
         return res
