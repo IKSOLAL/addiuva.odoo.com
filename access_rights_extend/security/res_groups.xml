@@ -1,0 +1,5 @@
+<odoo>
+    <record model="res.groups" id="ikatech_permissions_full">
+        <field name="name">Ikatech Permissions</field>
+    </record>
+</odoo>
