@@ -35,6 +35,7 @@ class AccountMove(models.Model):
             
                         if response.status_code == 200:
                             msg = response.json()['detail']
+                            '''
                             notification = {
                                        'type': 'ir.actions.client',
                                        'tag': 'display_notification',
@@ -46,6 +47,7 @@ class AccountMove(models.Model):
                                        }
                                     }
                             return notification
+                            '''
                         else:
                             if response.reason == 'Unauthorized':
                                 soa_api.get_token()
