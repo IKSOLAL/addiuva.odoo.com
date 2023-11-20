@@ -49,7 +49,7 @@ class AccountMove(models.Model):
                         else:
                             if response.reason == 'Unauthorized':
                                 soa_api.get_token()
-                                self._status_soa()
+                                self._compute_status_soa()
                             else:
                                 raise UserError(_("!Algo malo sucedio con SOA!  " + response.reason))
                
