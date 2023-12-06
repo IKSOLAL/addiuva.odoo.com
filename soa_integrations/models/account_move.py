@@ -5,12 +5,25 @@ import logging
 import json
 _logger = logging.getLogger(__name__)
 
+
+'''
+ Descripcion Status:
+ #IvStatus =5 es Pagado en Odoo y Pagada en SOA
+ #IvStatus = 3 es Abierto en Odoo y Pendiente por pagar en SOA
+ #IvStatus = 4 es En proceso de pago en Odoo y Pago parcial en SOA
+ #IvStatus = 2 es Pendiente de aprobacion  SOA y Borrador en Odoo
+ #IvStatus = 7 es Cancelada en SOA y en Odoo tambien debe ser Cancelada
+'''
+
 class AccountMove(models.Model):
     _inherit = ["account.move"]
 
     cod_soa = fields.Integer(string="Código SOA", required=True, default=0)
     payment_module_soa = fields.Boolean(string="Modulo Pagos SOA", default=0)
-    status_soa = fields.Selection([('paid','Pagada'),('not_paid','No Pagada')],default="not_paid",string="Status SOA", compute='_compute_status_soa')
+    status_soa = fields.Selection([('pending_approval','Pendiente de Aprobacion'),
+                                            ('paid','Pagada'),
+                                            ('not_paid','No Pagada'),
+                                            ('cancel','Cancelada')],default="not_paid",string="Status SOA", compute='_compute_status_soa')
     soa_support_file = fields.Binary(string="SOA Support File")
 
     @api.depends('payment_state')
@@ -24,7 +37,6 @@ class AccountMove(models.Model):
                         headers = {'Content-Type': 'application/json','client-id':soa_api.client_id,'Authorization': 'Token ' + str(soa_api.token)}
                         url = soa_api.url_invoice+str(invoice.cod_soa)+'/'
                         if invoice.payment_state == 'paid' or invoice.payment_state == 'in_payment':
-                            #IvStatus =5 es pagado, 3 es NO PAGADO, 4 es en proceso de pago
                             data = {'IvStatus':5}
                             response = requests.put(url, data=json.dumps(data),headers=headers)
                             invoice.status_soa = 'paid'
@@ -32,7 +44,13 @@ class AccountMove(models.Model):
                             data = {'IvStatus':3}
                             response = requests.put(url, data=json.dumps(data),headers=headers)
                             invoice.write({'status_soa': 'not_paid'})
-            
+
+                        if invoice.state == 'cancel':
+                            data = {'IvStatus': 7}
+                            response = requests.put(url, data=json.dumps(data), headers=headers)
+                            invoice.write({'status_soa': 'cancel'})
+
+
                         if response.status_code == 200:
                             msg = response.json()['detail']
                             '''
