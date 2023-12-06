@@ -50,7 +50,7 @@ class AccountMove(models.Model):
                             response = requests.put(url, data=json.dumps(data), headers=headers)
                             invoice.write({'status_soa': 'pending_approval'})
                         if invoice.state == 'cancel':
-                            data = {'IvStatus': 2}
+                            data = {'IvStatus': 7}
                             response = requests.put(url, data=json.dumps(data), headers=headers)
                             invoice.write({'status_soa': 'cancel'})
 
