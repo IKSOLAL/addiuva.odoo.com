@@ -5,37 +5,59 @@ import logging
 import json
 _logger = logging.getLogger(__name__)
 
+
+'''
+ Descripcion Status:
+ #IvStatus =5 es Pagado en Odoo y Pagada en SOA
+ #IvStatus = 3 es Abierto en Odoo y Pendiente por pagar en SOA
+ #IvStatus = 4 es En proceso de pago en Odoo y Pago parcial en SOA
+ #IvStatus = 2 es Pendiente de aprobacion  SOA y Borrador en Odoo
+ #IvStatus = 7 es Cancelada en SOA y en Odoo tambien debe ser Cancelada
+'''
+
 class AccountMove(models.Model):
     _inherit = ["account.move"]
 
     cod_soa = fields.Integer(string="Código SOA", required=True, default=0)
     payment_module_soa = fields.Boolean(string="Modulo Pagos SOA", default=0)
-    status_soa = fields.Selection([('paid','Pagada'),('not_paid','No Pagada')],string="Status SOA", compute='_status_soa')
+    status_soa = fields.Selection([('pending_approval','Pendiente de Aprobacion'),
+                                            ('paid','Pagada'),
+                                            ('not_paid','No Pagada'),
+                                            ('cancel','Cancelada')],default="not_paid",string="Status SOA", compute='_compute_status_soa')
     soa_support_file = fields.Binary(string="SOA Support File")
 
-    @api.onchange('payment_state','status_soa')
-    def _status_soa(self):
+    @api.depends('payment_state')
+    def _compute_status_soa(self):
         for invoice in self:
             invoice.status_soa = 'not_paid'
             soa_api = self.env['soa.integration.api'].search([('company_id','=',invoice.company_id.id)],limit=1)
-            #soa_api = self.env['soa.integration.api'].search([],limit=1)
             if soa_api:
                 if soa_api.soa_enabled:
-                    if invoice.cod_soa != 0:
+                    if invoice.cod_soa > 0:
                         headers = {'Content-Type': 'application/json','client-id':soa_api.client_id,'Authorization': 'Token ' + str(soa_api.token)}
                         url = soa_api.url_invoice+str(invoice.cod_soa)+'/'
                         if invoice.payment_state == 'paid' or invoice.payment_state == 'in_payment':
-                            #IvStatus =5 es pagado, 3 es NO PAGADO, 4 es en proceso de pago
                             data = {'IvStatus':5}
                             response = requests.put(url, data=json.dumps(data),headers=headers)
                             invoice.status_soa = 'paid'
                         elif invoice.payment_state == 'not_paid':
                             data = {'IvStatus':3}
                             response = requests.put(url, data=json.dumps(data),headers=headers)
-                            invoice.status_soa = 'not_paid'
+                            invoice.write({'status_soa': 'not_paid'})
+
+                        if invoice.state == 'draft':
+                            data = {'IvStatus': 2}
+                            response = requests.put(url, data=json.dumps(data), headers=headers)
+                            invoice.write({'status_soa': 'pending_approval'})
+                        if invoice.state == 'cancel':
+                            data = {'IvStatus': 2}
+                            response = requests.put(url, data=json.dumps(data), headers=headers)
+                            invoice.write({'status_soa': 'cancel'})
+
             
                         if response.status_code == 200:
                             msg = response.json()['detail']
+                            '''
                             notification = {
                                        'type': 'ir.actions.client',
                                        'tag': 'display_notification',
@@ -47,12 +69,14 @@ class AccountMove(models.Model):
                                        }
                                     }
                             return notification
+                            '''
                         else:
                             if response.reason == 'Unauthorized':
                                 soa_api.get_token()
-                                self._status_soa()
+                                self._compute_status_soa()
                             else:
                                 raise UserError(_("!Algo malo sucedio con SOA!  " + response.reason))
+               
                     
                     
             else:

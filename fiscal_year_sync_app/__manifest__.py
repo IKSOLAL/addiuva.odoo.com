@@ -14,7 +14,7 @@
     "depends" : ['account','l10n_generic_coa'],
     "data": [
         'security/ir.model.access.csv',
-        'data/account_demo.xml',
+        #'data/account_demo.xml',
         'data/data_account_type.xml',
         'wizard/account_period_close_view.xml',
         'views/account_fiscalperiod_view.xml',

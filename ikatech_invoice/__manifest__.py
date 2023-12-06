@@ -6,7 +6,7 @@
 ##############################################################################
 {
     'name': 'Ikatech Invoice Format',
-    'version': '14.0.1.0.1',
+    'version': '15.0.1.0.2',
     'category': 'Accounting',
     'summary': "Ikatech Invoice Format",
     'author': "Ikatech",
