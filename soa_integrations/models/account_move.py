@@ -45,16 +45,12 @@ class AccountMove(models.Model):
                             response = requests.put(url, data=json.dumps(data),headers=headers)
                             invoice.write({'status_soa': 'not_paid'})
 
-                        if invoice.state == 'draft':
-                            data = {'IvStatus': 2}
-                            response = requests.put(url, data=json.dumps(data), headers=headers)
-                            invoice.write({'status_soa': 'pending_approval'})
                         if invoice.state == 'cancel':
                             data = {'IvStatus': 7}
                             response = requests.put(url, data=json.dumps(data), headers=headers)
                             invoice.write({'status_soa': 'cancel'})
 
-            
+
                         if response.status_code == 200:
                             msg = response.json()['detail']
                             '''
