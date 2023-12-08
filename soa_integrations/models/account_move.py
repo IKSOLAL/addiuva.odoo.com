@@ -24,7 +24,7 @@ class AccountMove(models.Model):
     status_soa = fields.Selection([('pending_approval', 'Pendiente de Aprobacion'),
                                    ('paid', 'Pagada'),
                                    ('not_paid', 'No Pagada'),
-                                   ('cancel', 'Cancelada')], default="not_paid", string="Status SOA",
+                                   ('cancel', 'Cancelada')], default="pending_approval", string="Status SOA",
                                   compute='_compute_status_soa')
     soa_support_file = fields.Binary(string="SOA Support File")
 
