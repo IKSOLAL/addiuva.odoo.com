@@ -21,10 +21,10 @@ class AccountMove(models.Model):
 
     cod_soa = fields.Integer(string="Código SOA", required=True, default=0)
     payment_module_soa = fields.Boolean(string="Modulo Pagos SOA", default=0)
-    status_soa = fields.Selection([('pending_approval', 'Pendiente de Aprobacion'),
+    status_soa = fields.Selection([('manual','Factura Manual'),('pending_approval', 'Pendiente de Aprobacion'),
                                    ('paid', 'Pagada'),
                                    ('not_paid', 'No Pagada'),
-                                   ('cancel', 'Cancelada')], default="pending_approval", string="Status SOA",
+                                   ('cancel', 'Cancelada')], default="manual", string="Status SOA",
                                   compute='_compute_status_soa')
     soa_support_file = fields.Binary(string="SOA Support File")
 
@@ -79,6 +79,8 @@ class AccountMove(models.Model):
                                 self._compute_status_soa()
                             else:
                                 raise UserError(_("!Algo malo sucedio con SOA!  " + response.reason))
+                    else:
+                        invoice.write({'status_soa': 'manual'})
 
 
 
