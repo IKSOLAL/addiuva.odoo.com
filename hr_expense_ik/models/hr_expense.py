@@ -20,6 +20,7 @@ class HrExpense(models.Model):
             r.sheet_id.accounting_date = r.accounting_date
     def _get_default_expense_sheet_values(self):
         res = super(HrExpense,self)._get_default_expense_sheet_values()
-        res['default_accounting_date'] = self.accounting_date
-        return res
+        for r in self:
+            res['default_accounting_date'] = r.accounting_date
+            return res
 
