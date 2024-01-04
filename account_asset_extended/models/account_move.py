@@ -35,7 +35,7 @@ class AccountMove(models.Model):
             'account_id': asset.account_depreciation_id.id,
             'debit': 0.0 if float_compare(amount, 0.0, precision_digits=prec) > 0 else -amount,
             'credit': amount if float_compare(amount, 0.0, precision_digits=prec) > 0 else 0.0,
-            'analytic_account_id': False,
+            'analytic_account_id': account_analytic_id.id if asset.asset_type in ('sale') else False,
             'analytic_tag_ids': [(6, 0, analytic_tag_ids.ids)] if asset.asset_type == 'sale' else False,
             'currency_id': current_currency.id,
             'amount_currency': -amount_currency,
@@ -48,7 +48,8 @@ class AccountMove(models.Model):
             'account_id': asset.account_depreciation_expense_id.id,
             'credit': 0.0 if float_compare(amount, 0.0, precision_digits=prec) > 0 else -amount,
             'debit': amount if float_compare(amount, 0.0, precision_digits=prec) > 0 else 0.0,
-            'analytic_account_id': account_analytic_id.id if asset.asset_type in ('purchase', 'expense') else False,
+             'analytic_account_id': account_analytic_id.id if asset.asset_type in (
+            'purchase', 'expense') else False,
             'analytic_tag_ids': [(6, 0, analytic_tag_ids.ids)] if asset.asset_type in (
             'purchase', 'expense') else False,
             'currency_id': current_currency.id,

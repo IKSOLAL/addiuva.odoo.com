@@ -1,6 +1,7 @@
-from odoo import api, fields, models, _
+from odoo import fields, models, _
+from odoo.tools import float_compare
+from odoo.exceptions import UserError
 from math import copysign
-from odoo.tools import float_compare, float_is_zero, float_round
 
 
 class AccountAsset(models.Model):
