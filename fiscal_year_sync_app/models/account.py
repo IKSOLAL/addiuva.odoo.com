@@ -537,6 +537,7 @@ class AccountMoveLine(models.Model):
             })
         return True
 
+    ''' Esto hace que el reporte de Auditoria de diarios salga en blanco
     @api.model
     def _query_get(self, domain=None):
         self.check_access_rights('read')
@@ -616,7 +617,7 @@ class AccountMoveLine(models.Model):
 
             tables, where_clause, where_clause_params = query.get_sql()
         return tables, where_clause, where_clause_params
-
+    '''
 
     def convert_to_period(self):
         context = dict(self._context or {})
