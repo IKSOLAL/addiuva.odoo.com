@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_journal_excel" model="ir.actions.report">
+            <field name="name">Journals Audit</field>
+            <field name="model">account.common.journal.report</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">accounting_excel_reports.report_journal_excel</field>
+            <field name="report_file">accounting_excel_reports.report_journal_excel</field>
+            <field name="attachment_use">False</field>
+        </record>
+    </data>
+</odoo>

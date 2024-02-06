@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <record id="account_report_print_journal_excel_view" model="ir.ui.view">
+        <field name="name">Journals Audit</field>
+        <field name="model">account.print.journal</field>
+        <field name="inherit_id" ref="account_reports.account_report_print_journal_view"/>
+        <field name="arch" type="xml">
+            <button name="check_report" position="after">
+                or
+                <button name="check_report" string="Print Excel"
+                        type="object" class="oe_highlight"
+                        context="{'excel_report':1}"
+                />
+            </button>
+        </field>
+    </record>
+</odoo>
