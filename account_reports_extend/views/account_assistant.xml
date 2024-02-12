@@ -1,0 +1,55 @@
+<odoo>
+  <data>
+    <!-- View Wizard -->
+    <record id="xml_assistant_view_form" model="ir.ui.view">        	
+    <field name="name">acaccount.report.assistant.form</field>        	
+    <field name="model">account.report.assistant</field>        	
+    <field name="arch" type="xml">            	
+        <form>                	
+            <group class="oe_title"> 
+                <field name="start_date"/>
+                <field name="end_date"/>
+            </group>
+            <group>
+                <field name="num_order"/>
+            </group>
+            <footer>
+                <button name="print_report_xml" string="Generar" type="object" class="btn-primary"/>
+                <button string="Cancel" class="btn-secondary" special="cancel"/> 
+            </footer>
+        </form>        	
+    </field>    	
+    </record> 
+
+    <!-- Wizard Action -->
+    <record id="xml_assistant_wizard_action" model="ir.actions.act_window">        	
+        <field name="name">Auxiliar de Cuentas</field>        	
+        <field name="type">ir.actions.act_window</field>        	
+        <field name="res_model">account.report.assistant</field>        	
+        <field name="view_mode">form</field>        	
+        <field name="view_id" ref="xml_assistant_view_form"/>        	
+        <field name="target">new</field>    	
+    </record>
+    
+    <!-- Menu Item-->
+    <menuitem name="Auxiliar de Cuentas" id="account_mx_assistant" 
+        parent="account_reports.account_reports_audit_reports_menu" sequence="30"
+        action="xml_assistant_wizard_action"/>
+
+    <!-- XML Definition -->
+    <!-- <record id="account_xml_assistant" model="ir.actions.report">
+        <field name="name">account_xml_assistant</field>
+        <field name="model">account.report.assistant</field>
+        <field name="report_type">qweb-xml</field>
+        <field name="report_name">account_reports_extend.report_move_assis</field>
+        <field name="report_file">account_reports_extend.report_move_assis</field>
+    </record> -->
+    <report id="account_xml_assistant"
+           string="account_xml_assistant"
+           model="account.report.assistant"
+           report_type="qweb-xml"
+           file="account_reports_extend.report_move_assis"
+           name="account_reports_extend.report_move_assis"/>
+
+  </data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_move_assis">
+        <AuxiliarCtas:AuxiliarCtas Version="1.3" t-att-RFC="general['rfc_company']" 
+            t-att-Mes="general['month']" t-att-Anio="general['year']" 
+            t-att-TipoSolicitud="general['type']" t-att-NumOrden="general['order']" 
+            xsi:schemaLocation="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas/AuxiliarCtas_1_3.xsd" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xmlns:AuxiliarCtas="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/AuxiliarCtas">
+            <t t-foreach="data" t-as="move">
+                <AuxiliarCtas:Cuenta t-att="{'NumCta': move['code'], 'DesCta': move['name'], 'SaldoIni': move['balance'], 'SaldoFin': move['balance_end']}">
+                    <t t-foreach="move['lines']" t-as="line">
+                        <AuxiliarCtas:DetalleAux t-att="{'NumUnIdenPol': line['folio'], 'Fecha':line['date'], 'Concepto':line['tag'], 'Debe':line['debit'],  'Haber':line['credit']}"/>
+                    </t>
+                </AuxiliarCtas:Cuenta>
+            </t>
+        </AuxiliarCtas:AuxiliarCtas>
+    </template>
+</odoo>
