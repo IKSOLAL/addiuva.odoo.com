@@ -14,7 +14,7 @@
     'website': 'https://ikatechsolutions.com/',
     'license': 'AGPL-3',
     'depends': [
-        'account',
+        'l10n_mx_xml_polizas_edi','l10n_mx_edi',
         ],
     'data': [
         'views/account_move_view.xml',
