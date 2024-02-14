@@ -6,10 +6,10 @@
 ##############################################################################
 
 {
-    'name': 'Account Move Assignment',
+    'name': 'XML Polizas',
     'version': '15.0.0.0.0',
     'category': 'account',
-    'summary': "Add field assignment to account move line",
+    'summary': "Replace UUID for xml",
     'author': "Ikatech",
     'website': 'https://ikatechsolutions.com/',
     'license': 'AGPL-3',
