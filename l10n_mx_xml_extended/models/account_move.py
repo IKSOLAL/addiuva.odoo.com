@@ -2,8 +2,8 @@
 from odoo import models, fields,api
 
 
-class AccountMoveLine(models.Model):
-    _inherit = 'account.move.line'
+class AccountMove(models.Model):
+    _inherit = 'account.move'
 
     l10n_mx_xml_poliza_uuid = fields.Char(string="UUID")
 
