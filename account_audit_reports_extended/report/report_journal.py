@@ -12,7 +12,14 @@ class ReportJournalExcel(models.Model):
     def generate_xlsx_report(self, workbook, data, obj):
         report_obj = self.env['report.account.report_journal']
         result = report_obj._get_report_values(obj, data)
-        res_company = self.env.user.company_id
+        selected_companies = self.env['res.company'].browse(self._context.get('allowed_company_ids'))
+        first_company = 0
+        for c in selected_companies:
+            if first_company == 0:
+                first_company = 1
+                res_company = c
+        #res_company = self.env.user.company_id
+        #
 
         for o in result['docs']:
             sheet = workbook.add_worksheet()
