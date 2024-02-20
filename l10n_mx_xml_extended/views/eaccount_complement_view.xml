@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_eaccount_complements_form" model="ir.ui.view">
+            <field name="name">E Account Complements Form</field>
+            <field name="model">account.move.line</field>
+            <field name="arch" type="xml">
+               <form>
+                   <sheet>
+                       <field name="id" string="ID Account Move Line" invisible="1"/>
+                       <field name="eaccount_complements_ids" context="{'default_move_line_id':parent.id}">
+                           <tree editable="bottom">
+                               <field name="move_line_id" invisible="1"/>
+                               <field name="uuid"/>
+                               <field name="amount"/>
+                           </tree>
+                       </field>
+                       <footer>
+                            <button string="Guardar" special="save" class="btn-primary"/>
+                            <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        </footer>
+                   </sheet>
+               </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

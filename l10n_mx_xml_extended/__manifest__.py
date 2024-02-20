@@ -18,6 +18,9 @@
         ],
     'data': [
         'views/account_move_view.xml',
+        'views/account_account_view.xml',
+        'views/eaccount_complement_view.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'odoo-license': 'EE',

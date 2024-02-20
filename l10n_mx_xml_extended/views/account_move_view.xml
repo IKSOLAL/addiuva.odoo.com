@@ -6,8 +6,12 @@
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
-                    <xpath expr="//form/sheet/group/group/field[@name='ref']" position="after">
-                        <field name="l10n_mx_xml_poliza_uuid"/>
+                    <xpath expr="//notebook/page[2]/field[@name='line_ids']/tree/field[@name='debit']" position="before">
+                        <field name="enable_uuid_btn" invisible="1"/>
+                        <button class="fa fa-table"
+                                name="open_wizard_uuid"
+                                aria-label="Eliminar"
+                                type="object" attrs="{'invisible':[('enable_uuid_btn','=',False)]}"/>
                     </xpath>
             </field>
         </record>

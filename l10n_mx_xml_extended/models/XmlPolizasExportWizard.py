@@ -1,4 +1,5 @@
 from odoo import models
+import textwrap
 
 
 class XmlPolizasExportWizard(models.TransientModel):
@@ -15,10 +16,12 @@ class XmlPolizasExportWizard(models.TransientModel):
                 # move line data is already grouped by account, we store the retrieved move info
                 # to reduce db queries
                 move_id = line_data['move_id']
+                #for testing ivan_porras
+                #move_id = 1023983
                 mx_data = mx_move_vals.get(move_id)
                 if not mx_data:
                     # uuid = AccountMove.browse(move_id).l10n_mx_edi_cfdi_uuid
-                    uuid = AccountMove.browse(move_id).l10n_mx_xml_poliza_uuid
+                    #uuid = AccountMove.browse(move_id).l10n_mx_xml_poliza_uuid
                     if line_data['country_code'] != 'MX':
                         partner_rfc = 'XEXX010101000'
                     elif line_data['partner_vat']:
@@ -30,10 +33,12 @@ class XmlPolizasExportWizard(models.TransientModel):
 
                     mx_data = {
                         'partner_rfc': partner_rfc,
-                        'l10n_mx_edi_cfdi_uuid': uuid,
+                        #'l10n_mx_edi_cfdi_uuid': uuid,
+                        'l10n_mx_edi_cfdi_uuid': False,
                     }
                     mx_move_vals[move_id] = mx_data
-                if mx_data.get('l10n_mx_edi_cfdi_uuid'):
+                #if mx_data.get('l10n_mx_edi_cfdi_uuid'):
+                if mx_data.get('partner_rfc'):
                     currency_name = line_data.pop('currency_name', False)
                     currency_conversion_rate = mx_data.get('currency_conversion_rate')
                     foreign_currency = line_data['currency_id'] and line_data['currency_id'] != line_data[
@@ -55,3 +60,15 @@ class XmlPolizasExportWizard(models.TransientModel):
                         **mx_data
                     })
         return super()._get_move_export_data(accounts_results)
+
+
+    def _get_move_line_export_data(self, line):
+        return {
+            'line_label': textwrap.shorten(
+                line['journal_name'] + ((' - ' + line['name']) if line['name'] else ''),
+                width=200),
+            'account_name': line['account_name'],
+            'account_code': line['account_code'],
+            'credit': '%.2f' % line['credit'],
+            'debit': '%.2f' % line['debit'],
+        }
