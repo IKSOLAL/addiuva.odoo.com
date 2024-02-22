@@ -17,6 +17,7 @@
         'l10n_mx_xml_polizas_edi','l10n_mx_edi',
         ],
     'data': [
+        'data/xml_polizas.xml',
         'views/account_move_view.xml',
         'views/account_account_view.xml',
         'views/eaccount_complement_view.xml',

@@ -22,6 +22,7 @@ class XmlPolizasExportWizard(models.TransientModel):
                 if not mx_data:
                     # uuid = AccountMove.browse(move_id).l10n_mx_edi_cfdi_uuid
                     #uuid = AccountMove.browse(move_id).l10n_mx_xml_poliza_uuid
+                    partner_rfc = False
                     if line_data['country_code'] != 'MX':
                         partner_rfc = 'XEXX010101000'
                     elif line_data['partner_vat']:
@@ -63,6 +64,11 @@ class XmlPolizasExportWizard(models.TransientModel):
 
 
     def _get_move_line_export_data(self, line):
+        uuids = self.env['account.move.line'].search([('id','=',int(line['id']))]).eaccount_complements_ids
+        lst_uuids = []
+        for u in uuids:
+            lst_uuids.append({'uuid':u.uuid,'amount':u.amount})
+        currency = self.env['res.currency'].search([('id','=',int(line['currency_id']))])
         return {
             'line_label': textwrap.shorten(
                 line['journal_name'] + ((' - ' + line['name']) if line['name'] else ''),
@@ -71,4 +77,9 @@ class XmlPolizasExportWizard(models.TransientModel):
             'account_code': line['account_code'],
             'credit': '%.2f' % line['credit'],
             'debit': '%.2f' % line['debit'],
+            'lst_uuid': lst_uuids,
+            'currency_name': currency.name,
+            'customer_vat': line['partner_rfc'],
+            'currency_conversion_rate': line['currency_conversion_rate'] if 'currency_conversion_rate' in line else 1,
+            #'amount_total': '%.2f' % line['amount_total'],
         }

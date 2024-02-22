@@ -23,8 +23,8 @@ class EAccountComplements(models.Model):
         res = super(EAccountComplements,self).create(vals_list)
         uuid_ids = self.env['eaccount.complements'].search([('move_line_id', '=', self.move_line_id.id)])
         amounts = sum(uuid_ids.mapped('amount'))
-        if amounts > debits:
-            raise UserError('La sumatoria de los montos totales es mayor a los cargos')
+        #if amounts > debits:
+        #    raise UserError('La sumatoria de los montos totales es mayor a los cargos')
         return res
 
 
@@ -35,8 +35,8 @@ class EAccountComplements(models.Model):
 
         uuid_ids = self.env['eaccount.complements'].search([('move_line_id','=',self.move_line_id.id)])
         amounts = sum(uuid_ids.mapped('amount'))
-        if amounts > debits:
-            raise UserError('La sumatoria de los montos totales es mayor a los cargos')
+        #if amounts > debits:
+        #    raise UserError('La sumatoria de los montos totales es mayor a los cargos')
         return res
 
 
