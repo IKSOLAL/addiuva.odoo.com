@@ -6,37 +6,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-12-17 17:39+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2024-02-12 11:39+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_menu
 #: model:ir.model,name:account_menu.model_account_group
 msgid "Account Group"
-msgstr "Gruppo di Conti"
+msgstr "Gruppo contabile"
 
 #. module: account_menu
 #: model:ir.actions.act_window,name:account_menu.account_group_action
 #: model:ir.ui.menu,name:account_menu.account_group_menu
 msgid "Account Groups"
-msgstr "Gruppi di Conti"
+msgstr "Gruppi contabili"
 
 #. module: account_menu
 #: model:ir.model,name:account_menu.model_account_account_tag
 msgid "Account Tag"
-msgstr "Tag Conto"
+msgstr "Etichetta conto"
 
 #. module: account_menu
 #: model:ir.actions.act_window,name:account_menu.account_account_tag_action
 #: model:ir.ui.menu,name:account_menu.account_tag_menu
 msgid "Account Tags"
-msgstr "Tag Conto"
+msgstr "Etichette conto"
 
 #. module: account_menu
 #: model_terms:ir.ui.view,arch_db:account_menu.view_account_tax_group_form
@@ -45,8 +45,6 @@ msgid "Account Tax Group"
 msgstr "Gruppo di Imposte"
 
 #. module: account_menu
-#: model:ir.actions.act_window,name:account_menu.action_account_tax_group
-#: model:ir.ui.menu,name:account_menu.account_tax_group_menu
 #: model_terms:ir.ui.view,arch_db:account_menu.view_account_tax_group_search
 msgid "Account Tax Groups"
 msgstr "Gruppi di Imposte"
@@ -76,7 +74,7 @@ msgstr "Contabilità Anglosassone"
 #. module: account_menu
 #: model:ir.ui.menu,name:account_menu.menu_accounting_statement_bank
 msgid "Bank Statements"
-msgstr "Estratti Conto Bancari"
+msgstr "Estratti conto bancari"
 
 #. module: account_menu
 #: model:ir.ui.menu,name:account_menu.menu_accounting_bank_and_cash
@@ -96,7 +94,7 @@ msgstr "Modelli Piano dei Conti"
 #. module: account_menu
 #: model:ir.model,name:account_menu.model_res_config_settings
 msgid "Config Settings"
-msgstr "Impostazioni Configurazione"
+msgstr "Impostazioni di configurazione"
 
 #. module: account_menu
 #: model:ir.model.fields,field_description:account_menu.field_account_account_tag__display_name
@@ -104,7 +102,7 @@ msgstr "Impostazioni Configurazione"
 #: model:ir.model.fields,field_description:account_menu.field_account_tax_group__display_name
 #: model:ir.model.fields,field_description:account_menu.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr "Nome Visualizzato"
+msgstr "Nome visualizzato"
 
 #. module: account_menu
 #: model:ir.actions.act_window,name:account_menu.account_fiscal_position_template_action
@@ -126,13 +124,14 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:account_menu.field_account_tax_group____last_update
 #: model:ir.model.fields,field_description:account_menu.field_res_config_settings____last_update
 msgid "Last Modified on"
-msgstr "Ultima Modifica il"
+msgstr "Ultima modifica il"
 
 #. module: account_menu
 #: model_terms:ir.ui.view,arch_db:account_menu.res_config_settings_view_form
 msgid ""
 "Record the cost of a good as an expense when this good is\n"
-"                                invoiced to a final customer (instead of recording the cost as soon\n"
+"                                invoiced to a final customer (instead of "
+"recording the cost as soon\n"
 "                                as the product is received in stock)."
 msgstr ""
 "Registra il costo di un bene come una spesa quando tale bene\n"
@@ -150,9 +149,20 @@ msgstr ""
 "cliente finale."
 
 #. module: account_menu
+#: model_terms:ir.ui.view,arch_db:account_menu.view_account_tax_group_search
+msgid "Sequence"
+msgstr "Sequenza"
+
+#. module: account_menu
 #: model:ir.model,name:account_menu.model_account_tax_group
 msgid "Tax Group"
 msgstr "Gruppo imposte"
+
+#. module: account_menu
+#: model:ir.actions.act_window,name:account_menu.action_account_tax_group
+#: model:ir.ui.menu,name:account_menu.account_tax_group_menu
+msgid "Tax Groups"
+msgstr "Gruppi imposte"
 
 #. module: account_menu
 #: model:ir.ui.menu,name:account_menu.menu_account_tax_template

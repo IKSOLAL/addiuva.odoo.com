@@ -36,11 +36,8 @@
         <field name="model">account.tax.group</field>
         <field name="arch" type="xml">
             <search string="Account Tax Groups">
-                <field
-                    name="name"
-                    filter_domain="['|', ('sequence', '=like', str(self) + '%'), ('name', 'ilike', self)]"
-                    string="Account Tax Group"
-                />
+                <field name="name" string="Account Tax Group" />
+                <field name="sequence" string="Sequence" />
             </search>
         </field>
     </record>
@@ -55,7 +52,7 @@
         </field>
     </record>
     <record id="action_account_tax_group" model="ir.actions.act_window">
-        <field name="name">Account Tax Groups</field>
+        <field name="name">Tax Groups</field>
         <field name="res_model">account.tax.group</field>
         <field name="view_mode">tree,form</field>
     </record>
