@@ -12,10 +12,12 @@ from odoo.tools import float_is_zero
 class AccountAccountType(models.Model):
     _inherit = "account.account.type"
 
-    partner_policy = fields.Selection(
-        selection=[("optional", "Optional"), ("always", "Always"), ("never", "Never")],
+    property_partner_policy = fields.Selection(
+        selection=[
+            ("optional", "Optional"),
+            ("always", "Always"),
+            ("never", "Never")],
         string="Policy for Partner Field",
-        required=True,
         default="optional",
         company_dependent=True,
         help="Set the policy for the partner field : if you select "
@@ -36,7 +38,7 @@ class AccountAccount(models.Model):
         self.ensure_one()
         return self.user_type_id.with_company(
             self.company_id.id
-        ).partner_policy
+        ).property_partner_policy
 
 
 

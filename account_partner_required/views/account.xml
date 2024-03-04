@@ -12,7 +12,7 @@
     <field name="inherit_id" ref="account.view_account_type_form" />
     <field name="arch" type="xml">
         <field name="type" position="after">
-            <field name="partner_policy" />
+            <field name="property_partner_policy" />
         </field>
     </field>
 </record>
@@ -23,7 +23,7 @@
     <field name="inherit_id" ref="account.view_account_type_tree" />
     <field name="arch" type="xml">
         <field name="type" position="after">
-            <field name="partner_policy" />
+            <field name="property_partner_policy" />
         </field>
     </field>
 </record>
