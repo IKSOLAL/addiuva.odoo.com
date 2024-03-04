@@ -17,6 +17,7 @@ class AccountAccountType(models.Model):
         string="Policy for Partner Field",
         required=True,
         default="optional",
+        company_dependent=True,
         help="Set the policy for the partner field : if you select "
         "'Optional', the accountant is free to put a partner "
         "on an account move line with this type of account ; "
