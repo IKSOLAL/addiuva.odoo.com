@@ -29,6 +29,14 @@ class AccountAccountType(models.Model):
         "is present.",
     )
 
+class AccountMove(models.Model):
+    _inherit = "account.move"
+
+    def _post(self, soft=True):
+        res = super()._post(soft=soft)
+        self.mapped("line_ids")._check_partner_required()
+        return res
+
 
 class AccountAccount(models.Model):
     _inherit = "account.account"
