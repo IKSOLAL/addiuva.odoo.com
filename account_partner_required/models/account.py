@@ -32,9 +32,12 @@ class AccountAccount(models.Model):
     _inherit = "account.account"
 
     def get_partner_policy(self):
-        """Extension point to obtain partner policy for an account"""
+        """ Extension point to obtain analytic policy for an account """
         self.ensure_one()
-        return self.user_type_id.partner_policy
+        return self.user_type_id.with_company(
+            self.company_id.id
+        ).partner_policy
+
 
 
 class AccountMoveLine(models.Model):
