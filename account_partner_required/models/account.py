@@ -74,9 +74,11 @@ class AccountMoveLine(models.Model):
                     "'%s'."
                 ) % (line.account_id.name_get()[0][1], line.name, line.partner_id.name)
 
+    '''
     @api.constrains("partner_id", "account_id", "debit", "credit")
     def _check_partner_required(self):
         for line in self:
             message = line._check_partner_required_msg()
             if message:
                 raise ValidationError(message)
+    '''
