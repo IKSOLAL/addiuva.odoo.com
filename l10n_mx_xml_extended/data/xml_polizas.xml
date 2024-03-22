@@ -4,13 +4,15 @@
          <xpath expr="//*[name()='PLZ:Transaccion']" position="inside">
               <!--<xpath expr="//*[name()='PLZ:Transaccion']" position="inside">-->
                     <t t-foreach="line.get('lst_uuid')" t-as="u">
-                        <PLZ:CompNal
-                            xmlns:PLZ="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo"
-                            t-att-UUID_CFDI="u['uuid']"
-                            t-att-RFC="line['customer_vat']"
-                            t-att-MontoTotal="u['amount']"
-                            t-att-Moneda="line['currency_name']"
-                            t-att-TipCamb="line['currency_conversion_rate']"/>
+                        <t t-if="u['uuid']">
+                            <PLZ:CompNal
+                                xmlns:PLZ="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo"
+                                t-att-UUID_CFDI="u['uuid']"
+                                t-att-RFC="line['customer_vat']"
+                                t-att-MontoTotal="u['amount']"
+                                t-att-Moneda="line['currency_name']"
+                                t-att-TipCamb="line['currency_conversion_rate']"/>
+                        </t>
                     </t>
               <!--</xpath>-->
         </xpath>
