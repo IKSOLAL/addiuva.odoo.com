@@ -1,0 +1,94 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ika_evidence
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-31 07:48+0000\n"
+"PO-Revision-Date: 2024-03-31 01:50-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.1\n"
+
+#. module: ika_evidence
+#: model:ir.model,name:ika_evidence.model_account_account
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: ika_evidence
+#: model:ir.model,name:ika_evidence.model_account_account_type
+msgid "Account Type"
+msgstr "Tipo de cuenta"
+
+#. module: ika_evidence
+#: model:ir.model.fields.selection,name:ika_evidence.selection__account_account_type__property_evidence_policy__always
+msgid "Always"
+msgstr "Siempre"
+
+#. module: ika_evidence
+#: code:addons/ika_evidence/models/account.py:0
+#, python-format
+msgid ""
+"Attachment policy is set to 'Always' with account '%s' but the attachment "
+"is missing in the account move with label '%s'."
+msgstr ""
+"La política de archivos adjuntos está configurada en “Siempre” con la "
+"cuenta “%s”, pero el archivo adjunto falta en el movimiento de cuenta con "
+"la etiqueta “%s”."
+
+#. module: ika_evidence
+#: code:addons/ika_evidence/models/account.py:0
+#, python-format
+msgid ""
+"Attachment policy is set to 'Never' with account '%s' but the account move "
+"with label '%s' has a partner '%s'."
+msgstr ""
+"La política de archivos adjuntos está configurada en “Nunca” con la cuenta "
+"“%s”, pero la cuenta movida con la etiqueta “%s” tiene un socio “%s”."
+
+#. module: ika_evidence
+#: model:ir.model,name:ika_evidence.model_account_move
+msgid "Electronic invoicing"
+msgstr "Factura electrónica"
+
+#. module: ika_evidence
+#: model:ir.model,name:ika_evidence.model_account_move_line
+msgid "Journal Items"
+msgstr "Movimientos de diario"
+
+#. module: ika_evidence
+#: model:ir.model.fields.selection,name:ika_evidence.selection__account_account_type__property_evidence_policy__never
+msgid "Never"
+msgstr "Nunca"
+
+#. module: ika_evidence
+#: model:ir.model.fields.selection,name:ika_evidence.selection__account_account_type__property_evidence_policy__optional
+msgid "Optional"
+msgstr "Opcional"
+
+#. module: ika_evidence
+#: model:ir.model.fields,field_description:ika_evidence.field_account_account_type__property_evidence_policy
+msgid "Policy for Attachment File"
+msgstr "Política para archivos adjuntos"
+
+#. module: ika_evidence
+#: model:ir.model.fields,help:ika_evidence.field_account_account_type__property_evidence_policy
+msgid ""
+"Set the policy for the evidence field : if you select 'Optional', the "
+"accountant is free to put an attachment on an account move with this type "
+"of account ; if you select 'Always', the accountant will get an error "
+"message if there is no partner ; if you select 'Never', the accountant will "
+"get an error message if an attachment is present."
+msgstr ""
+"Establezca la política para el campo de evidencia: si selecciona "
+"‘Opcional’, el contador es libre de adjuntar un archivo en un movimiento de "
+"cuenta con este tipo de cuenta; si selecciona ‘Siempre’, el contador "
+"recibirá un mensaje de error si no hay ningún socio; Si selecciona “Nunca”, "
+"el contador recibirá un mensaje de error si hay un archivo adjunto."
