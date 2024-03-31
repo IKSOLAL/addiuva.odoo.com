@@ -28,6 +28,9 @@ class AccountAccountType(models.Model):
         "the accountant will get an error message if a partner "
         "is present.",
     )
+    account_journal_ids = fields.Many2many("account.journal", string="Excepto los diarios",
+                                           help="Se tomara como primera evaluacion el diario y despues la excepcion de cuentas "
+                                                "como nivel 2 de evaluacion")
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -56,6 +59,9 @@ class AccountMoveLine(models.Model):
     def _check_partner_required_msg(self):
         prec = self.env.user.company_id.currency_id.rounding
         for line in self:
+            if self.move_id.journal_id.id in self.account_id.user_type_id.account_journal_ids.ids:
+                return None
+
             if float_is_zero(line.debit, precision_rounding=prec) and float_is_zero(
                 line.credit, precision_rounding=prec
             ):
@@ -73,7 +79,6 @@ class AccountMoveLine(models.Model):
                     "the account move line with label '%s' has a partner "
                     "'%s'."
                 ) % (line.account_id.name_get()[0][1], line.name, line.partner_id.name)
-
 
     #@api.constrains("partner_id", "account_id", "debit", "credit")
     def _check_partner_required(self):

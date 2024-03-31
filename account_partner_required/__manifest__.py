@@ -11,13 +11,13 @@
     "category": "Accounting",
     "license": "AGPL-3",
     "summary": "Adds an option 'partner policy' on account types",
-    "author": "ACSONE SA/NV,Akretion,Odoo Community Association (OCA)",
+    "author": "ACSONE SA/NV,Akretion,Odoo Community Association (OCA),ivan porras",
     "website": "https://github.com/OCA/account-financial-tools",
     "depends": [
         "account_menu",
     ],
     "data": [
-        "views/account.xml",
+        "views/account_account_type.xml",
     ],
     "installable": True,
     "application": False,
