@@ -625,12 +625,14 @@
                     <br/>
                     <div class="col-1"/>
                     <div class="col-4" style="font-size:12px">
-                        <span>
-                            <strong>
-                                <span>Método de pago:</span>
-                            </strong>
-                            <t t-esc="o.payment_form_id.name"/>
-                        </span>
+                         <t t-if="o.ei_is_valid">
+                             <span>
+                                    <strong>
+                                        <span>Método de pago: </span>
+                                    </strong>
+                                    <t t-esc="o.payment_form_id.name"/>
+                                </span>
+                         </t>
                         <br/>
                         <span>
                             <span>
