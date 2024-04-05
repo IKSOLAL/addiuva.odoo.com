@@ -59,23 +59,21 @@ class AccountMoveLine(models.Model):
 
     def _check_attachment_required_msg(self):
         for line in self:
-            if self.move_id.journal_id.id in self.account_id.user_type_id.account_journal_ids.ids:
-                return None
-
-            policy = line.account_id.get_attachment_policy()
-            attachment_found = self.move_id.check_has_attachments()
-            if policy == "always" and not attachment_found:
-                return _(
-                    "Attachment policy is set to 'Always' with account '%s' but "
-                    "the attachment is missing in the account move with "
-                    "label '%s'."
-                ) % (line.account_id.name_get()[0][1], line.name)
-            elif policy == "never" and line.partner_id:
-                return _(
-                    "Attachment policy is set to 'Never' with account '%s' but "
-                    "the account move with label '%s' has a partner "
-                    "'%s'."
-                ) % (line.account_id.name_get()[0][1], line.name, line.partner_id.name)
+            if not self.move_id.journal_id.id in self.account_id.user_type_id.account_journal_ids.ids:
+                policy = line.account_id.get_attachment_policy()
+                attachment_found = self.move_id.check_has_attachments()
+                if policy == "always" and not attachment_found:
+                    return _(
+                        "Attachment policy is set to 'Always' with account '%s' but "
+                        "the attachment is missing in the account move with "
+                        "label '%s'."
+                    ) % (line.account_id.name_get()[0][1], line.name)
+                elif policy == "never" and line.partner_id:
+                    return _(
+                        "Attachment policy is set to 'Never' with account '%s' but "
+                        "the account move with label '%s' has a partner "
+                        "'%s'."
+                    ) % (line.account_id.name_get()[0][1], line.name, line.partner_id.name)
 
     #@api.constrains("partner_id", "account_id", "debit", "credit")
     def _check_attachment_required(self):
