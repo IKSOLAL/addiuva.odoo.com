@@ -29,7 +29,7 @@ class AccountAccount(models.Model):
 
     def get_attachment_policy(self):
         """ Extension point to obtain analytic policy for an account """
-        self.ensure_one()
+        #self.ensure_one()
         return self.user_type_id.with_company(
             self.company_id.id
         ).property_evidence_policy
