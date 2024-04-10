@@ -169,6 +169,7 @@ odoo.define('account_extend_ikatech.main', function (require) {
                                 htmlString += `<th>
                                                 <span class="DetailAmount " id="action_see_more_analytic" 
                                                     idAccount="${e.id}" 
+                                                    date_from="${datas['dates'][i].date_from}" date_to="${datas['dates'][i].date_to}"
                                                     type_operation="${datas['type_operation']}">${e.amount[i]}</span>
                                                 </th>`
                             }
@@ -191,8 +192,6 @@ odoo.define('account_extend_ikatech.main', function (require) {
             var accountId = element.target.getAttribute("idAccount")
             const date_from = moment(new Date(element.target.getAttribute("date_from")+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
             const date_to = moment(new Date(element.target.getAttribute("date_to")+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
-            // const date_from = moment(new Date(this.$el.find('.datetimepicker-input[name="date_from"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
-            // const date_to = moment(new Date(this.$el.find('.datetimepicker-input[name="date_to"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
 
             self._rpc({
                 model: 'account.reports.pandl',
@@ -209,8 +208,8 @@ odoo.define('account_extend_ikatech.main', function (require) {
             var self = this;
             var accountId = element.target.getAttribute("idAccount")
             var type_operation = element.target.getAttribute("type_operation")
-            const date_from = moment(new Date(this.$el.find('.datetimepicker-input[name="date_from"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
-            const date_to = moment(new Date(this.$el.find('.datetimepicker-input[name="date_to"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            const date_from = moment(new Date(element.target.getAttribute("date_from")+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            const date_to = moment(new Date(element.target.getAttribute("date_to")+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
 
             self._rpc({
                 model: 'account.reports.pandl',

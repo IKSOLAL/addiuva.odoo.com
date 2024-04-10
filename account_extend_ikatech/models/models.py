@@ -30,8 +30,9 @@ class account_reports_pandl(models.TransientModel):
             date_to = datetime.strptime(option[2].get('date_to'), '%Y-%m-%d')
             for month in range(int(months_n)):
                 new_date = date_to - relativedelta(months=month+1)
-                new_date_from = '{}-{}-{}'.format(new_date.year,new_date.month, calendar.monthrange(new_date.year, new_date.month)[1])
-                new_date_to = '{}-{}-01'.format(new_date.year,new_date.month)
+                formatted_month = str(new_date.month).zfill(2)
+                new_date_from = '{}-{}-{}'.format(new_date.year,formatted_month, calendar.monthrange(new_date.year, new_date.month)[1])
+                new_date_to = '{}-{}-01'.format(new_date.year,formatted_month)
                 dates.append({
                     'date_from': new_date_from,
                     'date_to': new_date_to
@@ -288,8 +289,9 @@ class account_reports_pandl(models.TransientModel):
             date_to = datetime.strptime(date_to, '%Y-%m-%d')
             for month in range(int(months)):
                 new_date = date_to - relativedelta(months=month+1)
-                new_date_from = '{}-{}-{}'.format(new_date.year,new_date.month, calendar.monthrange(new_date.year, new_date.month)[1])
-                new_date_to = '{}-{}-01'.format(new_date.year,new_date.month)
+                formatted_month = str(new_date.month).zfill(2)
+                new_date_from = '{}-{}-{}'.format(new_date.year,formatted_month, calendar.monthrange(new_date.year, new_date.month)[1])
+                new_date_to = '{}-{}-01'.format(new_date.year,formatted_month)
                 dates.append({
                     'date_from': new_date_from,
                     'date_to': new_date_to
@@ -363,8 +365,9 @@ class account_reports_pandl(models.TransientModel):
             date_to = datetime.strptime(date_to, '%Y-%m-%d')
             for month in range(int(months)):
                 new_date = date_to - relativedelta(months=month+1)
-                new_date_from = '{}-{}-{}'.format(new_date.year,new_date.month, calendar.monthrange(new_date.year, new_date.month)[1])
-                new_date_to = '{}-{}-01'.format(new_date.year,new_date.month)
+                formatted_month = str(new_date.month).zfill(2)
+                new_date_from = '{}-{}-{}'.format(new_date.year, formatted_month, calendar.monthrange(new_date.year, new_date.month)[1])
+                new_date_to = '{}-{}-01'.format(new_date.year,formatted_month)
                 dates.append({
                     'date_from': new_date_from,
                     'date_to': new_date_to
