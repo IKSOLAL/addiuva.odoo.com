@@ -1,0 +1,14 @@
+<odoo>                                
+  <data>                                    
+    <record id="action_account_extend_ikatech" model="ir.actions.client">                                        
+      <field name="name">Pandl Report</field>                                        
+      <field name="tag">account_extend_ikatech.action</field>                                    
+    </record>                               
+
+    <menuitem name="Reportes Finacieros Especialicados" id="report_account_finance_ikatech" parent="account.menu_finance_reports"
+            sequence="10"/>
+    <menuitem name="Profit and loss (PandL Analytic)"  id="account_extend_ikatech_menu_pandl" parent="report_account_finance_ikatech"
+            action="action_account_extend_ikatech"/>
+
+  </data>                            
+</odoo>

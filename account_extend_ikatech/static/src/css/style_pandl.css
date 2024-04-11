@@ -1,0 +1,206 @@
+.main{
+    height: 100%;
+    overflow: auto;
+}
+
+.header_main{
+    display: flex; 
+    flex-direction: column;
+    height: 4%;
+}
+
+.headerReport{
+    height: 3%;
+}
+
+.contentData{
+    height: 91%;
+    overflow: auto;
+}
+.table_view_pr {
+	display: flex;
+	width: 95%;
+	margin: 5px 25px 0 25px;
+	border-bottom: 0.1px solid rgba(46, 46, 46, 0.26);
+}
+
+.table_main_view{
+    width: 100%;
+}
+/* .titleTable{
+    border-bottom: 2px dotted rgb(76, 76, 76);
+} */
+
+.pandl_filter_fiew{
+    display:flex;
+    float:right;
+    margin-right: 10%;
+}
+
+.main p {
+    margin: 20px 0px 0px 20px !important;
+    font-size: 26px;
+}
+
+.table-simple th, .table-simple tr {
+    padding: 0;
+    /* border: 0 !important; */
+    /* width: 50%; */
+}
+.detail_lines{
+    padding: 0;
+    width: 100%;
+}
+.detail_lines th{
+    padding: 0;
+}
+.detail_lines span{
+    font-weight: normal;
+}
+.detail_lines .title_subline{
+    margin-left: 40px;
+}
+
+.title_subline {
+    color: rgb(1, 102, 107);
+    
+}
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+.titleSecondLine{
+    margin-left: 8px;
+}
+.titleSecondLine i{
+    margin-right: 5px;
+}
+
+
+.second_line{
+    margin-left: 8px;
+    cursor:pointer;
+}
+.third_line{
+    margin-left: 20px;
+    cursor:pointer;
+}
+.detailAmont{
+    margin-left: 15px;
+}
+.rowTotal{
+    background-color: #704b6612;
+}
+.total{
+    color: #704b66 !important;
+}
+.totalNum{
+    color: #704b66;
+
+}
+input {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 40%;
+    background-color: #f6f7fa;
+
+}
+.DetailAmount{
+    cursor:pointer;
+    margin-left: 15px;
+}
+.fourthDetailLine{
+        color: #000000 !important;
+        margin-left: 60px;
+        text-transform: lowercase;
+        font-weight: 400;
+}
+.fourthDetailAmount{
+    color: #000000 !important;
+    margin-left: 30px;
+    font-weight: 400;
+}
+.noBorder{
+    border: 0 !important;
+}
+
+.headerZise{
+    width: 120px;
+    height: 22px;
+}
+.btnHeader{
+    padding: 0;
+    width: 90px;
+    height: 22px;
+    font-size: 12px;
+}
+
+.box-comparation{
+    width: 150px;
+    height: 27px;
+    text-align: end;
+    align-content: center;
+    margin-right: 20px;
+}
+.box-months{
+    display: flex;
+    width: 220px;
+    position: absolute;
+    background: #f6f7fa;
+    height: 33px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.box-months span {
+    height: 20px;
+    color: #03666b;
+    padding: 5px;
+}
+
+.box-number{
+    width: 80px;
+    margin: 4px auto;
+    height: 20px;
+    background: #e5e6e9;
+}
+
+#comparation{
+    width: 15px;
+    height: 15px;
+}
+
+.check-inline{
+    font-size: 15px;
+    position: relative;
+}
+
+.color-btn-sex{
+    color: #01666b;
+}
+
+.icon_comparation{
+    font-size: 16px;
+}
+
+.box-dates{
+    margin-right: 30px;
+}
+.box-dates-set{
+    width: auto;
+    position: absolute;
+    background: #f6f7fa;
+    height: auto;
+    border: 1px solid black;
+    margin-top: 5px;
+}
+.dates-input{
+    display: flex;
+    margin: 10px;
+}
+.dates-input span{
+    margin-right: 8px;
+    color: #01666b;
+}
