@@ -301,7 +301,8 @@
                                             Inicio de actividades
                                         </span>
                                         <span style="font-size:18px;color:black;"
-                                              t-field="o.company_id.l10n_ar_afip_start_date"/>
+                                              t-field="o.company_id.l10n_ar_afip_start_date"
+                                              t-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
                                     </span>
                                 </span>
                                 <br/>
@@ -433,7 +434,8 @@
                                     </strong>
                                 </td>
                                 <td>:&amp;nbsp;
-                                    <span t-field="o.invoice_date_due"/>
+                                    <span t-field="o.invoice_date_due"
+                                          t-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
                                 </td>
                             </tr>
 
