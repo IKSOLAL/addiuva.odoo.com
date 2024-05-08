@@ -515,7 +515,8 @@
                                         </td>
                                         <td t-attf-class="{{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                             <center>
-                                                <span class="text-nowrap" t-field="line.discount"/>
+                                                <!--<span class="text-nowrap" t-field="line.discount"/>-->
+                                                <span t-esc="'%.2f'% line.discount"/>
                                             </center>
                                         </td>
                                         <td class="text-right o_price_total">
