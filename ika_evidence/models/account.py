@@ -62,7 +62,11 @@ class AccountMoveLine(models.Model):
             if not self.move_id.journal_id.id in self.account_id.user_type_id.account_journal_ids.ids:
                 policy = line.account_id.get_attachment_policy()
                 attachment_found = self.move_id.check_has_attachments()
-                if policy == "always" and not attachment_found:
+                except_account = False
+                if line.account_id.id in line.account_id.user_type_id.account_account_ids.ids:
+                    except_account = True
+
+                if policy == "always" and not attachment_found and not except_account:
                     return _(
                         "Attachment policy is set to 'Always' with account '%s' but "
                         "the attachment is missing in the account move with "
