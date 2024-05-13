@@ -47,10 +47,14 @@ class AccountMoveLineMassediting(models.TransientModel):
                     'general_account_id': cc})
             if self.account_analytic_id or self.delete_aa:
                 aa = False if self.delete_aa else self.account_analytic_id.id
+                analytic_move = self.env['account.analytic.line'].search([('move_id', '=', line.id)])
                 line.write(
                     {'analytic_account_id': aa})
-                self.env['account.analytic.line'].search([('move_id', '=', line.id)]).write({
-                    'account_id': aa})
+                if aa == False:
+                    analytic_move.unlink()
+                else:
+                    self.env['account.analytic.line'].search([('move_id', '=', line.id)]).write({
+                        'account_id': aa})
             if self.analytic_tags_id or self.delete_at:
                 ats = False if self.delete_at else self.analytic_tags_id.ids
                 line.write({'analytic_tag_ids': ats})
