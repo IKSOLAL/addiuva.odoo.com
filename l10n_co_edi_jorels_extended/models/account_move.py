@@ -8,7 +8,7 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     flag_colombia = fields.Boolean(string="Colombia", compute="_compute_flag_colombia")
-
+    '''
     event = fields.Selection([
         ('none', 'None'),
         ('receipt', 'Acknowledgment of receipt'),
@@ -29,6 +29,7 @@ class AccountMove(models.Model):
             create_column(self.env.cr, "account_move", "ei_amount_excluded_company", "varchar")
 
         return super()._auto_init()
+    '''
 
     @api.depends('partner_id')
     def _compute_flag_colombia(self):
