@@ -14,7 +14,7 @@ class AccountMove(models.Model):
         ('receipt', 'Acknowledgment of receipt'),
         ('rejection', 'Document Rejection'),
         ('acceptance', 'Express acceptance of document'),
-    ], string="Event", default='none', copy=False, readonly=True, required=True)
+    ], string="Event", default='none', copy=False, readonly=True, required=False)
 
     def _auto_init(self):
         if not column_exists(self.env.cr, "account_move", "ei_type_document"):
