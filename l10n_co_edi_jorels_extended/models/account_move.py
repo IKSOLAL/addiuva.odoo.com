@@ -9,6 +9,13 @@ class AccountMove(models.Model):
 
     flag_colombia = fields.Boolean(string="Colombia", compute="_compute_flag_colombia")
 
+    event = fields.Selection([
+        ('none', 'None'),
+        ('receipt', 'Acknowledgment of receipt'),
+        ('rejection', 'Document Rejection'),
+        ('acceptance', 'Express acceptance of document'),
+    ], string="Event", default='none', copy=False, readonly=True, required=True)
+
     def _auto_init(self):
         if not column_exists(self.env.cr, "account_move", "ei_type_document"):
             create_column(self.env.cr, "account_move", "ei_type_document", "varchar")
