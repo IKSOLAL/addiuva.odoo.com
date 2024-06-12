@@ -16,8 +16,7 @@ class ResCurrencyRateExt(models.Model):
             last_rate = self.env['res.currency.rate']._get_last_rates_for_companies(self.company_id | self.env.company)
             for currency_rate in self:
                 company = currency_rate.company_id or self.env.company
-                currency_rate.company_rate = (currency_rate.rate or currency_rate._get_latest_rate().rate or 1.0) / \
-                                             last_rate[company]
+                currency_rate.company_rate = (currency_rate.rate or currency_rate._get_latest_rate().rate or 1.0) / last_rate[company]
 
     @api.onchange('company_rate')
     def _inverse_company_rate(self):
@@ -30,8 +29,7 @@ class ResCurrencyRateExt(models.Model):
             last_rate = self.env['res.currency.rate']._get_last_rates_for_companies(self.company_id | self.env.company)
             for currency_rate in self:
                 company = currency_rate.company_id or self.env.company
-                currency_rate.company_rate = (currency_rate.rate or currency_rate._get_latest_rate().rate or 1.0) / \
-                                             last_rate[company]
+                currency_rate.rate = currency_rate.company_rate * last_rate[company]
 
     @api.depends('company_rate')
     def _compute_inverse_company_rate(self):
