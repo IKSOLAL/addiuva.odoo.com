@@ -89,6 +89,7 @@ class AccountFiscalyear(models.Model):
 
 class AccountPeriod(models.Model):
     _name = "account.period"
+    _inherit = "mail.thread"
     _description = "Account period"
 
     name = fields.Char('Period Name', required=True)
@@ -97,7 +98,7 @@ class AccountPeriod(models.Model):
     date_start = fields.Date('Start of Period', required=True, states={'done':[('readonly',True)]})
     date_stop = fields.Date('End of Period', required=True, states={'done':[('readonly',True)]})
     fiscalyear_id = fields.Many2one('account.fiscalyear', 'Fiscal Year', required=True, states={'done':[('readonly',True)]})
-    state = fields.Selection([('draft','Open'), ('done','Closed')], 'Status', readonly=True, copy=False, default='draft')
+    state = fields.Selection([('draft','Open'), ('done','Closed')], 'Status', readonly=True, copy=False, default='draft', tracking=True)
     company_id = fields.Many2one('res.company', string='Company', store=True, readonly=True, default=lambda self: self.env.user.company_id )
 
     _sql_constraints = [
@@ -160,6 +161,9 @@ class AccountPeriod(models.Model):
                 raise UserError(_('You can not re-open a period which belongs to closed fiscal year'))
         self._cr.execute('update account_journal_period set state=%s where period_id in %s', (mode, tuple(self.ids),))
         self._cr.execute('update account_period set state=%s where id in %s', (mode, tuple(self.ids),))
+        for period in self:
+            body = _('Period open by -> %s', self.env.user.name)
+            period.message_post(body=body)
         return True
 
     # @api.model

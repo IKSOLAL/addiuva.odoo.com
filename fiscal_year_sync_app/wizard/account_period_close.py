@@ -26,6 +26,8 @@ class AccountPeriodClose(models.TransientModel):
                         raise UserError(_('In order to close a period, you must first post related journal entries.'))
                     self._cr.execute('update account_journal_period set state=%s where period_id=%s', (mode, period_id.id))
                     self._cr.execute('update account_period set state=%s where id=%s', (mode, period_id.id))
+                    body = _('Period close by -> %s', self.env.user.name)
+                    period_id.message_post(body=body)
         return {'type': 'ir.actions.act_window_close'}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
