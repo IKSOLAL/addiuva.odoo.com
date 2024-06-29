@@ -507,6 +507,25 @@ class AccountMove(models.Model):
             move.line_ids.create_analytic_lines()
         valid_moves = [move.id for move in valid_moves_ids]
         return len(valid_moves) > 0 and valid_moves or False
+    
+    def action_post(self):
+        res = super(AccountMove, self).action_post()
+        for inv in self:
+            if inv.period_id.state == 'done':
+                raise UserError(_('You can not create journal entries in a closed period %s') % (inv.period_id.name))
+            if inv.fiscalyear_id.state == 'done':
+                raise UserError(_('%s is already closed') % (inv.fiscalyear_id.name))
+        return res
+    
+    def button_draft(self):
+        res = super(AccountMove, self).button_draft()
+        for inv in self:
+            if inv.period_id.state == 'done':
+                raise UserError(_('You can not cancel journal entries in a closed period %s') % (inv.period_id.name))
+            if inv.fiscalyear_id.state == 'done':
+                raise UserError(_('%s is already closed') % (inv.fiscalyear_id.name))
+        return res
+            
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
