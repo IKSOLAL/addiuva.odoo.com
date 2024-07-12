@@ -25,8 +25,8 @@ class AccountInvoice(models.Model):
     @api.depends('invoice_date', 'date')
     def _compute_get_period(self):
         for record in self:
-            if record.invoice_date or record.date:
-                today = record.invoice_date or record.date
+            if record.date:
+                today = record.date
                 company_enabled = self.company_id.id
                 period_ids = self.env['account.period'].search([('date_start','<=',today), ('date_stop','>=',today), ('company_id','=',company_enabled)], limit=1)
                 record.period_id = period_ids
