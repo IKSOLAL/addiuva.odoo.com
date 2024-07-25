@@ -191,7 +191,12 @@
                                 </tr>
                                 <tr>
                                     <td><strong><span>DIRECCIÓN</span></strong></td>
-                                    <td>:&amp;nbsp;<span t-field="o.partner_id.street"/>, &amp;nbsp;<span t-field="o.partner_id.l10n_mx_edi_colony"/></td>
+                                    <td>:&amp;nbsp;<span t-field="o.partner_id.street"/>, &amp;nbsp;
+                                       <span t-field="o.partner_id.l10n_mx_edi_colony"/>,
+                                        alcaldía <span t-field="o.partner_id.city_id.name"/>,
+                                        <span t-field="o.partner_id.state_id.name"/>,
+                                        CP <span t-field="o.partner_id.zip"/>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong><span>CONTACTO: &amp;nbsp;</span></strong></td>
