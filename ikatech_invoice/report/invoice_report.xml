@@ -61,7 +61,7 @@
                                 <span>Sitio Web:&amp;nbsp;</span>
                                 <spant t-field="o.company_id.website"/>
                                 <br/>
-                                <t t-if="o.company_id.country_id.name=='Argentina'">
+                                <t t-if="o.company_id.country_id.code=='AR'">
                                     <span>
                                         <div name="center-upper" class="col-2 text-center" t-att-style="'color: %s;' % o.company_id.primary_color">
                                             <span style="display: inline-block; text-align: center; line-height: 8px;">
@@ -83,56 +83,56 @@
                     <div class="col-4" style="border: 2px; border-style: groove;border-radius: 10px;">
                         <div style="padding:30px 20px 20px 20px;">
                             <center>
-                                <t t-if="o.company_id.country_id.name=='México'">
+                                <t t-if="o.company_id.country_id.code=='MX'">
                                     <strong>
                                         <span>R.F.C</span>
                                     </strong>
                                      <span t-field="o.company_id.vat"/>
                                 </t>
-                                <t t-if="o.company_id.country_id.name=='Colombia'">
+                                <t t-if="o.company_id.country_id.code=='CO'">
                                     <strong>
                                         <span>NIT</span>
                                     </strong>
                                      <span t-field="o.company_id.vat"/>
                                 </t>
-                                <t t-if="o.company_id.country_id.name=='Chile'">
+                                <t t-if="o.company_id.country_id.code=='CL'">
                                     <strong>
                                         <span>RUT</span>
                                     </strong>
                                      <span t-field="o.company_id.vat"/>
                                 </t>
-                                <t t-if="o.company_id.country_id.name=='Costa Rica'">
+                                <t t-if="o.company_id.country_id.code=='CR'">
                                     <strong>
                                         <span style="font-size:20px" t-esc="o.company_id.identification_id.name"/>
                                     </strong>
                                      <span t-field="o.company_id.vat"/>
                                 </t>
-                                <t t-if="o.company_id.country_id.name=='Argentina'">
+                                <t t-if="o.company_id.country_id.code=='AR'">
                                     <strong>
                                         <span>CUIT:</span>
                                     </strong>
                                     <span t-field="o.company_id.vat"/>
                                 </t>
                                 <br/>
-                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='México'">
+                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.code=='MX'">
                                     <strong>
                                         <span>FACTURA ELECTRONICA</span>
                                     </strong>
                                     <br/>
                                 </span>
-                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='Colombia'">
+                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.code=='CO'">
                                     <strong>
                                         <span>FACTURA ELECTRONICA DE VENTA</span>
                                     </strong>
                                     <br/>
                                 </span>
-                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='Costa Rica'">
+                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.code=='CR'">
                                     <strong>
                                         <t t-esc="dict (o.fields_get (allfields = ['tipo_documento']) ['tipo_documento'] ['selection']) [o.tipo_documento]"/>
                                     </strong>
                                     <br/>
                                 </span>
-                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='Argentina'">
+                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.code=='AR'">
                                     <div name="right-upper-side" class="col-8 text-right" style="padding-left: 0px;" t-if="not pre_printed_report">
                                         <!-- (6) Titulo de Documento DICE FACTURA -->
                                         <h4 t-att-style="'color: %s;' % o.company_id.primary_color">
@@ -173,24 +173,24 @@
                                     </strong>
                                     <br/>
                                 </span>
-                                <span t-if="o.company_id.country_id.name=='México'">
+                                <span t-if="o.company_id.country_id.code=='MX'">
                                     <span>FOLIO:</span>
                                 </span>
-                                <span t-if="o.company_id.country_id.name=='Colombia'">
+                                <span t-if="o.company_id.country_id.code=='CO'">
                                     <span>NÚMERO:</span>
                                 </span>
                                 &amp;nbsp;
-                                 <t t-if="o.company_id.country_id.name=='Argentina'">
+                                 <t t-if="o.company_id.country_id.code=='AR'">
                                      <t t-if="not pre_printed_report">
                                         <!-- (7) Numero punto venta - (8) numero de documento -->
                                         <span t-att-style="'color: %s;' % o.company_id.secondary_color">Nro</span>
                                         <span t-esc="o.l10n_latam_document_number"/>
                                     </t>
                                  </t>
-                                <t t-if="o.company_id.country_id.name != 'Argentina'">
+                                <t t-if="o.company_id.country_id.code != 'AR'">
                                     <span t-if="o.name != '/'" t-field="o.name"/>
                                 </t>
-                                <span t-if="o.company_id.country_id.name=='Argentina'">
+                                <span t-if="o.company_id.country_id.code=='AR'">
                                     <span><br/>
                                         <span t-att-style="'color: %s;font-size:18px;' % o.company_id.secondary_color">
                                             IIBB
@@ -257,7 +257,7 @@
                                 </td>
                             </tr>
                             -->
-                            <tr t-if="o.company_id.country_id.name=='Argentina'">
+                            <tr t-if="o.company_id.country_id.code=='AR'">
                                 <td>
                                     <strong>
                                         <span>COND. IVA</span>
@@ -274,7 +274,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <t t-if="o.company_id.country_id.name=='México'">
+                                    <t t-if="o.company_id.country_id.code=='MX'">
                                         <strong>
                                             <span>R.F.C</span>
                                         </strong>
@@ -282,7 +282,7 @@
                                             <span t-field="o.partner_id.vat"/>
                                         </td>
                                     </t>
-                                    <t t-if="o.company_id.country_id.name=='Colombia'">
+                                    <t t-if="o.company_id.country_id.code=='CO'">
                                         <strong>
                                             <span>NIT</span>
                                         </strong>
@@ -290,7 +290,7 @@
                                             <span t-field="o.partner_id.vat"/>
                                         </td>
                                     </t>
-                                    <t t-if="o.company_id.country_id.name=='Chile'">
+                                    <t t-if="o.company_id.country_id.code=='CL'">
                                         <strong>
                                             <span>RUT</span>
                                         </strong>
@@ -298,7 +298,7 @@
                                             <span t-field="o.partner_id.vat"/>
                                         </td>
                                     </t>
-                                    <t t-if="o.company_id.country_id.name=='Costa Rica'">
+                                    <t t-if="o.company_id.country_id.code=='CR'">
                                         <strong>
                                             <span t-esc="o.partner_id.identification_id.name" style="text-transform: uppercase;"/>
                                         </strong>
@@ -306,7 +306,7 @@
                                             <span t-field="o.partner_id.vat"/>
                                         </td>
                                     </t>
-                                    <t t-if="o.company_id.country_id.name=='Argentina'">
+                                    <t t-if="o.company_id.country_id.code=='AR'">
                                         <strong>
                                             <span>CUIT</span>
                                         </strong>
@@ -339,7 +339,7 @@
                             </tr>
 
 
-                            <tr t-if="o.company_id.country_id.name=='México'">
+                            <tr t-if="o.company_id.country_id.code=='MX'">
                                 <td>
                                     <strong>
                                         <span>FORMA DE PAGO</span>
@@ -351,7 +351,7 @@
                                 </td>
                             </tr>
 
-                            <tr t-if="o.company_id.country_id.name=='Argentina'">
+                            <tr t-if="o.company_id.country_id.code=='AR'">
                                 <t t-if="o.partner_id.email">
                                     <td>
                                         <strong>
@@ -503,7 +503,7 @@
                 </div>
                 <div class="row">
                     <div class="col-7" style="font-size:16px">
-                        <t t-if="o.company_id.country_id.name=='Argentina'">
+                        <t t-if="o.company_id.country_id.code=='AR'">
                             <span style="font-size:12px;color:black;">
                                 <t t-if="o.l10n_ar_afip_concept in ['2', '3', '4'] and o.l10n_ar_afip_service_start and o.l10n_ar_afip_service_end">
                                     <strong>Periodo facturado:</strong>
@@ -553,7 +553,7 @@
 
                 <!-- footer data -->
                 <div style="float:right;">
-                    <t t-if="o.company_id.country_id.name=='Argentina'" style="float:right;">
+                    <t t-if="o.company_id.country_id.code=='AR'" style="float:right;">
                         <div name="footer" position="inside">
                             <div name="footer_left_column" position="inside">
                                 <img t-if="o.l10n_ar_afip_qr_code" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.l10n_ar_afip_qr_code, 400, 400)" alt="QR Code" style="height:100px"/>
@@ -589,7 +589,7 @@
                 </div>
 
 
-                <t t-if="o.company_id.country_id.name=='Costa Rica'">
+                <t t-if="o.company_id.country_id.code=='CR'">
                     <p class="text-left" style="padding:2px 2px 2px 2px; font-size:14px " t-if="o.move_type in ('out_invoice', 'in_refund') and o.number_electronic">
                         Clave:<span t-field="o.number_electronic"/>&amp;nbsp;&amp;nbsp;&amp;nbsp;// Usuario:
                         <span t-field="o.user_id.name"/>
@@ -612,7 +612,7 @@
                     -
                     <span t-field="o.invoice_incoterm_id.name"/>
                 </p>
-                <t t-if="o.company_id.country_id.name=='Costa Rica'">
+                <t t-if="o.company_id.country_id.code=='CR'">
                     <div id="qrcode" t-if="o.display_qr_code and o.amount_residual &gt; 0">
                         <p t-if="qr_code_urls.get(o.id)">
                             <strong class="text-center">Scan me with your banking app.</strong>
