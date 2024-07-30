@@ -37,7 +37,7 @@ class AccountMove(models.Model):
                 if soa_api.soa_enabled:
                     if invoice.cod_soa > 0:
                         headers = {'Content-Type': 'application/json', 'client-id': soa_api.client_id,
-                                   'Authorization': 'Token ' + str(soa_api.token)}
+                                   'Authorization': 'Bearer ' + str(soa_api.token)}
                         url = soa_api.url_invoice + str(invoice.cod_soa) + '/'
                         if invoice.payment_state == 'paid' or invoice.payment_state == 'in_payment':
                             data = {'IvStatus': 5}

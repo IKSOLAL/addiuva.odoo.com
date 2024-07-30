@@ -29,7 +29,7 @@ class SoaIntegrationApi(models.Model):
             })
         if r.status_code == 200:
            jsondata = r.json()
-           self.token = jsondata['access_token']
+           self.token = jsondata['access']
         else:
             raise UserError('API is not available')
            
