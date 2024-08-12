@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ika_user_categories_ika_user_categories,ika_user_categories.ika_user_categories,model_ika_user_categories_ika_user_categories,base.group_user,1,1,1,1
