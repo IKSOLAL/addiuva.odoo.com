@@ -9,7 +9,7 @@
 
     'author': "Ivan Porras",
     'category': 'User',
-    'version': '0.1',
+    'version': '0.2',
     'depends': ['base'],
     'data': [
         'views/res_users_view_inherit.xml',

@@ -11,4 +11,15 @@
             </xpath>
         </field>
     </record>
+
+    <record id="res_users_inherit_tree_view" model="ir.ui.view">
+        <field name="name">res.users</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="category_id" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
