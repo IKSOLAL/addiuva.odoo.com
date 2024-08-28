@@ -517,6 +517,25 @@ class AccountMove(models.Model):
                 raise UserError(_('%s is already closed') % (inv.fiscalyear_id.name))
         return res
     
+    def _post(self, soft=True):
+        res = super(AccountMove, self)._post(soft=True)
+        if soft:
+            future_moves = self.filtered(lambda move: move.date > fields.Date.context_today(self))
+            future_moves.auto_post = True
+            for move in future_moves:
+                msg = _('This move will be posted at the accounting date: %(date)s', date=format_date(self.env, move.date))
+                move.message_post(body=msg)
+            to_post = self - future_moves
+        else:
+            to_post = self
+        for move in to_post:
+            if move.date <= fields.Date.context_today(self):
+                if move.period_id.state == 'done':
+                    raise UserError(_('You can not create journal entries in a closed period %s') % (move.period_id.name))
+                if move.fiscalyear_id.state == 'done':
+                    raise UserError(_('%s is already closed') % (move.fiscalyear_id.name))
+        return res
+    
     def button_draft(self):
         res = super(AccountMove, self).button_draft()
         for inv in self:
