@@ -181,7 +181,7 @@
                     <div class="col-4" style="border: 2px; border-style: groove;border-radius: 10px;">
                         <div style="padding:30px 20px 20px 20px;">
                             <center>
-                                <t t-if="o.company_id.country_id.name=='México'">
+                                <t t-if="o.company_id.country_id.code=='MX'">
                                     <strong>
                                         <span>R.F.C</span>
                                     </strong>
@@ -212,7 +212,7 @@
                                     <span t-field="o.company_id.vat"/>
                                 </t>
                                 <br/>
-                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.name=='México'">
+                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.company_id.country_id.code=='MX'">
                                     <strong>
                                         <span>FACTURA ELECTRONICA</span>
                                     </strong>
@@ -272,7 +272,7 @@
                                     </strong>
                                     <br/>
                                 </span>
-                                <span t-if="o.company_id.country_id.name=='México'">
+                                <span t-if="o.company_id.country_id.code=='MX'">
                                     <span>FOLIO:</span>
                                 </span>
                                 <span t-if="o.company_id.country_id.name=='Colombia'">
@@ -376,7 +376,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <t t-if="o.company_id.country_id.name=='México'">
+                                    <t t-if="o.company_id.country_id.code=='MX'">
                                         <strong>
                                             <span>R.F.C</span>
                                         </strong>
@@ -443,7 +443,7 @@
                             </tr>
 
 
-                            <tr t-if="o.company_id.country_id.name=='México'">
+                            <tr t-if="o.company_id.country_id.code=='MX'">
                                 <td>
                                     <strong>
                                         <span>FORMA DE PAGO</span>
