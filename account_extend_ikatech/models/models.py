@@ -13,22 +13,19 @@ class account_reports_pandl(models.TransientModel):
     date_to = fields.Datetime(string=_("Date to"))
     company_id = fields.Many2one('res.company', string='Company',  default=lambda self: self.env.company)
     
-    @api.model
-    def pandl_report(self, option):
-        data_report = {}
-        # report_values = self.env['account.reports.pandl'].search(
-        #     [('id', '=', option[0])])
+    
+    def convert_dates(self, date_from, date_to, months, years, month_year, date_compartarion):
+        print("==================== ", date_compartarion)
+        months, years, month_year = int(months), int(years), int(month_year)
         dates, date_names = [],[]
-        comparation = option[3]
-        months_n = option[4]
-        date_names.append('Del {} Al {}'.format(option[2].get('date_to'), option[2].get('date_from')))
-        if comparation: # Si hay que comparar entre fechas
-            dates.append({
-                'date_from': option[2].get('date_from'),
-                'date_to':option[2].get('date_to')
-            })
-            date_to = datetime.strptime(option[2].get('date_to'), '%Y-%m-%d')
-            for month in range(int(months_n)):
+        date_names.append('Del {} Al {}'.format(date_to, date_from))
+        dates.append({
+            'date_from': date_from,
+            'date_to':date_to
+        })
+        date_to = datetime.strptime(date_to, '%Y-%m-%d')
+        if months > 0:
+            for month in range(months):
                 new_date = date_to - relativedelta(months=month+1)
                 formatted_month = str(new_date.month).zfill(2)
                 new_date_from = '{}-{}-{}'.format(new_date.year,formatted_month, calendar.monthrange(new_date.year, new_date.month)[1])
@@ -38,7 +35,50 @@ class account_reports_pandl(models.TransientModel):
                     'date_to': new_date_to
                 })
                 date_names.append('Del {} Al {}'.format(new_date_to, new_date_from))
+        if years > 0:
+            for year in range(int(years)):
+                new_date = date_to - relativedelta(years=year+1)
+                new_date_from = '{}-12-31'.format(new_date.year)
+                new_date_to = '{}-01-01'.format(new_date.year)
+                dates.append({
+                    'date_from': new_date_from,
+                    'date_to': new_date_to
+                })
+                date_names.append('Del {} Al {}'.format(new_date_to, new_date_from))
+        if month_year > 0:
+            for month_y in range(month_year):
+                new_date = date_to - relativedelta(years = month_y + 1)
+                formatted_month = str(new_date.month).zfill(2)
+                new_date_from = '{}-{}-{}'.format(new_date.year, formatted_month, calendar.monthrange(new_date.year, new_date.month)[1])
+                new_date_to = '{}-{}-01'.format(new_date.year,formatted_month)
+                dates.append({
+                    'date_from': new_date_from,
+                    'date_to': new_date_to
+                })
+                date_names.append('Del {} Al {}'.format(new_date_to, new_date_from))
+        if date_compartarion:
+            dates.append({
+                'date_from': date_compartarion['date_from'],
+                'date_to': date_compartarion['date_to']
+            })
+            date_names.append('Del {} Al {}'.format(date_compartarion['date_to'],date_compartarion['date_from']))
+        return dates, date_names
+    
+    @api.model
+    def pandl_report(self, option):
+        data_report = {}
+        dates, date_names = [],[]
+        date_from = option[2].get('date_from')
+        date_to = option[2].get('date_to')
+        comparation = option[3]
+        months_n = option[4]
+        years_n = option[5]
+        month_year = option[6]
+        date_compartarion = option[7]
+        if comparation: # Si hay que comparar entre fechas
+            dates, date_names = self.convert_dates(date_from, date_to, months_n, years_n, month_year, date_compartarion)
         else:
+            date_names.append('Del {} Al {}'.format(option[2].get('date_to'), option[2].get('date_from')))
             dates.append({
                 'date_from': option[2].get('date_from'),
                 'date_to':option[2].get('date_to')
@@ -279,23 +319,10 @@ class account_reports_pandl(models.TransientModel):
         }
     
     @api.model
-    def get_details_lines(self, option, company_id, type_operation, row_id, date_from, date_to, comparation, months):
+    def get_details_lines(self, option, company_id, type_operation, row_id, date_from, date_to, comparation, months, years, month_year, date_compartarion):
         dates = []
         if comparation: # Si hay que comparar entre fechas
-            dates.append({
-                'date_from': date_from,
-                'date_to':date_to
-            })
-            date_to = datetime.strptime(date_to, '%Y-%m-%d')
-            for month in range(int(months)):
-                new_date = date_to - relativedelta(months=month+1)
-                formatted_month = str(new_date.month).zfill(2)
-                new_date_from = '{}-{}-{}'.format(new_date.year,formatted_month, calendar.monthrange(new_date.year, new_date.month)[1])
-                new_date_to = '{}-{}-01'.format(new_date.year,formatted_month)
-                dates.append({
-                    'date_from': new_date_from,
-                    'date_to': new_date_to
-                })
+            dates, date_names = self.convert_dates(date_from, date_to, months, years, month_year, date_compartarion)
         else:
             dates.append({
                 'date_from': date_from,
@@ -355,23 +382,10 @@ class account_reports_pandl(models.TransientModel):
             
     #! --------------------------------------------      
     @api.model
-    def get_analytics_account(self, option, company_id, account_id, date_from, date_to, comparation, months):
+    def get_analytics_account(self, option, company_id, account_id, date_from, date_to, comparation, months, years, month_year, date_compartarion):
         dates = []
         if comparation: # Si hay que comparar entre fechas
-            dates.append({
-                'date_from': date_from,
-                'date_to':date_to
-            })
-            date_to = datetime.strptime(date_to, '%Y-%m-%d')
-            for month in range(int(months)):
-                new_date = date_to - relativedelta(months=month+1)
-                formatted_month = str(new_date.month).zfill(2)
-                new_date_from = '{}-{}-{}'.format(new_date.year, formatted_month, calendar.monthrange(new_date.year, new_date.month)[1])
-                new_date_to = '{}-{}-01'.format(new_date.year,formatted_month)
-                dates.append({
-                    'date_from': new_date_from,
-                    'date_to': new_date_to
-                })
+            dates, date_names = self.convert_dates(date_from, date_to, months, years, month_year, date_compartarion)
         else:
             dates.append({
                 'date_from': date_from,
@@ -414,11 +428,12 @@ class account_reports_pandl(models.TransientModel):
                         ['analytic_account_id']
                     )
                 for line in lines: # llenamos el arreglo que vamos a usar para las operaciones
-                    analytic_account = line.get('analytic_account_id')[1]
+                    analytic_account_id = line.get('analytic_account_id')[0] if line.get('analytic_account_id') else 0
+                    analytic_account = line.get('analytic_account_id')[1] if line.get('analytic_account_id') else "Indefinido"
                     amount = line.get('debit') - line.get('credit')
                     if amount != 0:
                         data.append({
-                            'id': line.get('analytic_account_id')[0],
+                            'id': analytic_account_id,
                             'name': analytic_account,
                             'amount': [self.format_currency(amount)],
                         })

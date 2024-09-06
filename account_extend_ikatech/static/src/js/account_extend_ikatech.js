@@ -7,6 +7,18 @@ odoo.define('account_extend_ikatech.main', function (require) {
     var QWeb = core.qweb;
     var time = require('web.time');
 
+    const dateComparations = () => {
+        var dateComparation = {}
+        var comDateTo = document.querySelector('#comparation_date_to')
+        var comDateFrom = document.querySelector('#comparation_date_from')
+        if (comDateTo.value  && comDateFrom.value){
+            dateComparation.date_to = comDateTo.value
+            dateComparation.date_from = comDateFrom.value
+            document.querySelector("#comparation").checked = true
+        };
+        return dateComparation;
+    };
+
     const OurAction = AbstractAction.extend({
         template: "account_extend_ikatech.ClientAction",  
 
@@ -23,10 +35,22 @@ odoo.define('account_extend_ikatech.main', function (require) {
             'click #comparation': 'show_box_comparation',
             'click #comparation_button': 'show_filters_comparation',
             'change #months': 'active_comparation',
+            'change #years': 'active_comparation_years',
+            'change #monthYear': 'active_comparation_years_month',
             'click #setDates': 'show_box_dates',
             'click .fourthDetailAmount': 'action_see_more_fourth',
+            'click #monthComparation': 'monthComparation',
+            'click #yearsComparation': 'yearsComparation',
+            'click #datesComparation': 'datesComparation',
+            'click #monthYearComparation': 'monthYearComparation',
+            'click #date_custom':  'showDateCustmom',
+            'click #thisMonth': "setThisMonth",
+            'click #thisSemester': "setThisSemester",
+            'click #thisYear': "setThisYear",
+            'click #lastMonth': "setLastMonth",
+            'click #lastSemester': "setLastSemester",
+            'click #lastYear': "setLastYear",
         },
-
 
         //! default functions
         init: function(parent, action) {
@@ -53,6 +77,9 @@ odoo.define('account_extend_ikatech.main', function (require) {
             var self = this;
             var comparation = false;
             var months = 0;
+            var years = 0;
+            var monthYear = 0
+            var dateComparation = {}
             const filter_data_selected = {};
             if (initial_render) {
                 filter_data_selected.date_from = moment().format('YYYY-MM-DD');
@@ -61,14 +88,18 @@ odoo.define('account_extend_ikatech.main', function (require) {
             } else {
                 filter_data_selected.date_from = moment(new Date(this.$el.find('.datetimepicker-input[name="date_from"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
                 filter_data_selected.date_to = moment(new Date(this.$el.find('.datetimepicker-input[name="date_to"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
-                comparation = self.el.querySelector('#comparation').checked
                 months = self.el.querySelector('#months').value
+                years = self.el.querySelector('#years').value
+                monthYear = self.el.querySelector('#monthYear').value
+                dateComparation = dateComparations()
+                comparation = self.el.querySelector('#comparation').checked
+                console.log(dateComparation)
             }
             self._rpc({
                 model: 'account.reports.pandl',
                 method: 'pandl_report',
                 args: [
-                    [this.wizard_id, this.company_id, filter_data_selected, comparation, months], 
+                    [this.wizard_id, this.company_id, filter_data_selected, comparation, months, years, monthYear, dateComparation], 
                 ],
             }).then(function(datas) {
                 if (initial_render) {
@@ -119,8 +150,11 @@ odoo.define('account_extend_ikatech.main', function (require) {
             var self = this;
             const typeOp = element.target.getAttribute("typeop")
             const idRow = element.target.getAttribute("idRow")
-            const comparation = self.el.querySelector('#comparation').checked
             const months = self.el.querySelector('#months').value
+            const years = self.el.querySelector('#years').value
+            const monthYear = self.el.querySelector('#monthYear').value
+            const dateComparation = dateComparations()
+            const comparation = self.el.querySelector('#comparation').checked
             const date_from = moment(new Date(this.$el.find('.datetimepicker-input[name="date_from"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
             const date_to = moment(new Date(this.$el.find('.datetimepicker-input[name="date_to"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
             
@@ -136,7 +170,7 @@ odoo.define('account_extend_ikatech.main', function (require) {
                 rpc.query({
                     model: 'account.reports.pandl',
                     method: 'get_details_lines',
-                    args: [self.wizard_id, self.company_id, typeOp, idRow, date_from, date_to, comparation, months],
+                    args: [self.wizard_id, self.company_id, typeOp, idRow, date_from, date_to, comparation, months, years, monthYear, dateComparation],
                 }).then(function(datas) {
                     var htmlString = ""
                     var aml = ['depre','amort','net_incomes','customer_comissions','other_incomes','costo_directo_op','otros_costos_op','comision_brokers']
@@ -224,10 +258,13 @@ odoo.define('account_extend_ikatech.main', function (require) {
         
         show_analytics_account: function(el) {
             var self = this;
-            const comparation = self.el.querySelector('#comparation').checked
             const months = self.el.querySelector('#months').value
+            const years = self.el.querySelector('#years').value
+            const monthYear = self.el.querySelector('#monthYear').value
+            const dateComparation = dateComparations()
             const accountId = el.target.getAttribute("idaccount") //por alguna razon trae la equiqueta span hija
             var type_operation = el.target.getAttribute("type_operation")
+            const comparation = self.el.querySelector('#comparation').checked
             const date_from = moment(new Date(this.$el.find('.datetimepicker-input[name="date_from"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
             const date_to = moment(new Date(this.$el.find('.datetimepicker-input[name="date_to"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
             
@@ -240,7 +277,7 @@ odoo.define('account_extend_ikatech.main', function (require) {
                 rpc.query({
                     model: 'account.reports.pandl',
                     method: 'get_analytics_account',
-                    args: [self.wizard_id, self.company_id, accountId, date_from, date_to, comparation, months],
+                    args: [self.wizard_id, self.company_id, accountId, date_from, date_to, comparation, months, years, monthYear, dateComparation],
                 }).then(function(datas) {
                     var htmlString = ""
                     datas['data'].forEach((e) => {
@@ -305,7 +342,29 @@ odoo.define('account_extend_ikatech.main', function (require) {
             var self = this;
             let check = self.el.querySelector("#comparation")
             let months = self.el.querySelector("#months")
-            if (months.value == 1){
+            if (months.value == 0){
+                check.checked = false
+            } else {
+                check.checked = true
+            }
+        },
+
+        active_comparation_years: function() {
+            var self = this;
+            let check = self.el.querySelector("#comparation")
+            let years = self.el.querySelector("#years")
+            if (years.value == 0){
+                check.checked = false
+            } else {
+                check.checked = true
+            }
+        },
+
+        active_comparation_years_month: function() {
+            var self = this;
+            let check = self.el.querySelector("#comparation")
+            let years = self.el.querySelector("#monthYear")
+            if (years.value == 0){
                 check.checked = false
             } else {
                 check.checked = true
@@ -316,7 +375,7 @@ odoo.define('account_extend_ikatech.main', function (require) {
             var self = this;
             let element = self.el.querySelector("#boxComparationCont")
             let hidden = element.getAttribute("hidden");
-            if (hidden) {
+                if (hidden) {
                 element.removeAttribute("hidden");
             } else {
                 element.setAttribute("hidden", "hidden");
@@ -333,6 +392,181 @@ odoo.define('account_extend_ikatech.main', function (require) {
                 element.setAttribute("hidden", "hidden");
             }
         },
+
+        showDateCustmom: function(e){
+            var self = this;
+            let element = self.el.querySelector(".box-inside-dates")
+            let hidden = element.getAttribute("hidden");
+            if (hidden) {
+                element.removeAttribute("hidden");
+            } else {
+                element.setAttribute("hidden", "hidden");
+            }
+        },
+
+        yearsComparation: function(e){
+            var self = this;
+            let element = self.el.querySelector("#year_box_comparation")
+            let hidden = element.getAttribute("hidden");
+            if (hidden) {
+                element.removeAttribute("hidden");
+            } else {
+                element.setAttribute("hidden", "hidden");
+                let year = self.el.querySelector("#years");
+                year.value = 0
+            }
+        },
+
+        monthComparation: function(e){
+            var self = this;
+            let element = self.el.querySelector("#months_box_comparation")
+            let hidden = element.getAttribute("hidden");
+            if (hidden) {
+                element.removeAttribute("hidden");
+            } else {
+                element.setAttribute("hidden", "hidden");
+                let months = self.el.querySelector("#months");
+                months.value = 0
+            }
+        },
+
+        monthYearComparation: function(e){
+            var self = this;
+            let element = self.el.querySelector("#year_month_box_comparation")
+            let hidden = element.getAttribute("hidden");
+            if (hidden) {
+                element.removeAttribute("hidden");
+            } else {
+                element.setAttribute("hidden", "hidden");
+                let months = self.el.querySelector("#monthYear");
+                months.value = 0
+            }
+        },
+
+        datesComparation: function(e){
+            var self = this;
+            let element = self.el.querySelector("#dates_box_comparation")
+            let hidden = element.getAttribute("hidden");
+            if (hidden) {
+                element.removeAttribute("hidden");
+            } else {
+                element.setAttribute("hidden", "hidden");
+                self.el.querySelector('#comparation_date_to').value = ''
+                self.el.querySelector('#comparation_date_from').value = ''
+            }
+        },
+
+        // ! Dates Frontend
+        setLastYear: function() {
+            var self = this;
+            const firstdate = moment().subtract(1, 'Year').startOf('Year').format('YYYY-MM-DD');
+            const lastdate = moment().subtract(1, 'Year').endOf('Year').format("YYYY-MM-DD");
+            var dateFrom = self.el.querySelector('.datetimepicker-input[name="date_from"]')
+            dateFrom.value = lastdate
+            var dateTo = self.el.querySelector('.datetimepicker-input[name="date_to"]')
+            dateTo.value = firstdate
+            var checkDate = self.el.querySelector('#checkDate');
+            checkDate.remove()
+            var btn = self.el.querySelector('#lastYear')
+            var icon = document.createElement('i');
+            icon.className = 'fa fa-solid fa-check'
+            icon.style = 'color: #28a745;'
+            icon.id = 'checkDate'
+            btn.firstChild.before(icon);
+        },
+
+        setLastSemester: function() {
+            var self = this;
+            const firstdate = moment().subtract(1, 'quarter').startOf('quarter').format('YYYY-MM-DD');
+            const lastdate = moment().subtract(1, 'quarter').endOf('quarter').format("YYYY-MM-DD");
+            var dateFrom = self.el.querySelector('.datetimepicker-input[name="date_from"]')
+            dateFrom.value = lastdate
+            var dateTo = self.el.querySelector('.datetimepicker-input[name="date_to"]')
+            dateTo.value = firstdate
+            var checkDate = self.el.querySelector('#checkDate');
+            checkDate.remove()
+            var btn = self.el.querySelector('#lastSemester')
+            var icon = document.createElement('i');
+            icon.className = 'fa fa-solid fa-check'
+            icon.style = 'color: #28a745;'
+            icon.id = 'checkDate'
+            btn.firstChild.before(icon);
+        },
+
+
+        setLastMonth: function() {
+            var self = this;
+            const firstdate = moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD');
+            const lastdate = moment().subtract(1, 'month').endOf('month').format("YYYY-MM-DD");
+            var dateFrom = self.el.querySelector('.datetimepicker-input[name="date_from"]')
+            dateFrom.value = lastdate
+            var dateTo = self.el.querySelector('.datetimepicker-input[name="date_to"]')
+            dateTo.value = firstdate
+            var checkDate = self.el.querySelector('#checkDate');
+            checkDate.remove()
+            var btn = self.el.querySelector('#lastMonth')
+            var icon = document.createElement('i');
+            icon.className = 'fa fa-solid fa-check'
+            icon.style = 'color: #28a745;'
+            icon.id = 'checkDate'
+            btn.firstChild.before(icon);
+        },
+
+        setThisYear: function() {
+            var self = this;
+            const firstdate = moment().startOf('Year').format('YYYY-MM-DD');
+            const lastdate = moment().endOf('Year').format("YYYY-MM-DD");
+            var dateFrom = self.el.querySelector('.datetimepicker-input[name="date_from"]')
+            dateFrom.value = lastdate
+            var dateTo = self.el.querySelector('.datetimepicker-input[name="date_to"]')
+            dateTo.value = firstdate
+            var checkDate = self.el.querySelector('#checkDate');
+            checkDate.remove()
+            var btn = self.el.querySelector('#thisYear')
+            var icon = document.createElement('i');
+            icon.className = 'fa fa-solid fa-check'
+            icon.style = 'color: #28a745;'
+            icon.id = 'checkDate'
+            btn.firstChild.before(icon);
+        },
+
+        setThisSemester: function() {
+            var self = this;
+            const firstdate = moment().startOf('quarter').format('YYYY-MM-DD');
+            const lastdate = moment().endOf('quarter').format("YYYY-MM-DD");
+            var dateFrom = self.el.querySelector('.datetimepicker-input[name="date_from"]')
+            dateFrom.value = lastdate
+            var dateTo = self.el.querySelector('.datetimepicker-input[name="date_to"]')
+            dateTo.value = firstdate
+            var checkDate = self.el.querySelector('#checkDate');
+            checkDate.remove()
+            var btn = self.el.querySelector('#thisSemester')
+            var icon = document.createElement('i');
+            icon.className = 'fa fa-solid fa-check'
+            icon.style = 'color: #28a745;'
+            icon.id = 'checkDate'
+            btn.firstChild.before(icon);
+        },
+
+        setThisMonth: function() {
+            var self = this;
+            const firstdate = moment().startOf('month').format('YYYY-MM-DD');
+            const lastdate = moment().endOf('month').format("YYYY-MM-DD");
+            var dateFrom = self.el.querySelector('.datetimepicker-input[name="date_from"]')
+            dateFrom.value = lastdate
+            var dateTo = self.el.querySelector('.datetimepicker-input[name="date_to"]')
+            dateTo.value = firstdate
+            var checkDate = self.el.querySelector('#checkDate');
+            checkDate.remove()
+            var btn = self.el.querySelector('#thisMonth')
+            var icon = document.createElement('i');
+            icon.className = 'fa fa-solid fa-check'
+            icon.style = 'color: #28a745;'
+            icon.id = 'checkDate'
+            btn.firstChild.before(icon);
+            // self.el.querySelector('#setDates').textContent = "Este Mes";
+        },
+
     });
 
     core.action_registry.add('account_extend_ikatech.action', OurAction);

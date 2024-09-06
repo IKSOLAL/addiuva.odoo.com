@@ -142,16 +142,18 @@ input {
     height: 27px;
     text-align: end;
     align-content: center;
-    margin-right: 20px;
+    margin-right: 45px;
 }
 .box-months{
     display: flex;
-    width: 220px;
+    flex-direction: column;
+    width: 190px;
     position: absolute;
     background: #f6f7fa;
-    height: 33px;
+    height: auto;
     border: 1px solid black;
     text-align: center;
+    margin-top: 3px;
 }
 
 .box-months span {
@@ -167,6 +169,17 @@ input {
     background: #e5e6e9;
 }
 
+.box-inside{
+    flex-direction: row;
+    display: flex;
+}
+
+.btn-comparation{
+    background-color: #f6f7fa;
+}
+.btn-comparation:hover{
+    background-color: #c9c9c9;
+}
 #comparation{
     width: 15px;
     height: 15px;
@@ -186,15 +199,29 @@ input {
 }
 
 .box-dates{
-    margin-right: 30px;
+    margin-right: 25px;
 }
+.btn-dates {
+    margin: 2px 0 2px 0;
+}
+
+.btn-dates i {
+    margin-left: -16px;
+    margin-right: 5px;
+}
+
 .box-dates-set{
-    width: auto;
+    display: flex;
+    flex-direction: column;
+    width: 190px;
     position: absolute;
     background: #f6f7fa;
     height: auto;
     border: 1px solid black;
     margin-top: 5px;
+}
+.box-dates-set a {
+    padding-left: 25px;
 }
 .dates-input{
     display: flex;
@@ -204,3 +231,24 @@ input {
     margin-right: 8px;
     color: #01666b;
 }
+
+.divider_line {
+    border-top: 0.1px solid gray;
+}
+
+.comparation-dates-input{
+    display: flex;
+    margin: 5px;
+}
+/* @keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.2s ease-in-out;
+} */

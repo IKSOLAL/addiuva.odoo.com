@@ -171,7 +171,7 @@
                 <tr id="row_otros_costos_op">
                   <th><a  typeop="otros_costos_op" idRow="row_otros_costos_op" class="third_line"><span>
                   <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
-                  </span>Costo directo de operación</a></th>
+                  </span>Otros costos de operación</a></th>
                   <t t-if="comparation">
                     <t t-foreach="data_report['otros_costos_op']" t-as="amount_tot">
                       <th><span><t t-esc="amount_tot"/></span></th>
@@ -814,42 +814,68 @@
             <span class="checkbox-inline check-inline color-btn-sex cursorPointer"  id="comparation_button">Comparación:</span>
             <input type="checkbox" id="comparation"  hidden="hidden"/>
             <div class="box-months" id="boxComparationCont" hidden="hidden">
-                <span>Meses a Comparar:</span>
-                <input class="box-number" type="number" id="months" value="1" min="1" max="12"/>
+                <a class="cursorPointer btn-comparation" id="monthComparation">Meses Anteriores</a>
+                <div class="box-inside" id="months_box_comparation" hidden="hidden">
+                  <span>No. Meses:</span>
+                  <input class="box-number" type="number" id="months" value="0" min="0" max="12"/>
+                </div>
+                <a class="cursorPointer btn-comparation" id="yearsComparation">Años Anteriores</a>
+                <div class="box-inside"  id="year_box_comparation" hidden="hidden">
+                  <span>No. Años:</span>
+                  <input class="box-number" type="number" id="years" value="0" min="0" max="12"/>
+                </div>
+                <a class="cursorPointer btn-comparation" id="monthYearComparation">Mes Años Anteriores</a>
+                <div class="box-inside"  id="year_month_box_comparation" hidden="hidden">
+                  <span>No. Meses:</span>
+                  <input class="box-number" type="number" id="monthYear" value="0" min="0" max="12"/>
+                </div>
+                <!--  -->
+                <a class="cursorPointer btn-comparation" id="datesComparation">Fecha Personalizada</a>
+                <div class="box-inside" style="flex-direction: column" id="dates_box_comparation" hidden="hidden">
+                    <div class="comparation-dates-input">
+                      <span>Desde:</span>
+                      <input type="date" id="comparation_date_to"
+                        class="form-control datetimepicker-input headerZise"></input>
+                    </div>
+                    <div class="comparation-dates-input">
+                      <span>Hasta:</span>
+                      <input type="date" id="comparation_date_from"
+                        class="form-control datetimepicker-input headerZise"></input>
+                    </div>
+                </div>
             </div>
           </div>
           <div class="box-dates">
               <span class="fa fa-calendar color-btn-sex icon_comparation"></span>
               <span class="checkbox-inline check-inline color-btn-sex cursorPointer" id="setDates">Fechas:</span>
               <div class="box-dates-set" id="boxSetDates" hidden="hidden">
-                  <div class="dates-input">
-                    <span>Desde:</span>
-                    <input type="date" name="date_to"
-                      class="form-control datetimepicker-input headerZise"
-                      data-target="#date_to"
-                      t-att-name="prefix"></input>
-                  </div>
-                  <div class="dates-input">
-                    <span>Hasta:</span>
-                    <input type="date" name="date_from"
-                      class="form-control datetimepicker-input headerZise"
-                      data-target="#date_from"
-                      t-att-name="prefix"></input>
-                  </div>
+                  <a class="cursorPointer btn-comparation btn-dates" id="thisMonth">Este mes</a>
+                  <a class="cursorPointer btn-comparation btn-dates"  id="thisSemester">Este trimestre</a>
+                  <a class="cursorPointer btn-comparation btn-dates" id="thisYear"> <i id="checkDate" class="fa fa-solid fa-check" style="color: #28a745;"/>Este año fiscal</a> 
+                  <a class="cursorPointer btn-comparation btn-dates divider_line"></a>
+                  <a class="cursorPointer btn-comparation btn-dates" id="lastMonth">El mes pasado</a>
+                  <a class="cursorPointer btn-comparation btn-dates" id="lastSemester">Trimestre anterior</a>
+                  <a class="cursorPointer btn-comparation btn-dates" id="lastYear">Año fiscal anterior</a>
+                  <a class="cursorPointer btn-comparation btn-dates divider_line"></a>
+                  <a class="cursorPointer btn-comparation btn-dates" id="date_custom">Personalizado</a>
+                  <div class="box-inside-dates" hidden="hidden">
+                    <div class="comparation-dates-input">
+                      <span>Desde:</span>
+                      <input type="date" name="date_to"
+                        class="form-control datetimepicker-input headerZise"
+                        data-target="#date_to"
+                        t-att-name="prefix"></input>
+                    </div>
+                    <div class="comparation-dates-input">
+                      <span>Hasta:</span>
+                      <input type="date" name="date_from"
+                        class="form-control datetimepicker-input headerZise"
+                        data-target="#date_from"
+                        t-att-name="prefix"></input>
+                    </div>
+                </div>
               </div>
           </div>
-          <!-- <div>
-              <input type="date" name="date_to"
-              class="form-control datetimepicker-input headerZise"
-              data-target="#date_to"
-              t-att-name="prefix"/>
-          </div>
-          <div>
-              <input type="date" name="date_from"
-                class="form-control datetimepicker-input headerZise"
-                data-target="#date_from"
-                t-att-name="prefix"/>
-          </div> -->
           <div style="margin-left:5px">
               <button type="button" id="apply_filter" class="btn btn-primary btnHeader">Aplicar</button>
           </div>
