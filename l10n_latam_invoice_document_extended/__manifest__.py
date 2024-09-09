@@ -14,7 +14,7 @@
     'website': '',
     'license': 'AGPL-3',
     'depends': [
-        'account',
+        'l10n_latam_invoice_document',
         ],
      'data': [
      ],
