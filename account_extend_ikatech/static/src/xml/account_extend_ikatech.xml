@@ -1,0 +1,888 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->     
+
+<templates xml:space="preserve">   
+    <!--! Template Principal  -->
+
+    <t t-name="account_extend_ikatech.ClientAction">
+        <div class="main" >
+            <div class="headerReport">
+                    <p style="margin: 20px;">Addiuva Ganancias y pérdidas (PandL Gastos)</p>
+            </div>
+            <div class="header_main">
+                <div class="filter_view_pandl"/>
+            </div>
+            <div class="contentData">
+                <div class="table_view_pr" />
+            </div>
+        </div>
+    </t>
+
+    <!-- End template Principal  -->
+    <!--! Inherits Templates -->
+
+      <!--? View for General analytics Lines -->
+      <t t-name="analyticPandlTable">
+        <div class="table_main_view">
+          <table class="table table-simple">
+            <thead>
+              <tr ></tr>
+              <t t-if="comparation">
+                <t t-foreach="dates_name" t-as="name">
+                  <tr class="noBorder"></tr>
+                </t>
+              </t><t t-else="">
+                <tr class="noBorder"></tr>
+              </t>
+            </thead>
+            <tbody>
+                <tr>
+                  <th class="noBorder"><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th class="noBorder"><span><t t-esc="name"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th class="noBorder"><span><t t-esc="dates_name"/></span></th>
+                  </t>  
+                </tr>
+                <tr>
+                  <th class="titleTable noBorder"><span>Ingresos</span></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th class="noBorder"></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th class="noBorder"></th>
+                  </t>
+                </tr>
+                <tr >
+                  <th class="noBorder"><a class="titleSecondLine"><span>
+                  </span>Ingresos Netos</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th class="noBorder"><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th class="noBorder"></th>
+                  </t>  
+                </tr>
+                <tr id="row_net_incomes">
+                  <th><a  typeop="net_incomes" idRow="row_net_incomes" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Ingresos Brutos</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['ingresos_brutos']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['ingresos_brutos']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_customer_comissions">
+                  <th><a typeop="customer_comissions" idRow="row_customer_comissions" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Comisiones Clientes</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['comision_clientes']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['comision_clientes']"/></span></th>
+                  </t>
+                </tr>
+                <!-- Sum total -->
+                <tr class="">
+                  <th><a class="titleSecondLine total"><span>
+                  </span>Total Ingresos Netos</a></th>
+                    <t t-if="comparation">
+                      <t t-foreach="data_report['tot_net_incomes']" t-as="amount_tot">
+                        <th><span class="totalNum"><t t-esc="amount_tot"/></span></th>
+                      </t>
+                    </t> <t t-else="">
+                      <th><span class="totalNum"><t t-esc="data_report['tot_net_incomes']"/></span></th>
+                    </t>
+                </tr>
+                
+                <tr id="row_other_incomes">
+                  <th>
+                    <a typeop="other_incomes" idRow="row_other_incomes" class="third_line">
+                      <span>
+                        <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                      </span>
+                      Otros Ingresos
+                    </a>
+                  </th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['otros_ingresos']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['otros_ingresos']"/></span></th>
+                  </t>
+                </tr>
+                <!--  -->
+                <tr>
+                  <th><a class="third_line">Ingresos Meses Anteriores</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><input type="text"></input></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><input type="text"></input></th>
+                  </t>
+                </tr>
+                <tr class="rowTotal">
+                  <th><a class="titleSecondLine total"><span>
+                  </span>TOTAL INGRESOS</a></th>
+                    <t t-if="comparation">
+                      <t t-foreach="data_report['total_ingresos']" t-as="amount_tot">
+                        <th><span class="totalNum"><t t-esc="amount_tot"/></span></th>
+                      </t>
+                    </t> <t t-else="">
+                      <th><span class="totalNum"><t t-esc="data_report['total_ingresos']"/></span></th>
+                    </t>
+                </tr>
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr id="row_costo_directo_op">
+                  <th><a  typeop="costo_directo_op" idRow="row_costo_directo_op" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Costo directo de operación</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['costo_directo_op']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['costo_directo_op']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_otros_costos_op">
+                  <th><a  typeop="otros_costos_op" idRow="row_otros_costos_op" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Otros costos de operación</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['otros_costos_op']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['otros_costos_op']"/></span></th>
+                  </t>
+                </tr>
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr class="rowTotal">
+                  <th><a class="titleSecondLine total"><span>
+                  </span>MARGEN BRUTO OPERATIVO</a></th>
+                    <t t-if="comparation">
+                      <t t-foreach="data_report['margen_bruto_op']" t-as="amount_tot">
+                        <th><span class="totalNum"><t t-esc="amount_tot"/></span></th>
+                      </t>
+                    </t> <t t-else="">
+                      <th><span class="totalNum"><t t-esc="data_report['margen_bruto_op']"/></span></th>
+                    </t>
+                </tr>
+                <tr id="row_costo_directo_co">
+                  <th><a  typeop="costo_directo_co" idRow="row_costo_directo_co" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Costo directo de comercialización</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['costo_directo_co']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['costo_directo_co']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_comision_brokers">
+                  <th><a  typeop="comision_brokers" idRow="row_comision_brokers" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Comisiones Brokers</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['comision_brokers']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['comision_brokers']"/></span></th>
+                  </t>
+                </tr>
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr class="rowTotal">
+                  <th><a class="titleSecondLine total"><span>
+                  </span>MARGEN NETO OPERATIVO Y VENTA</a></th>
+                    <t t-if="comparation">
+                      <t t-foreach="data_report['margen_neto_op_vnt']" t-as="amount_tot">
+                        <th><span class="totalNum"><t t-esc="amount_tot"/></span></th>
+                      </t>
+                    </t> <t t-else="">
+                      <th><span class="totalNum"><t t-esc="data_report['margen_neto_op_vnt']"/></span></th>
+                    </t>
+                </tr>
+                <!--  -->
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span>Costos Indirectos de Operación</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <tr id="row_proveedores">
+                  <th><a  typeop="proveedores" idRow="row_proveedores" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Proveedores</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['proveedores']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['proveedores']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_centro_atencion">
+                  <th><a  typeop="centro_atencion" idRow="row_centro_atencion" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Centro atención telefónica</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['centro_atencion']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['centro_atencion']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_control_calidad">
+                  <th><a  typeop="control_calidad" idRow="row_control_calidad" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Control de calidad</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['control_calidad']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['control_calidad']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_ventas">
+                  <th><a  typeop="ventas" idRow="row_ventas" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Ventas</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['ventas']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['ventas']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_servicio_cliente">
+                  <th><a  typeop="servicio_cliente" idRow="row_servicio_cliente" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Servicio al cliente</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['servicio_cliente']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['servicio_cliente']"/></span></th>
+                  </t>
+                </tr>
+                <tr class="">
+                  <th><a class="titleSecondLine total"><span>
+                  </span>Total Costos Indirectos de Operación</a></th>
+                    <t t-if="comparation">
+                      <t t-foreach="data_report['costo_indirecto_op']" t-as="amount_tot">
+                        <th><span class="totalNum"><t t-esc="amount_tot"/></span></th>
+                      </t>
+                    </t> <t t-else="">
+                      <th><span class="totalNum"><t t-esc="data_report['costo_indirecto_op']"/></span></th>
+                    </t>
+                </tr>
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr class="rowTotal">
+                  <th><a class="titleSecondLine total"><span>
+                  </span>MARGEN NETO DE CONTRIBUCION</a></th>
+                    <t t-if="comparation">
+                      <t t-foreach="data_report['margen_neto']" t-as="amount_tot">
+                        <th><span class="totalNum"><t t-esc="amount_tot"/></span></th>
+                      </t>
+                    </t> <t t-else="">
+                      <th><span class="totalNum"><t t-esc="data_report['margen_neto']"/></span></th>
+                    </t>
+                </tr>
+                <!--  -->
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span>Gastos Generales de Admon y Ventas</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <tr id="row_operaciones">
+                  <th><a  typeop="operaciones" idRow="row_operaciones" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Operaciones</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['operaciones']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['operaciones']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_comercial_mark">
+                  <th><a  typeop="comercial_mark" idRow="row_comercial_mark" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Comercial/Marketing</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['comercial_mark']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['comercial_mark']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_gerencia">
+                  <th><a  typeop="gerencia" idRow="row_gerencia" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Comercial/Gerencia</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['gerencia']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['gerencia']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_legal_aud">
+                  <th><a  typeop="legal_aud" idRow="row_legal_aud" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Legal/Auditoria</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['legal_aud']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['legal_aud']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_cont_fin">
+                  <th><a  typeop="cont_fin" idRow="row_cont_fin" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Contabilidad y Finanzas</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['cont_fin']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['cont_fin']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_admin_rh">
+                  <th><a  typeop="admin_rh" idRow="row_admin_rh" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Administración y Recursos Humanos</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['admin_rh']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['admin_rh']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_sistemas">
+                  <th><a  typeop="sistemas" idRow="row_sistemas" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Sistemas</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['sistemas']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['sistemas']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_corpo">
+                  <th><a  typeop="corpo" idRow="row_corpo" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Corporativo</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['corpo']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['corpo']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_meses_ant">
+                  <th><a  typeop="meses_ant" idRow="row_meses_ant" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Gastos Meses Anteriores</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['meses_ant']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['meses_ant']"/></span></th>
+                  </t>
+                </tr>
+                <tr class="">
+                  <th><a class="titleSecondLine total"><span>
+                  </span>Total GASTOS GENERALES DE ADMON Y VENTAS</a></th>
+                    <t t-if="comparation">
+                      <t t-foreach="data_report['gst_gral']" t-as="amount_tot">
+                        <th><span class="totalNum"><t t-esc="amount_tot"/></span></th>
+                      </t>
+                    </t> <t t-else="">
+                      <th><span class="totalNum"><t t-esc="data_report['gst_gral']"/></span></th>
+                    </t>
+                </tr>
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr class="rowTotal">
+                  <th><a class="titleSecondLine total"><span>
+                  </span>EBITDA</a></th>
+                    <t t-if="comparation">
+                      <t t-foreach="data_report['ebitda']" t-as="amount_tot">
+                        <th><span class="totalNum"><t t-esc="amount_tot"/></span></th>
+                      </t>
+                    </t> <t t-else="">
+                      <th><span class="totalNum"><t t-esc="data_report['ebitda']"/></span></th>
+                    </t>
+                </tr>
+                <!--  -->
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr id="row_costos_extraor">
+                  <th><a  typeop="costos_extraor" idRow="row_costos_extraor" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Costos y Gastos Extraordinarios</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['costos_extraor']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['costos_extraor']"/></span></th>
+                  </t>
+                </tr>
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr class="rowTotal">
+                  <th><a class="titleSecondLine total"><span>
+                  </span>EBITDA CON EXTRAORDINARIOS</a></th>
+                    <t t-if="comparation">
+                      <t t-foreach="data_report['ebitda_extra']" t-as="amount_tot">
+                        <th><span class="totalNum"><t t-esc="amount_tot"/></span></th>
+                      </t>
+                    </t> <t t-else="">
+                      <th><span class="totalNum"><t t-esc="data_report['ebitda_extra']"/></span></th>
+                    </t>
+                </tr>
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr id="row_depre">
+                  <th><a  typeop="depre" idRow="row_depre" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Depreciación</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['depre']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['depre']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_amort">
+                  <th><a  typeop="amort" idRow="row_amort" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>Amortización</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['amort']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['amort']"/></span></th>
+                  </t>
+                </tr>
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr class="rowTotal">
+                  <th><a class="titleSecondLine total"><span>
+                  </span>EBIT</a></th>
+                    <t t-if="comparation">
+                      <t t-foreach="data_report['ebit']" t-as="amount_tot">
+                        <th><span class="totalNum"><t t-esc="amount_tot"/></span></th>
+                      </t>
+                    </t> <t t-else="">
+                      <th><span class="totalNum"><t t-esc="data_report['ebit']"/></span></th>
+                    </t>
+                </tr>
+                <!--  -->
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr id="row_ing_noop">
+                  <th><a  typeop="ing_noop" idRow="row_ing_noop" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>INGRESOS NO OPERACIONALES</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['ing_noop']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['ing_noop']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_com_ban">
+                  <th><a  typeop="com_ban" idRow="row_com_ban" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>GASTOS (Comisiones bancarias, gravamen y otros bancarios)</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['com_ban']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['com_ban']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_int_mul">
+                  <th><a  typeop="int_mul" idRow="row_int_mul" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>GASTOS (Intereses Multas o Mora)</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['int_mul']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['int_mul']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_diversos">
+                  <th><a  typeop="diversos" idRow="row_diversos" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>GASTOS (Diversos)</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['diversos']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['diversos']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_no_dedu">
+                  <th><a  typeop="no_dedu" idRow="row_no_dedu" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>GASTOS (No Deducibles)</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['no_dedu']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['no_dedu']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_mult_san">
+                  <th><a  typeop="mult_san" idRow="row_mult_san" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>GASTOS (Multas sanciones y litigios)</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['mult_san']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['mult_san']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_dif_cam">
+                  <th><a  typeop="dif_cam" idRow="row_dif_cam" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>DIFERENCIAS CAMBIARIAS Y CM</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['dif_cam']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['dif_cam']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_imps">
+                  <th><a  typeop="imps" idRow="row_imps" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>IMPUESTOS</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['imps']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['imps']"/></span></th>
+                  </t>
+                </tr>
+                <tr id="row_gast_ejer_ant">
+                  <th><a  typeop="gast_ejer_ant" idRow="row_gast_ejer_ant" class="third_line"><span>
+                  <i class="fa fa-caret-right" role="img" aria-label="Desplegado" title="Desplegado"></i>
+                  </span>GASTOS EJERCICIOS ANTERIORES</a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="data_report['gast_ejer_ant']" t-as="amount_tot">
+                      <th><span><t t-esc="amount_tot"/></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th><span><t t-esc="data_report['gast_ejer_ant']"/></span></th>
+                  </t>
+                </tr>
+                <!--? Espacio -->
+                <tr >
+                  <th><a class="titleSecondLine"><span>
+                  </span></a></th>
+                  <t t-if="comparation">
+                    <t t-foreach="dates_name" t-as="name">
+                      <th><span></span></th>
+                    </t>
+                  </t> <t t-else="">
+                    <th></th>
+                  </t>  
+                </tr>
+                <!-- ?Espacio -->
+                <tr class="rowTotal">
+                  <th><a class="titleSecondLine total"><span>
+                  </span>RESULTADO NETO</a></th>
+                    <t t-if="comparation">
+                      <t t-foreach="data_report['resul_neto']" t-as="amount_tot">
+                        <th><span class="totalNum"><t t-esc="amount_tot"/></span></th>
+                      </t>
+                    </t> <t t-else="">
+                      <th><span class="totalNum"><t t-esc="data_report['resul_neto']"/></span></th>
+                    </t>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </t>
+      <!--? End view for analytics Libes -->
+
+      <!--? Filters Section View -->
+      <t t-name="analyticPandlFilterView">
+        <div class="pandl_filter_fiew">
+          <div>
+            <!-- <span><input type="number" id="months"/></span> -->
+          </div>
+          <div class="box-comparation">
+            <span class="fa fa-bar-chart color-btn-sex icon_comparation"></span>
+            <span class="checkbox-inline check-inline color-btn-sex cursorPointer"  id="comparation_button">Comparación:</span>
+            <input type="checkbox" id="comparation"  hidden="hidden"/>
+            <div class="box-months" id="boxComparationCont" hidden="hidden">
+                <a class="cursorPointer btn-comparation" id="monthComparation">Meses Anteriores</a>
+                <div class="box-inside" id="months_box_comparation" hidden="hidden">
+                  <span>No. Meses:</span>
+                  <input class="box-number" type="number" id="months" value="0" min="0" max="12"/>
+                </div>
+                <a class="cursorPointer btn-comparation" id="yearsComparation">Años Anteriores</a>
+                <div class="box-inside"  id="year_box_comparation" hidden="hidden">
+                  <span>No. Años:</span>
+                  <input class="box-number" type="number" id="years" value="0" min="0" max="12"/>
+                </div>
+                <a class="cursorPointer btn-comparation" id="monthYearComparation">Mes Años Anteriores</a>
+                <div class="box-inside"  id="year_month_box_comparation" hidden="hidden">
+                  <span>No. Meses:</span>
+                  <input class="box-number" type="number" id="monthYear" value="0" min="0" max="12"/>
+                </div>
+                <!--  -->
+                <a class="cursorPointer btn-comparation" id="datesComparation">Fecha Personalizada</a>
+                <div class="box-inside" style="flex-direction: column" id="dates_box_comparation" hidden="hidden">
+                    <div class="comparation-dates-input">
+                      <span>Desde:</span>
+                      <input type="date" id="comparation_date_to"
+                        class="form-control datetimepicker-input headerZise"></input>
+                    </div>
+                    <div class="comparation-dates-input">
+                      <span>Hasta:</span>
+                      <input type="date" id="comparation_date_from"
+                        class="form-control datetimepicker-input headerZise"></input>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="box-dates">
+              <span class="fa fa-calendar color-btn-sex icon_comparation"></span>
+              <span class="checkbox-inline check-inline color-btn-sex cursorPointer" id="setDates">Fechas:</span>
+              <div class="box-dates-set" id="boxSetDates" hidden="hidden">
+                  <a class="cursorPointer btn-comparation btn-dates" id="thisMonth">Este mes</a>
+                  <a class="cursorPointer btn-comparation btn-dates"  id="thisSemester">Este trimestre</a>
+                  <a class="cursorPointer btn-comparation btn-dates" id="thisYear"> <i id="checkDate" class="fa fa-solid fa-check" style="color: #28a745;"/>Este año fiscal</a> 
+                  <a class="cursorPointer btn-comparation btn-dates divider_line"></a>
+                  <a class="cursorPointer btn-comparation btn-dates" id="lastMonth">El mes pasado</a>
+                  <a class="cursorPointer btn-comparation btn-dates" id="lastSemester">Trimestre anterior</a>
+                  <a class="cursorPointer btn-comparation btn-dates" id="lastYear">Año fiscal anterior</a>
+                  <a class="cursorPointer btn-comparation btn-dates divider_line"></a>
+                  <a class="cursorPointer btn-comparation btn-dates" id="date_custom">Personalizado</a>
+                  <div class="box-inside-dates" hidden="hidden">
+                    <div class="comparation-dates-input">
+                      <span>Desde:</span>
+                      <input type="date" name="date_to"
+                        class="form-control datetimepicker-input headerZise"
+                        data-target="#date_to"
+                        t-att-name="prefix"></input>
+                    </div>
+                    <div class="comparation-dates-input">
+                      <span>Hasta:</span>
+                      <input type="date" name="date_from"
+                        class="form-control datetimepicker-input headerZise"
+                        data-target="#date_from"
+                        t-att-name="prefix"></input>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div style="margin-left:5px">
+              <button type="button" id="apply_filter" class="btn btn-primary btnHeader">Aplicar</button>
+          </div>
+        </div>
+      </t>
+      <!--? EndFilters Section View -->
+
+
+    <!-- ! End Inherits Templates -->
+</templates>
