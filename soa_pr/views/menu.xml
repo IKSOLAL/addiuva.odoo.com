@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="soa_pr_actions" model="ir.actions.act_window">
+            <field name="name">Soa PR</field>
+            <field name="res_model">soa.pr</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    
+        <menuitem name="Planes-PR" id="plans_pr" parent="soa_integrations.soa_integration_api" action="soa_pr_actions" sequence="11"/> 
+</odoo>

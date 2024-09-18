@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="soa_pr_category" model="ir.module.category">
+            <field name="name">SOA PR</field>
+        </record>
+
+        <record id="soa_pr_group" model="res.groups">
+            <field name="name">Administrador</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="soa_pr.soa_pr_category"/>
+        </record>
+    </data>
+</odoo>
