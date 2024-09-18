@@ -35,7 +35,6 @@ class SoaPrExtended(models.Model):
     company_id = fields.Many2one(
         comodel_name='res.company',
         string='Compañía',
-         default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('soa_pr')),
         help='Compañía asociada al usuario logueado'
     )
     
