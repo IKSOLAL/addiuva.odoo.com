@@ -955,13 +955,14 @@
                         <strong t-field="o.company_id.business_name"/>
                     </div>
                 </div>
-                <!--
+              <t t-if="o.company_id.id == 5">
                 <div class="row">
-                     <div class="col-12">
-                         <p>Metodo de pago: Transferencia bancaria a la cuenta corriente 115 663 15 841 Bancolombia</p>
+                     <div class="col-12">s
+                         <span>Metodo de pago: Transferencia bancaria a la cuenta corriente 115 663 15 841 Bancolombia</span>
                      </div>
                 </div>
-                -->
+              </t>
+
             </t>
             <t t-if="is_cfdi_signed">
                 <div class="row" id="complement">
