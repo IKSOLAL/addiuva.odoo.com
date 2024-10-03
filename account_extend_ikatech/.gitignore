@@ -1,0 +1,10 @@
+# Ignorar archivos compilados de Python
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorar directorios __pycache__ generados por Python
+__pycache__/
+
+# Ignorar la carpeta de configuración de Visual Studio Code
+.vscode/

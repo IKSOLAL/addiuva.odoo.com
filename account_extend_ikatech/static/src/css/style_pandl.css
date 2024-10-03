@@ -90,7 +90,10 @@
     margin-left: 15px;
 }
 .rowTotal{
-    background-color: #704b6612;
+    background-color: #704b6624;
+}
+.rowPorcentage{
+    background-color: #acacac21;
 }
 .total{
     color: #704b66 !important;

@@ -16,7 +16,6 @@ class account_reports_pandl(models.TransientModel):
     
     
     def convert_dates(self, date_from, date_to, months, years, month_year, date_compartarion):
-        print("==================== ", date_compartarion)
         months, years, month_year = int(months), int(years), int(month_year)
         dates, date_names = [],[]
         date_names.append('Del {} Al {}'.format(date_to, date_from))
@@ -110,16 +109,19 @@ class account_reports_pandl(models.TransientModel):
             'total_ingresos': [],
             'costo_directo_op': [],
             'otros_costos_op': [],
+            'porcentage_income':[],
             'margen_bruto_op': [],
             # Analitic lines
             'costo_directo_co':[],
             'comision_brokers': [],
+            'porcentage_bruto_op':[],
             'margen_neto_op_vnt': [],
             'proveedores': [],
             'centro_atencion': [],
             'control_calidad': [],
             'ventas': [],
             'servicio_cliente': [],
+            'porcentage_neto_op': [],
             'costo_indirecto_op': [],
             'margen_neto': [],
             'operaciones': [],
@@ -131,13 +133,17 @@ class account_reports_pandl(models.TransientModel):
             'sistemas': [],
             'corpo': [],
             'meses_ant': [],
+            'porcentage_margen_neto': [],
             'gst_gral': [],
             'ebitda': [],
+            'porcentage_ebitda':[],
             'costos_extraor': [],
             'ebitda_extra': [],
+            'porcentage_ebitda_extra':[],
             'depre': [],
             'amort': [],
             'ebit': [],
+            'porcentage_ebit':[],
             'ing_noop': [],
             'com_ban': [],
             'int_mul': [],
@@ -148,7 +154,7 @@ class account_reports_pandl(models.TransientModel):
             'imps': [],
             'gast_ejer_ant': [],
             'resul_neto': [],
-            
+            'porcentage_resul_neto':[],
         }
         
         for date in data['dates']:
@@ -165,10 +171,12 @@ class account_reports_pandl(models.TransientModel):
             report_data['total_ingresos'].append(self.format_currency(total_ingresos))
             report_data['costo_directo_op'].append(self.format_currency(cdo))
             report_data['otros_costos_op'].append(self.format_currency(ocp))
+            report_data['porcentage_income'].append(round(((cdo + ocp) / total_ingresos) * 100, 1))
             margen_bruto_op = total_ingresos - cdo - ocp
             report_data['margen_bruto_op'].append(self.format_currency(margen_bruto_op))
             report_data['costo_directo_co'].append(self.format_currency(cdc))
             report_data['comision_brokers'].append(self.format_currency(cb))
+            report_data['porcentage_bruto_op'].append(round((margen_bruto_op/total_ingresos)*100, 1))
             margen_neto_op_vnt = margen_bruto_op - cdc - cb
             report_data['margen_neto_op_vnt'].append(self.format_currency(margen_neto_op_vnt))
             report_data['proveedores'].append(self.format_currency(pv))
@@ -176,6 +184,7 @@ class account_reports_pandl(models.TransientModel):
             report_data['control_calidad'].append(self.format_currency(ccal))
             report_data['ventas'].append(self.format_currency(vt))
             report_data['servicio_cliente'].append(self.format_currency(sc))
+            report_data['porcentage_neto_op'].append(round((margen_neto_op_vnt/total_ingresos)*100, 1))
             costo_indirecto_op = pv + ca + ccal + vt + sc
             report_data['costo_indirecto_op'].append(self.format_currency(costo_indirecto_op))
             margen_neto = margen_neto_op_vnt - costo_indirecto_op
@@ -189,17 +198,21 @@ class account_reports_pandl(models.TransientModel):
             report_data['sistemas'].append(self.format_currency(sis))
             report_data['corpo'].append(self.format_currency(cr))
             report_data['meses_ant'].append(self.format_currency(msa))
+            report_data['porcentage_margen_neto'].append(round((margen_neto/total_ingresos)*100, 1))
             gst_gral = op + cm + gr + la + cf + af + sis + cr + msa
             report_data['gst_gral'].append(self.format_currency(gst_gral))
             ebitda = margen_neto - gst_gral
             report_data['ebitda'].append(self.format_currency(ebitda))
+            report_data['porcentage_ebitda'].append(round((ebitda/total_ingresos)*100, 1))
             report_data['costos_extraor'].append(self.format_currency(cext))
             ebitda_extra = ebitda - cext
             report_data['ebitda_extra'].append(self.format_currency(ebitda_extra))
+            report_data['porcentage_ebitda_extra'].append(round((ebitda_extra/total_ingresos)*100, 1))
             report_data['depre'].append(self.format_currency(dep))
             report_data['amort'].append(self.format_currency(amort))
             ebit = ebitda_extra - (dep + amort)
             report_data['ebit'].append(self.format_currency(ebit))
+            report_data['porcentage_ebit'].append(round((ebit/total_ingresos)*100, 1))
             report_data['ing_noop'].append(self.format_currency(ingoop))
             report_data['com_ban'].append(self.format_currency(cob))
             report_data['int_mul'].append(self.format_currency(inm))
@@ -212,6 +225,7 @@ class account_reports_pandl(models.TransientModel):
             ing_no_ope = cob + inm + divs + ndd + mus + difc + imps + gea 
             resul_neto = (ebit + ingoop) - (ing_no_ope)
             report_data['resul_neto'].append(self.format_currency(resul_neto))
+            report_data['porcentage_resul_neto'].append(round((resul_neto/total_ingresos)*100, 1))
             
         return report_data
     
