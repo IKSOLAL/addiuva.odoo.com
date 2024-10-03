@@ -4,6 +4,7 @@ from odoo import models, fields, api, _
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 import calendar
+from odoo.exceptions import ValidationError
 
 class account_reports_pandl(models.TransientModel):
     _name = 'account.reports.pandl'
@@ -407,11 +408,16 @@ class account_reports_pandl(models.TransientModel):
                     )
                 data = []
                 for line in lines:
-                    analytic_account = line.get('analytic_account_id')[1]
+                    if not line.get('analytic_account_id'):
+                        analytic_account = "Indefinido"
+                        analytic_id = 0
+                    else:
+                        analytic_account = line.get('analytic_account_id')[1]
+                        analytic_id = line.get('analytic_account_id')[0]
                     amount = line.get('debit') - line.get('credit')
                     if amount != 0:
                         data.append({
-                            'id': line.get('analytic_account_id')[0],
+                            'id': analytic_id,
                             'name': analytic_account,
                             'amount': [self.format_currency(amount)],
                         })
@@ -556,7 +562,7 @@ class account_reports_pandl(models.TransientModel):
         if type_operation == 'costo_directo_op':
             domain = [
                 ('account_id.user_type_id','=',17), #costo de ingreso
-                ('account_id.code','not in',('52010001','50008001','53000003','59000001')),
+                ('account_id.code','not in',('52010001','50008001','53000003','59000001','52025001')),
                 ('company_id', '=', company_id),('parent_state','=','posted'),
                 ('date', '>=', date_to), ('date','<=',date_from),
             ]
