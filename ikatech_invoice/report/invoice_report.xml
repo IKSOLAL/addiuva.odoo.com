@@ -337,15 +337,17 @@
                                     <span t-field="o.partner_id.name"/>
                                 </td>
                             </tr>
-                            <tr>
+                           <tr>
                                 <td>
                                     <strong>
                                         <span>DIRECCIÓN</span>
                                     </strong>
                                 </td>
                                 <td>:&amp;nbsp;<span t-field="o.partner_id.street"/>, &amp;nbsp;
-                                     <span t-field="o.partner_id.l10n_mx_edi_colony"/>,
-                                    alcaldía <span t-field="o.partner_id.city_id.name"/>,
+                                      <t t-if="o.partner_id.l10n_mx_edi_colony">
+                                         <span t-field="o.partner_id.l10n_mx_edi_colony"/>,&amp;nbsp;
+                                      </t>
+                                     Ciudad <span t-field="o.partner_id.city"/>,
                                     <span t-field="o.partner_id.state_id.name"/>,
                                     CP <span t-field="o.partner_id.zip"/>
                                 </td>
