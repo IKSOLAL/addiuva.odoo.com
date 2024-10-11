@@ -643,6 +643,13 @@
                          </t>
                         <br/>
                         <span>
+                            <t t-if="o.company_id.country_id.name=='Argentina'">
+                                <t t-if="o.currency_id.id == 2">
+                                    <span>
+                                        <strong><u>Moneda: USD - Dólar Estadounidense</u></strong><br/>
+                                    </span>
+                                </t>
+                            </t>
                             <span>
                                 <strong>Valor en letras:</strong>
                                 <t t-esc="o.invoice_amount_text"/>
@@ -652,6 +659,18 @@
 
                     </div>
                 </div>
+                 <div class="row"
+                   style="border: 2px; border-style: groove;border-radius: 10px;" t-if="o.company_id.country_id.name=='Argentina' and o.currency_id.id == 2">
+                        <span style="font-size:14px">
+                                                El total de este comprobante expresado en moneda de curso legal - Pesos Argentinos
+                                                considerándose un tipo de cambio consignado de <strong>
+                                                <t t-esc="o.l10n_ar_currency_rate" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                </strong>
+                                                asciende a: <strong>
+                                                <t t-esc="o.amount_total_signed"
+                                                  t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
+                                            </span>
+                    </div>
 
                 <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference"
                    name="payment_communication" style="font-size:14px">
