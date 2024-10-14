@@ -23,7 +23,7 @@
       <!--? View for General analytics Lines -->
       <t t-name="analyticPandlTable">
         <div class="table_main_view">
-          <table class="table table-simple">
+          <table class="table table-simple" id="pandltable">
             <thead>
               <tr ></tr>
               <t t-if="comparation">
@@ -157,14 +157,14 @@
                 </tr>
                 <!-- ?Espacio -->
                  <tr id="row_porcentage_income" class="rowPorcentage">
-                  <th><a  typeop="porcentage_income" idRow="row_porcentage_income"><span>
+                  <th class="porcentage"><a typeop="porcentage_income" idRow="row_porcentage_income"><span>
                   </span>% Sobre Ingreso</a></th>
                   <t t-if="comparation">
                     <t t-foreach="data_report['porcentage_income']" t-as="amount_tot">
                       <th><span><t t-esc="amount_tot"/>%</span></th>
                     </t>
                   </t> <t t-else="">
-                    <th><span><t t-esc="data_report['porcentage_income']"/>%</span></th>
+                    <th class="porcentage_amount"><span><t t-esc="data_report['porcentage_income']"/>%</span></th>
                   </t>
                 </tr>
                 <tr id="row_costo_directo_op">
@@ -216,14 +216,14 @@
                     </t>
                 </tr>
                 <tr id="row_porcentage_bruto_op"  class="rowPorcentage">
-                  <th><a  typeop="porcentage_bruto_op" idRow="row_porcentage_bruto_op"><span>
+                  <th class="porcentage"><a  typeop="porcentage_bruto_op" idRow="row_porcentage_bruto_op"><span>
                   </span>% Sobre Ingreso</a></th>
                   <t t-if="comparation">
                     <t t-foreach="data_report['porcentage_bruto_op']" t-as="amount_tot">
                       <th><span><t t-esc="amount_tot"/>%</span></th>
                     </t>
                   </t> <t t-else="">
-                    <th><span><t t-esc="data_report['porcentage_bruto_op']"/>%</span></th>
+                    <th class="porcentage_amount"><span><t t-esc="data_report['porcentage_bruto_op']"/>%</span></th>
                   </t>
                 </tr>
                 <tr id="row_costo_directo_co">
@@ -275,14 +275,14 @@
                     </t>
                 </tr>
                 <tr id="row_porcentage_neto_op" class="rowPorcentage">
-                  <th><a  typeop="porcentage_neto_op" idRow="row_porcentage_neto_op"><span>
+                  <th class="porcentage"><a  typeop="porcentage_neto_op" idRow="row_porcentage_neto_op"><span>
                   </span>% Sobre Ingreso</a></th>
                   <t t-if="comparation">
                     <t t-foreach="data_report['porcentage_neto_op']" t-as="amount_tot">
                       <th><span><t t-esc="amount_tot"/>%</span></th>
                     </t>
                   </t> <t t-else="">
-                    <th><span><t t-esc="data_report['porcentage_neto_op']"/>%</span></th>
+                    <th class="porcentage_amount"><span><t t-esc="data_report['porcentage_neto_op']"/>%</span></th>
                   </t>
                 </tr>
                 <!--  -->
@@ -406,14 +406,14 @@
                     </t>
                 </tr>
                 <tr id="row_porcentage_margen_neto" class="rowPorcentage">
-                  <th><a  typeop="porcentage_margen_neto" idRow="row_porcentage_margen_neto"><span>
+                  <th class="porcentage"><a  typeop="porcentage_margen_neto" idRow="row_porcentage_margen_neto"><span>
                   </span>% Sobre Ingreso</a></th>
                   <t t-if="comparation">
                     <t t-foreach="data_report['porcentage_margen_neto']" t-as="amount_tot">
                       <th><span><t t-esc="amount_tot"/>%</span></th>
                     </t>
                   </t> <t t-else="">
-                    <th><span><t t-esc="data_report['porcentage_margen_neto']"/>%</span></th>
+                    <th class="porcentage_amount"><span><t t-esc="data_report['porcentage_margen_neto']"/>%</span></th>
                   </t>
                 </tr>
                 <!--  -->
@@ -585,14 +585,14 @@
                     </t>
                 </tr>
                 <tr id="row_porcentage_ebitda" class="rowPorcentage">
-                  <th><a  typeop="porcentage_ebitda" idRow="row_porcentage_ebitda"><span>
+                  <th class="porcentage"><a  typeop="porcentage_ebitda" idRow="row_porcentage_ebitda"><span>
                   </span>% Sobre Ingreso</a></th>
                   <t t-if="comparation">
                     <t t-foreach="data_report['porcentage_ebitda']" t-as="amount_tot">
                       <th><span><t t-esc="amount_tot"/>%</span></th>
                     </t>
                   </t> <t t-else="">
-                    <th><span><t t-esc="data_report['porcentage_ebitda']"/>%</span></th>
+                    <th class="porcentage_amount"><span><t t-esc="data_report['porcentage_ebitda']"/>%</span></th>
                   </t>
                 </tr>
                 <!--  -->
@@ -646,14 +646,14 @@
                     </t>
                 </tr>
                 <tr id="row_porcentage_ebitda_extra" class="rowPorcentage">
-                  <th><a  typeop="porcentage_ebitda_extra" idRow="row_porcentage_ebitda_extra"><span>
+                  <th class="porcentage"><a  typeop="porcentage_ebitda_extra" idRow="row_porcentage_ebitda_extra"><span>
                   </span>% Sobre Ingreso</a></th>
                   <t t-if="comparation">
                     <t t-foreach="data_report['porcentage_ebitda_extra']" t-as="amount_tot">
                       <th><span><t t-esc="amount_tot"/>%</span></th>
                     </t>
                   </t> <t t-else="">
-                    <th><span><t t-esc="data_report['porcentage_ebitda_extra']"/>%</span></th>
+                    <th class="porcentage_amount"><span><t t-esc="data_report['porcentage_ebitda_extra']"/>%</span></th>
                   </t>
                 </tr>
                 <!--? Espacio -->
@@ -718,14 +718,14 @@
                     </t>
                 </tr>
                 <tr id="row_porcentage_ebit" class="rowPorcentage">
-                  <th><a  typeop="porcentage_ebit" idRow="row_porcentage_ebit"><span>
+                  <th class="porcentage"><a  typeop="porcentage_ebit" idRow="row_porcentage_ebit"><span>
                   </span>% Sobre Ingreso</a></th>
                   <t t-if="comparation">
                     <t t-foreach="data_report['porcentage_ebit']" t-as="amount_tot">
                       <th><span><t t-esc="amount_tot"/>%</span></th>
                     </t>
                   </t> <t t-else="">
-                    <th><span><t t-esc="data_report['porcentage_ebit']"/>%</span></th>
+                    <th class="porcentage_amount"><span><t t-esc="data_report['porcentage_ebit']"/>%</span></th>
                   </t>
                 </tr>
                 <!--  -->
@@ -875,14 +875,14 @@
                     </t>
                 </tr>
                 <tr id="row_porcentage_resul_neto" class="rowPorcentage">
-                  <th><a  typeop="porcentage_resul_neto" idRow="row_porcentage_resul_neto"><span>
+                  <th class="porcentage"><a  typeop="porcentage_resul_neto" idRow="row_porcentage_resul_neto"><span>
                   </span>% Sobre Ingreso</a></th>
                   <t t-if="comparation">
                     <t t-foreach="data_report['porcentage_resul_neto']" t-as="amount_tot">
                       <th><span><t t-esc="amount_tot"/>%</span></th>
                     </t>
                   </t> <t t-else="">
-                    <th><span><t t-esc="data_report['porcentage_resul_neto']"/>%</span></th>
+                    <th class="porcentage_amount"><span><t t-esc="data_report['porcentage_resul_neto']"/>%</span></th>
                   </t>
                 </tr>
             </tbody>
@@ -966,6 +966,12 @@
           </div>
           <div style="margin-left:5px">
               <button type="button" id="apply_filter" class="btn btn-primary btnHeader">Aplicar</button>
+          </div>
+        </div>
+        <div class="pandl_filter_fiew_left">
+           <div style="margin-left:5px">
+              <button type="button" id="generate_xlsx" class="btn btn-primary btn_xlsx">Excel</button>
+               <button type="button" id="generate_pdf" class="btn btn-primary btn_pdf">PDF</button>
           </div>
         </div>
       </t>

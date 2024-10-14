@@ -988,3 +988,33 @@ class account_reports_pandl(models.TransientModel):
                 ('date', '>=', date_to), ('date','<=',date_from),
             ]
         return domain
+    
+    @api.model
+    def generate_xlsx(self, option):
+        print("******************")
+        print(option)
+        data_report = {}
+        dates, date_names = [],[]
+        date_from = option[2].get('date_from')
+        date_to = option[2].get('date_to')
+        comparation = option[3]
+        months_n = option[4]
+        years_n = option[5]
+        month_year = option[6]
+        date_compartarion = option[7]
+        if comparation: # Si hay que comparar entre fechas
+            dates, date_names = self.convert_dates(date_from, date_to, months_n, years_n, month_year, date_compartarion)
+        else:
+            date_names.append('Del {} Al {}'.format(option[2].get('date_to'), option[2].get('date_from')))
+            dates.append({
+                'date_from': option[2].get('date_from'),
+                'date_to':option[2].get('date_to')
+            })
+        data = {
+            'model': self,
+            'company_id': option[1],
+            'dates': dates,
+        }
+        data_report = self.get_report_data(data)
+        print(data_report)
+        pass

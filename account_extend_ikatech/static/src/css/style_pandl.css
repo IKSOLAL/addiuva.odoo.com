@@ -37,6 +37,16 @@
     margin-right: 10%;
 }
 
+.pandl_filter_fiew_left{
+    display:flex;
+    float:left;
+    margin: 10px 0px 0px 35px;
+}
+
+.btn_xlsx, .btn_pdf{
+    width:80px;
+}
+
 .main p {
     margin: 20px 0px 0px 20px !important;
     font-size: 26px;

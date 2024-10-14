@@ -6,6 +6,9 @@ odoo.define('account_extend_ikatech.main', function (require) {
     var rpc = require('web.rpc');
     var QWeb = core.qweb;
     var time = require('web.time');
+    var session = require('web.session');
+    //var jsPDF = window.jspdf.jsPDF; // Asegúrate de que jsPDF esté en el contexto global
+
 
     const dateComparations = () => {
         var dateComparation = {}
@@ -24,8 +27,8 @@ odoo.define('account_extend_ikatech.main', function (require) {
 
         events: {
             'click #apply_filter': 'apply_filter',
-            'click #pdf': 'print_pdf',
-            'click #xlsx': 'print_xlsx',
+            'click #generate_xlsx': 'generate_xlsx',
+            'click #generate_pdf': 'generate_pdf',
             'click .view_purchase_order': 'button_view_order',
             'click .pr-line': 'show_drop_down',
             'click .third_line': 'show_detail_lines',
@@ -57,6 +60,7 @@ odoo.define('account_extend_ikatech.main', function (require) {
             this._super(parent, action);
             this.company_id = action.context.allowed_company_ids[0];
             this.wizard_id = action.context.wizard | null;
+            this.user_name = session.name;
         },
 
         start: function() {
@@ -93,7 +97,6 @@ odoo.define('account_extend_ikatech.main', function (require) {
                 monthYear = self.el.querySelector('#monthYear').value
                 dateComparation = dateComparations()
                 comparation = self.el.querySelector('#comparation').checked
-                console.log(dateComparation)
             }
             self._rpc({
                 model: 'account.reports.pandl',
@@ -119,6 +122,385 @@ odoo.define('account_extend_ikatech.main', function (require) {
                     }));
                 } 
             })
+        },
+
+        generate_pdf: function() {
+            var self = this
+            var originalTable = document.getElementById('pandltable');  
+            var table = originalTable.cloneNode(true);
+            if (!table) {
+                console.error('No se encontró la tabla con el ID "pandltable".');
+                return;
+            }
+
+             // Crear una nueva fila para el título
+            var titleRow = table.insertRow(0); // Inserta en la primera posición
+            var titleCell = titleRow.insertCell(0); // Crea una celda en la fila
+            titleCell.colSpan = table.rows[0].cells.length; // Asegúrate de que ocupe todas las columnas
+            titleCell.innerHTML = '<strong>Addiuva Ganancias y pérdidas (PandL Gastos)</strong>'; // Agrega el título
+            titleCell.style.textAlign = 'center'; // Centrar el texto
+            titleCell.style.fontSize = '18px'; // Ajustar el tamaño de fuente
+            titleCell.style.padding = '0px'; // Añadir un poco de padding
+            titleCell.style.border = '0px';
+            titleCell.style.margin = '0px';
+
+
+            //! Extras
+            // Obtener la fecha actual
+            var now = new Date();
+            var day = now.getDate().toString().padStart(2, '0');      // Día con dos dígitos
+            var month = (now.getMonth() + 1).toString().padStart(2, '0'); // Mes con dos dígitos (los meses son 0 indexados en JS)
+            var year = now.getFullYear();                              // Año completo
+
+            // Formato de fecha: DD/MM/YYYY
+            var currentDate = `Creado él: ${day}/${month}/${year}`;
+            var createdBy = `por: ${self.user_name}`;
+
+            var userRow = table.insertRow(1); 
+            var userCell = userRow.insertCell(0); 
+            userCell.colSpan = table.rows[1].cells.length;
+            userCell.innerHTML = currentDate + ' ' + createdBy; 
+            userCell.style.textAlign = 'center';
+            userCell.style.fontSize = '12px'; 
+            userCell.style.padding = '0px';
+            userCell.style.border = '0px';
+            userCell.style.margin = '0px';
+            
+
+            // Crear opciones para html2pdf
+            var opt = {
+                margin:       1,
+                filename:     'table.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // Usar html2pdf para convertir la tabla a PDF
+            html2pdf()
+                .from(table)
+                .set(opt)
+                .save()
+                .then(() => {
+                    console.log('PDF generado con éxito');
+                })
+                .catch(err => {
+                    console.error('Error al generar el PDF:', err);
+                });
+        },
+
+
+        // genera un xlsx apartir de la tabla html de pandl
+        generate_xlsx: function() {
+            var self = this
+            var table = document.getElementById('pandltable');
+    
+            // Convierte la tabla HTML en un archivo de Excel
+            var wb = XLSX.utils.table_to_book(table, {sheet: "PandL Addiuva"});
+            var ws = wb.Sheets["PandL Addiuva"];
+
+            // Obtener el número de columnas (definir un rango o calcular)
+            var numCols = XLSX.utils.decode_range(ws['!ref']).e.c + 1; // Total de columnas
+        
+            // Establecer el ancho de la primera columna y las demás
+            ws['!cols'] = [
+                { wpx: 400 },  // Primera columna con ancho de 350 píxeles
+                ...Array(numCols - 1).fill({ wpx: 250 })  // Todas las demás con 200 píxeles
+            ];
+
+            // Primer Linea del Titulo
+            var titleLine = table.getElementsByClassName("titleTable");
+            for (var i = 0; i < titleLine.length; i++) {
+                var cell = titleLine[i];
+                var row = cell.parentNode.rowIndex;  
+                var col = cell.cellIndex;          
+        
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
+        
+                if (!ws[cellAddress]) ws[cellAddress] = { v: '' };
+        
+                ws[cellAddress].s = {
+                    font: {
+                        bold: true,        // Negrita
+                    },
+                };
+            }
+
+            // Segunda Linea del Titulo
+            var titleSecline = table.getElementsByClassName("titleSecondLine");
+            for (var i = 0; i < titleSecline.length; i++) {
+                var link = titleSecline[i];
+                var cell = link.parentNode; 
+                var row = cell.parentNode.rowIndex;  
+                var col = cell.cellIndex;          
+        
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
+        
+                if (!ws[cellAddress]) ws[cellAddress] = { v: '' };
+        
+                ws[cellAddress].s = {
+                    font: {
+                        bold: true,        // Negrita
+                    },
+                    alignment: {
+                        horizontal: 'left', // Alineación horizontal
+                        indent: 1           // Sangría de 1
+                    },
+                };
+            }
+
+            // Tercer Linea del Titulo
+            var titleThirdline = table.getElementsByClassName("third_line");
+            for (var i = 0; i < titleThirdline.length; i++) {
+                var link = titleThirdline[i];
+                var cell = link.parentNode; 
+                var row = cell.parentNode.rowIndex;  
+                var col = cell.cellIndex;          
+
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
+        
+                if (!ws[cellAddress]) ws[cellAddress] = { v: '' };
+        
+                ws[cellAddress].s = {
+                    font: {
+                        bold: true,        // Negrita
+                    },
+                    alignment: {
+                        horizontal: 'left', // Alineación horizontal
+                        indent: 2           // Sangría de 1
+                    },
+                };
+            }
+        
+            // Recorre las celdas que quieres modificar basadas en la clase 'fourth_line'
+            var fourthLineLinks = table.getElementsByClassName("fourth_line");
+        
+            for (var i = 0; i < fourthLineLinks.length; i++) {
+                var link = fourthLineLinks[i];
+                var cell = link.parentNode; // Obtener la celda <td> o <th>
+                var row = cell.parentNode.rowIndex;  // Índice de la fila
+                var col = cell.cellIndex;            // Índice de la columna
+        
+                // Convertir el índice de fila y columna a dirección de celda en Excel
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
+        
+                // Asegúrate de que la celda existe en el worksheet
+                if (!ws[cellAddress]) ws[cellAddress] = { v: '' };
+        
+                // Aplicar estilos avanzados usando xlsx-js-style
+                ws[cellAddress].s = {
+                    alignment: {
+                        horizontal: 'left', // Alineación horizontal
+                        indent: 3           // Sangría de 1
+                    },
+                };
+            }
+
+            // Cuarta linea fuera de a 
+            var title_subline = table.getElementsByClassName("title_subline");
+            for (var i = 0; i < title_subline.length; i++) {
+                var link = title_subline[i];
+                var cell = link.parentNode.parentNode; 
+                var row = cell.parentNode.rowIndex;  
+                var col = cell.cellIndex;          
+
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
+        
+                if (!ws[cellAddress]) ws[cellAddress] = { v: '' };
+        
+                ws[cellAddress].s = {
+                    alignment: {
+                        horizontal: 'left', // Alineación horizontal
+                        indent: 3           // Sangría de 1
+                    },
+                };
+            }
+
+             // Cuarta Linea 
+            var fourthDetailLine = table.getElementsByClassName("fourthDetailLine");
+            for (var i = 0; i < fourthDetailLine.length; i++) {
+                var link = fourthDetailLine[i];
+                var cell = link.parentNode; 
+                var row = cell.parentNode.rowIndex;  
+                var col = cell.cellIndex;          
+
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
+        
+                if (!ws[cellAddress]) ws[cellAddress] = { v: '' };
+
+                var cellValue = ws[cellAddress].v;
+                if (typeof cellValue === 'string') {  // Solo aplica a valores de texto
+                    ws[cellAddress].v = cellValue.toLowerCase();  // Convertir a minúsculas
+                }
+
+                ws[cellAddress].s = {
+                    alignment: {
+                        horizontal: 'left', // Alineación horizontal
+                        indent: 5           // Sangría de 1
+                    },
+                };
+            }
+
+            // Linea Porcentajes
+            var porcentageLine = table.getElementsByClassName("porcentage");
+            for (var i = 0; i < porcentageLine.length; i++) {
+                var cell = porcentageLine[i];
+                var row = cell.parentNode.rowIndex;  
+                var col = cell.cellIndex;          
+        
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
+        
+                if (!ws[cellAddress]) ws[cellAddress] = { v: '' };
+        
+                ws[cellAddress].s = {
+                    font: {
+                        bold: true,        // Negrita
+                    },
+                    alignment: {
+                        horizontal: 'left', // Alineación horizontal
+                        indent: 1           // Sangría de 1
+                    },
+                };
+            }
+
+        
+            //! Columnas
+            // Verificar si el rango de la hoja existe
+            if (ws['!ref']) {
+                // Obtener el rango de celdas en la hoja
+                var range = XLSX.utils.decode_range(ws['!ref']);
+
+                // Aplicar formato numérico a las celdas de la columna 2 en adelante
+                for (var R = range.s.r; R <= range.e.r; ++R) { // Recorre las filas
+                    for (var C = 1; C <= range.e.c; ++C) { // Comienza en la columna 2 (índice 1 en base 0)
+                        var cellAddress = XLSX.utils.encode_cell({r: R, c: C});
+
+                        // Asegúrate de que la celda existe en el worksheet
+                        if (ws[cellAddress]) {
+                            // Aplicar el formato de número
+                            ws[cellAddress].s = {
+                                numFmt: '$#,##0.00',  // Formato numérico con dos decimales
+                                font: {
+                                    sz: 12,  // Opcional: tamaño de la fuente
+                                    color: { rgb: "000000" }  // Opcional: color del texto
+                                },
+                                alignment: {
+                                    horizontal: "left"  // Alinear a la derecha para los números
+                                }
+                            };
+                        }
+                    }
+                }
+            } else {
+                console.error("El rango de la hoja no está definido.");
+            }
+
+            // cantidades detalladas
+            var DetailAmount = table.getElementsByClassName("DetailAmount");
+        
+            for (var i = 0; i < DetailAmount.length; i++) {
+                var link = DetailAmount[i];
+                var cell = link.parentNode; 
+                var row = cell.parentNode.rowIndex;  
+                var col = cell.cellIndex;   
+        
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
+        
+                if (!ws[cellAddress]) ws[cellAddress] = { v: '' };
+
+                ws[cellAddress].s = {
+                    alignment: {
+                        horizontal: 'left', // Alineación horizontal
+                        indent: 1          // Sangría de 1
+                    },
+                    numFmt: '$#,##0.00',  // Formato numérico con dos decimales
+                    font: {
+                        sz: 12,  // Opcional: tamaño de la fuente
+                        color: { rgb: "000000" }  // Opcional: color del texto
+                    },
+                };
+            }
+
+             // cantidades detalladas cuarta linea
+            var fourthDetailAmount = table.getElementsByClassName("fourthDetailAmount");
+        
+            for (var i = 0; i < fourthDetailAmount.length; i++) {
+                var link = fourthDetailAmount[i];
+                var cell = link.parentNode; 
+                var row = cell.parentNode.rowIndex;  
+                var col = cell.cellIndex;   
+        
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
+        
+                if (!ws[cellAddress]) ws[cellAddress] = { v: '' };
+
+                ws[cellAddress].s = {
+                    alignment: {
+                        horizontal: 'left', // Alineación horizontal
+                        indent: 3          // Sangría de 1
+                    },
+                    numFmt: '$#,##0.00',  // Formato numérico con dos decimales
+                    font: {
+                        sz: 12,  // Opcional: tamaño de la fuente
+                        color: { rgb: "000000" }  // Opcional: color del texto
+                    },
+                };
+            }
+
+             // cantidades porcentajes
+            var porcentageAmount = table.getElementsByClassName("porcentage_amount");
+        
+            for (var i = 0; i < porcentageAmount.length; i++) {
+                var cell = porcentageAmount[i];
+                var row = cell.parentNode.rowIndex;  
+                var col = cell.cellIndex;   
+        
+                var cellAddress = XLSX.utils.encode_cell({r: row, c: col});
+        
+                if (!ws[cellAddress]) ws[cellAddress] = { v: '' };
+
+                ws[cellAddress].s = {
+                    alignment: {
+                        horizontal: 'left', // Alineación horizontal
+                    },
+                    numFmt: '0.00%',  // Formato numérico con dos decimales
+                    font: {
+                        sz: 12,  // Opcional: tamaño de la fuente
+                        color: { rgb: "000000" }  // Opcional: color del texto
+                    },
+                };
+            }
+
+            //! Extras
+            // Obtener la fecha actual
+            var now = new Date();
+            var day = now.getDate().toString().padStart(2, '0');      // Día con dos dígitos
+            var month = (now.getMonth() + 1).toString().padStart(2, '0'); // Mes con dos dígitos (los meses son 0 indexados en JS)
+            var year = now.getFullYear();                              // Año completo
+
+            // Formato de fecha: DD/MM/YYYY
+            var currentDate = `Creado él: ${day}/${month}/${year}`;
+            var createdBy = `Creado por: ${self.user_name}`;
+            // Colocar la hora en la celda A1 (fila 0, columna 0)
+            ws['A1'] = { v: currentDate };
+            ws['B1'] = { v: createdBy };
+
+            // Aplicar estilo a la celda A1 (opcional)
+            format = {
+                font: {
+                    sz: 10,       // Tamaño de la fuente
+                    color: { rgb: "000000" } // Color del texto negro
+                },
+                alignment: {
+                    horizontal: "left" // Alineado a la izquierda
+                }
+            }
+            ws['A1'].s = format;
+            ws['B1'].s = format;
+
+            // Guardar el archivo Excel con los estilos aplicados
+            XLSX.writeFile(wb, 'StyledPandL.xlsx');
+
         },
 
         //! Data functions
