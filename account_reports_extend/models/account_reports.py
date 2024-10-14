@@ -133,6 +133,7 @@ class ReportAccountAgedPartnerInherit(models.AbstractModel):
             ]
         return columns
 
+#FIX General Ledger
 class AccountReport(models.AbstractModel):
     _inherit = 'account.report'
 
