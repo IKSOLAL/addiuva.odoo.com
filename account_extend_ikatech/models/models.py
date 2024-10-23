@@ -5,6 +5,7 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 import calendar
 from odoo.exceptions import ValidationError
+import locale
 
 class account_reports_pandl(models.TransientModel):
     _name = 'account.reports.pandl'
@@ -75,6 +76,7 @@ class account_reports_pandl(models.TransientModel):
         years_n = option[5]
         month_year = option[6]
         date_compartarion = option[7]
+        foreingCurrency = option[8]
         if comparation: # Si hay que comparar entre fechas
             dates, date_names = self.convert_dates(date_from, date_to, months_n, years_n, month_year, date_compartarion)
         else:
@@ -87,6 +89,7 @@ class account_reports_pandl(models.TransientModel):
             'model': self,
             'company_id': option[1],
             'dates': dates,
+            'foreingCurrency': foreingCurrency,
         }
         data_report = self.get_report_data(data)
         return {
@@ -226,8 +229,43 @@ class account_reports_pandl(models.TransientModel):
             resul_neto = (ebit + ingoop) - (ing_no_ope)
             report_data['resul_neto'].append(self.format_currency(resul_neto))
             report_data['porcentage_resul_neto'].append(round((resul_neto/total_ingresos)*100, 1))
+        if data['foreingCurrency'] == 'true':
+            rate = self.get_rate_currency(data['company_id'])
+            # Nuevo diccionario para almacenar los resultados
+            result = {}
             
+            # Realizamos la división en cada uno de los valores de las listas
+            for key, values in report_data.items():
+                # Verificamos que la clave no contenga la palabra "porcentage"
+                if 'porcentage' not in key:
+                    new_values = []
+                    for value in values:
+                        # Convertimos y dividimos solo si es un valor monetario (cadena que comienza con '$')
+                        if isinstance(value, str) and value.startswith('$'):
+                            num_value = self.convert_to_float(value)
+                            formatted_value = self.format_currency(num_value / rate)
+                            new_values.append(formatted_value)
+                        else:
+                            new_values.append(value)  # Para valores que no son monetarios
+                    result[key] = new_values
+                else:
+                    result[key] = values
+            return result
         return report_data
+    
+    
+    
+    # Función para convertir el formato de dinero a float
+    def convert_to_float(self, value):
+        return float(value.replace('$', '').replace(',', '').strip())
+
+    # Función para formatear números como moneda
+    def format_currency(self, value):
+        return locale.currency(value, grouping=True)
+        
+    def get_rate_currency(self, company_id):
+        currency_rate = self.env['res.currency.rate'].search([('currency_id','=',2),('company_id','=', company_id)], limit=1, order="name desc")
+        return currency_rate.inverse_company_rate
     
     def get_incomes_items(self, company_id, date_from, date_to):
         ingresos_brutos = sum(self.env['account.move.line'].search(
@@ -334,7 +372,7 @@ class account_reports_pandl(models.TransientModel):
         }
     
     @api.model
-    def get_details_lines(self, option, company_id, type_operation, row_id, date_from, date_to, comparation, months, years, month_year, date_compartarion):
+    def get_details_lines(self, option, company_id, type_operation, row_id, date_from, date_to, comparation, months, years, month_year, date_compartarion, foreingCurrency):
         dates = []
         if comparation: # Si hay que comparar entre fechas
             dates, date_names = self.convert_dates(date_from, date_to, months, years, month_year, date_compartarion)
@@ -384,6 +422,13 @@ class account_reports_pandl(models.TransientModel):
                             dc['amount'].append(self.format_currency(0))
                 i = i + 1
         new_data = data if comparation == False else data_comparation
+        if foreingCurrency == "true":
+            rate = self.get_rate_currency(company_id)
+            for val in new_data:
+                for i, amount in enumerate(val['amount']):  # Usa enumerate para obtener el índice
+                    num_value = self.convert_to_float(amount)
+                    formatted_value = self.format_currency(num_value / rate)
+                    val['amount'][i] = formatted_value  # Asigna el nuevo valor de vuelta al diccionario
         return {
             'name': "Account Reports PandL",
             'type': 'ir.actions.client',
@@ -397,7 +442,7 @@ class account_reports_pandl(models.TransientModel):
             
     #! --------------------------------------------      
     @api.model
-    def get_analytics_account(self, option, company_id, account_id, date_from, date_to, comparation, months, years, month_year, date_compartarion):
+    def get_analytics_account(self, option, company_id, account_id, date_from, date_to, comparation, months, years, month_year, date_compartarion, foreingCurrency):
         dates = []
         if comparation: # Si hay que comparar entre fechas
             dates, date_names = self.convert_dates(date_from, date_to, months, years, month_year, date_compartarion)
@@ -488,6 +533,13 @@ class account_reports_pandl(models.TransientModel):
                             dc['amount'].append(self.format_currency(0))
                 i = i + 1
         new_data = data if comparation == False else data_comparation
+        if foreingCurrency == "true":
+            rate = self.get_rate_currency(company_id)
+            for val in new_data:
+                for i, amount in enumerate(val['amount']):  # Usa enumerate para obtener el índice
+                    num_value = self.convert_to_float(amount)
+                    formatted_value = self.format_currency(num_value / rate)
+                    val['amount'][i] = formatted_value  # Asigna el nuevo valor de vuelta al diccionario
         # ? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
         return {
             'name': "Account Reports PandL",

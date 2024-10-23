@@ -931,22 +931,23 @@
                         class="form-control datetimepicker-input headerZise"></input>
                     </div>
                 </div>
+                <!--  -->
             </div>
           </div>
           <div class="box-dates">
               <span class="fa fa-calendar color-btn-sex icon_comparation"></span>
               <span class="checkbox-inline check-inline color-btn-sex cursorPointer" id="setDates">Fechas:</span>
               <div class="box-dates-set" id="boxSetDates" hidden="hidden">
-                  <a class="cursorPointer btn-comparation btn-dates" id="thisMonth">Este mes</a>
-                  <a class="cursorPointer btn-comparation btn-dates"  id="thisSemester">Este trimestre</a>
-                  <a class="cursorPointer btn-comparation btn-dates" id="thisYear"> <i id="checkDate" class="fa fa-solid fa-check" style="color: #28a745;"/>Este año fiscal</a> 
-                  <a class="cursorPointer btn-comparation btn-dates divider_line"></a>
-                  <a class="cursorPointer btn-comparation btn-dates" id="lastMonth">El mes pasado</a>
-                  <a class="cursorPointer btn-comparation btn-dates" id="lastSemester">Trimestre anterior</a>
-                  <a class="cursorPointer btn-comparation btn-dates" id="lastYear">Año fiscal anterior</a>
-                  <a class="cursorPointer btn-comparation btn-dates divider_line"></a>
-                  <a class="cursorPointer btn-comparation btn-dates" id="date_custom">Personalizado</a>
-                  <div class="box-inside-dates" hidden="hidden">
+                <a class="cursorPointer btn-comparation btn-dates" id="thisMonth">Este mes</a>
+                <a class="cursorPointer btn-comparation btn-dates"  id="thisSemester">Este trimestre</a>
+                <a class="cursorPointer btn-comparation btn-dates" id="thisYear"> <i id="checkDate" class="fa fa-solid fa-check" style="color: #28a745;"/>Este año fiscal</a> 
+                <a class="cursorPointer btn-comparation btn-dates divider_line"></a>
+                <a class="cursorPointer btn-comparation btn-dates" id="lastMonth">El mes pasado</a>
+                <a class="cursorPointer btn-comparation btn-dates" id="lastSemester">Trimestre anterior</a>
+                <a class="cursorPointer btn-comparation btn-dates" id="lastYear">Año fiscal anterior</a>
+                <a class="cursorPointer btn-comparation btn-dates divider_line"></a>
+                <a class="cursorPointer btn-comparation btn-dates" id="date_custom">Personalizado</a>
+                <div class="box-inside-dates" hidden="hidden">
                     <div class="comparation-dates-input">
                       <span>Desde:</span>
                       <input type="date" name="date_to"
@@ -962,16 +963,30 @@
                         t-att-name="prefix"></input>
                     </div>
                 </div>
-              </div>
+            </div>
+          </div>
+          <!--  -->
+          <div class="box-currency">
+            <span class="fa fa-money color-btn-sex icon_comparation"></span>
+            <span class="checkbox-inline check-inline color-btn-sex cursorPointer" id="setCurrency">Moneda:</span>
+            <!-- <div class="box-dates-set" id="boxSetDates" hidden="hidden"> -->
+            <div class="box-currency-set" id="boxSetCurrency" hidden="hidden">
+                <div class="row-currency">
+                  <a class="cursorPointer btn-currency" id="localCurrency" check="true"><i id="checkCurrency" class="fa fa-solid fa-check" style="color: #28a745;"/> Local</a>
+                </div>
+                <div class="row-currency">
+                  <a class="cursorPointer btn-currency" id="foreingCurrency" check="false">Extranjera</a>
+                </div>
+            </div>
           </div>
           <div style="margin-left:5px">
               <button type="button" id="apply_filter" class="btn btn-primary btnHeader">Aplicar</button>
           </div>
         </div>
         <div class="pandl_filter_fiew_left">
-           <div style="margin-left:5px">
+          <div style="margin-left:5px">
               <button type="button" id="generate_xlsx" class="btn btn-primary btn_xlsx">Excel</button>
-               <button type="button" id="generate_pdf" class="btn btn-primary btn_pdf">PDF</button>
+              <button type="button" id="generate_pdf" class="btn btn-primary btn_pdf">PDF</button>
           </div>
         </div>
       </t>

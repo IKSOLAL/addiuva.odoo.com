@@ -41,6 +41,7 @@ odoo.define('account_extend_ikatech.main', function (require) {
             'change #years': 'active_comparation_years',
             'change #monthYear': 'active_comparation_years_month',
             'click #setDates': 'show_box_dates',
+            'click #setCurrency': 'show_box_currency',
             'click .fourthDetailAmount': 'action_see_more_fourth',
             'click #monthComparation': 'monthComparation',
             'click #yearsComparation': 'yearsComparation',
@@ -53,6 +54,8 @@ odoo.define('account_extend_ikatech.main', function (require) {
             'click #lastMonth': "setLastMonth",
             'click #lastSemester': "setLastSemester",
             'click #lastYear': "setLastYear",
+            'click #localCurrency': "setLocalCurrency",
+            'click #foreingCurrency': "setForeingCurrency",
         },
 
         //! default functions
@@ -84,6 +87,7 @@ odoo.define('account_extend_ikatech.main', function (require) {
             var years = 0;
             var monthYear = 0
             var dateComparation = {}
+            var foreingCurrency = false
             const filter_data_selected = {};
             if (initial_render) {
                 filter_data_selected.date_from = moment().format('YYYY-MM-DD');
@@ -97,12 +101,13 @@ odoo.define('account_extend_ikatech.main', function (require) {
                 monthYear = self.el.querySelector('#monthYear').value
                 dateComparation = dateComparations()
                 comparation = self.el.querySelector('#comparation').checked
+                foreingCurrency = self.el.querySelector("#foreingCurrency").getAttribute('check')
             }
             self._rpc({
                 model: 'account.reports.pandl',
                 method: 'pandl_report',
                 args: [
-                    [this.wizard_id, this.company_id, filter_data_selected, comparation, months, years, monthYear, dateComparation], 
+                    [this.wizard_id, this.company_id, filter_data_selected, comparation, months, years, monthYear, dateComparation, foreingCurrency], 
                 ],
             }).then(function(datas) {
                 if (initial_render) {
@@ -515,7 +520,8 @@ odoo.define('account_extend_ikatech.main', function (require) {
             elComp.setAttribute("hidden", "hidden");
             let elDate = self.el.querySelector("#boxSetDates")
             elDate.setAttribute("hidden", "hidden");
-
+            let foreingCurrency = self.el.querySelector('#boxSetCurrency');
+            foreingCurrency.setAttribute("hidden", "hidden");
             rpc.query({
                 model: 'account.reports.pandl',
                 method: 'write',
@@ -539,6 +545,7 @@ odoo.define('account_extend_ikatech.main', function (require) {
             const comparation = self.el.querySelector('#comparation').checked
             const date_from = moment(new Date(this.$el.find('.datetimepicker-input[name="date_from"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
             const date_to = moment(new Date(this.$el.find('.datetimepicker-input[name="date_to"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            const foreingCurrency = self.el.querySelector("#foreingCurrency").getAttribute('check')
             
             if (self.$(`.detail_lines.${typeOp}`).length > 0){
                 const incomesLines = self.el.querySelectorAll(`.detail_lines.${typeOp}`);
@@ -552,7 +559,7 @@ odoo.define('account_extend_ikatech.main', function (require) {
                 rpc.query({
                     model: 'account.reports.pandl',
                     method: 'get_details_lines',
-                    args: [self.wizard_id, self.company_id, typeOp, idRow, date_from, date_to, comparation, months, years, monthYear, dateComparation],
+                    args: [self.wizard_id, self.company_id, typeOp, idRow, date_from, date_to, comparation, months, years, monthYear, dateComparation, foreingCurrency],
                 }).then(function(datas) {
                     var htmlString = ""
                     var aml = ['depre','amort','net_incomes','customer_comissions','other_incomes','costo_directo_op','otros_costos_op','comision_brokers']
@@ -649,7 +656,8 @@ odoo.define('account_extend_ikatech.main', function (require) {
             const comparation = self.el.querySelector('#comparation').checked
             const date_from = moment(new Date(this.$el.find('.datetimepicker-input[name="date_from"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
             const date_to = moment(new Date(this.$el.find('.datetimepicker-input[name="date_to"]').val()+"T00:00:00"), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
-            
+            const foreingCurrency = self.el.querySelector("#foreingCurrency").getAttribute('check')
+
             if (self.$(`.detailAccount${accountId}`).length > 0){
                 const incomesLines = self.$(`.detailAccount${accountId}`);
                 for (let i = 0; i < incomesLines.length; i++){
@@ -659,7 +667,7 @@ odoo.define('account_extend_ikatech.main', function (require) {
                 rpc.query({
                     model: 'account.reports.pandl',
                     method: 'get_analytics_account',
-                    args: [self.wizard_id, self.company_id, accountId, date_from, date_to, comparation, months, years, monthYear, dateComparation],
+                    args: [self.wizard_id, self.company_id, accountId, date_from, date_to, comparation, months, years, monthYear, dateComparation, foreingCurrency],
                 }).then(function(datas) {
                     var htmlString = ""
                     datas['data'].forEach((e) => {
@@ -712,6 +720,17 @@ odoo.define('account_extend_ikatech.main', function (require) {
         show_box_dates: function(){
             var self = this;
             let element = self.el.querySelector("#boxSetDates")
+            let hidden = element.getAttribute("hidden");
+            if (hidden) {
+                element.removeAttribute("hidden");
+            } else {
+                element.setAttribute("hidden", "hidden");
+            }
+        },
+
+        show_box_currency: function(){
+            var self = this;
+            let element = self.el.querySelector("#boxSetCurrency")
             let hidden = element.getAttribute("hidden");
             if (hidden) {
                 element.removeAttribute("hidden");
@@ -947,6 +966,33 @@ odoo.define('account_extend_ikatech.main', function (require) {
             icon.id = 'checkDate'
             btn.firstChild.before(icon);
             // self.el.querySelector('#setDates').textContent = "Este Mes";
+        },
+
+        setLocalCurrency: function(){
+            var self = this;
+            var checkCurrency = self.el.querySelector('#checkCurrency');
+            checkCurrency.remove()
+            var btn = self.el.querySelector('#localCurrency')
+            btn.setAttribute('check','true')
+            self.el.querySelector('#foreingCurrency').setAttribute('check','false')
+            var icon = document.createElement('i');
+            icon.className = 'fa fa-solid fa-check'
+            icon.style = 'color: #28a745;'
+            icon.id = 'checkCurrency'
+            btn.firstChild.before(icon);
+        },
+        setForeingCurrency: function(){
+            var self = this;
+            var checkCurrency = self.el.querySelector('#checkCurrency');
+            checkCurrency.remove()
+            var btn = self.el.querySelector('#foreingCurrency')
+            btn.setAttribute('check','true')
+            self.el.querySelector('#localCurrency').setAttribute('check','false')
+            var icon = document.createElement('i');
+            icon.className = 'fa fa-solid fa-check'
+            icon.style = 'color: #28a745;'
+            icon.id = 'checkCurrency'
+            btn.firstChild.before(icon);
         },
 
     });

@@ -212,7 +212,7 @@ input {
 }
 
 .box-dates{
-    margin-right: 25px;
+    margin-right: 45px;
 }
 .btn-dates {
     margin: 2px 0 2px 0;
@@ -252,6 +252,32 @@ input {
 .comparation-dates-input{
     display: flex;
     margin: 5px;
+}
+
+.box-currency {
+    margin: 0px 45px 0px 0px;
+}
+
+.box-currency-set {
+	display: flex;
+	flex-direction: column;
+	width: 100px;
+	position: absolute;
+	background: #f6f7fa;
+	height: auto;
+	border: 1px solid black;
+	margin-top: 5px;
+}
+.box-currency-set a {
+    padding-left: 5px;
+    display: block
+}
+.row-currency {
+    height: 20px;
+    padding: 1px;
+    background-color: #714b6730;
+    margin: 4px;
+    border-radius: 2px;
 }
 /* @keyframes fadeIn {
     from {
